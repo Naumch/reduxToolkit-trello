@@ -1,23 +1,23 @@
 import { useState, Dispatch, SetStateAction } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, pressedEnter } from "../../app/hooks";
 import { listAdded } from "./listsSlice";
 import { Box, Button, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
   boardId: string;
-  setEdit: Dispatch<SetStateAction<boolean>>;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function FormAddNewList({ boardId, setEdit }: Props) {
-  const [value, setValue] = useState("");
+export default function FormAddNewList({ boardId, setIsEditing }: Props) {
+  const [title, setTitle] = useState("");
 
   const dispatch = useAppDispatch();
 
   const saveNewList = () => {
-    dispatch(listAdded({ title: value, boardId }));
-    setValue("");
-    setEdit(false);
+    dispatch(listAdded({ title, boardId }));
+    setTitle("");
+    setIsEditing(false);
   };
 
   return (
@@ -34,8 +34,9 @@ export default function FormAddNewList({ boardId, setEdit }: Props) {
         fullWidth
         placeholder="Ввести заголовок списка"
         size="small"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        onKeyDown={(event) => pressedEnter(event, saveNewList)}
         sx={{ mb: 1, backgroundColor: "white", borderRadius: 1 }}
       />
       <Button
@@ -46,7 +47,7 @@ export default function FormAddNewList({ boardId, setEdit }: Props) {
       >
         Добавить список
       </Button>
-      <IconButton onClick={() => setEdit(false)}>
+      <IconButton onClick={() => setIsEditing(false)}>
         <CloseIcon fontSize="small" htmlColor="black" />
       </IconButton>
     </Box>

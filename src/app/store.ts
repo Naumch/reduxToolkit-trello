@@ -2,9 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import boardsReducer from "../feautures/boards/boardsSlice";
 import listsReducer from "../feautures/lists/listsSlice";
+import cardsReducer from "../feautures/cards/cardsSlice";
 
 const store = configureStore({
-  reducer: { boards: boardsReducer, lists: listsReducer },
+  reducer: {
+    boards: boardsReducer,
+    lists: listsReducer,
+    cards: cardsReducer,
+  },
 });
 
 export default store;

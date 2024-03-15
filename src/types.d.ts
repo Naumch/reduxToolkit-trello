@@ -10,3 +10,9 @@ type List = {
   title: string;
   board: string;
 };
+
+type Card = {
+  id: string;
+  title: string;
+  list: string;
+};

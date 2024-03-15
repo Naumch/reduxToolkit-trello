@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, pressedEnter } from "../../app/hooks";
 import { boardTitleUpdated, toggleFavourites } from "./boardsSlice";
 
 import {
   Box,
   Typography,
   TextField,
-  Button,
   IconButton,
   Container,
 } from "@mui/material";
@@ -18,14 +17,14 @@ type Props = {
 };
 
 export default function Header({ board }: Props) {
-  const [value, setValue] = useState(board.title);
-  const [edit, setEdit] = useState(false);
+  const [title, setTitle] = useState(board.title);
+  const [isEditing, setIsEditing] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    dispatch(boardTitleUpdated({ id: board.id, title: value }));
-    setEdit(false);
+  const updateTitle = () => {
+    dispatch(boardTitleUpdated({ id: board.id, title }));
+    setIsEditing(false);
   };
 
   return (
@@ -40,38 +39,32 @@ export default function Header({ board }: Props) {
       }}
     >
       <Container sx={{ display: "flex", alignItems: "center" }}>
-        {edit ? (
-          <>
-            <TextField
-              onChange={(e) => setValue(e.target.value)}
-              size="small"
-              value={value}
-              sx={{ backgroundColor: "white", mr: 2 }}
-            />
-            <Button variant="contained" onClick={handleClick}>
-              сохранить
-            </Button>
-          </>
+        {isEditing ? (
+          <TextField
+            onChange={(event) => setTitle(event.target.value)}
+            size="small"
+            value={title}
+            sx={{ backgroundColor: "white", mr: 2 }}
+            onKeyDown={(event) => pressedEnter(event, updateTitle)}
+          />
         ) : (
-          <>
-            <Box
-              onClick={() => setEdit(true)}
-              sx={{
-                cursor: "pointer",
-                padding: "8px 16px",
-                display: "inline-block",
-                borderRadius: 1,
-                backgroundColor: board.color,
-                "&:hover": {
-                  backgroundColor: "rgba(0, 0, 0, 0.04)",
-                },
-              }}
-            >
-              <Typography variant="h5" component="span">
-                {board.title}
-              </Typography>
-            </Box>
-          </>
+          <Box
+            onClick={() => setIsEditing(true)}
+            sx={{
+              cursor: "pointer",
+              padding: "8px 16px",
+              display: "inline-block",
+              borderRadius: 1,
+              backgroundColor: board.color,
+              "&:hover": {
+                backgroundColor: "rgba(0, 0, 0, 0.04)",
+              },
+            }}
+          >
+            <Typography variant="h5" component="span">
+              {board.title}
+            </Typography>
+          </Box>
         )}
         <IconButton
           sx={{ ml: 1 }}

@@ -40,16 +40,16 @@ const boardsSlice = createSlice({
       action: PayloadAction<{ id: string; title: string }>
     ) {
       const { id, title } = action.payload;
-
       const existingBoard = state.find((board) => board.id === id);
+
       if (existingBoard) {
         existingBoard.title = title;
       }
     },
     toggleFavourites(state, action: PayloadAction<{ id: string }>) {
       const { id } = action.payload;
-
       const existingBoard = state.find((board) => board.id === id);
+
       if (existingBoard) {
         existingBoard.favourites = !existingBoard.favourites;
       }

@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { useState, ReactNode, Dispatch, SetStateAction } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { listDeleted } from "./listsSlice";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
   List,
-  ListItem,
   ListItemButton,
   ListItemText,
   IconButton,
   Divider,
+  Collapse,
 } from "@mui/material";
 import ModalHeader from "../../components/ModalHeader";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
 import ModalWrapper from "../../components/ModalWrapper";
+import {
+  cardsDeletedByListId,
+  cardsMovedAnotherList,
+} from "../cards/cardsSlice";
 
 type Props = {
-  id: string;
+  listId: string;
+  setIsAddingCard: Dispatch<SetStateAction<boolean>>;
 };
 
 type Action = {
@@ -24,23 +30,33 @@ type Action = {
   text: string;
   func: () => void;
   divider: boolean;
+  collapse?: ReactNode;
 };
 
-export default function ModalActionsWithList({ id }: Props) {
+export default function ModalActionsWithList({
+  listId,
+  setIsAddingCard,
+}: Props) {
   const [open, setOpen] = useState(false);
+  const [openCollapse, setOpenCollapse] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
+    setOpenCollapse(false);
   };
 
   const dispatch = useAppDispatch();
+  const lists = useAppSelector((state) => state.lists);
 
   const actions: Action[] = [
     {
       id: nanoid(),
       text: "Добавить карточку",
-      func: () => console.log("test"),
+      func: () => {
+        setIsAddingCard(true);
+        handleClose();
+      },
       divider: false,
     },
     {
@@ -53,31 +69,63 @@ export default function ModalActionsWithList({ id }: Props) {
       id: nanoid(),
       text: "Перемещение списка",
       func: () => console.log("test"),
-      divider: false,
+      divider: true,
     },
     {
       id: nanoid(),
-      text: "Подписаться",
+      text: "Сортировать по...",
       func: () => console.log("test"),
       divider: true,
     },
     {
       id: nanoid(),
       text: "Переместить все карточки в этом списке",
-      func: () => console.log("test"),
+      func: () => setOpenCollapse(!openCollapse),
       divider: false,
+      collapse: (
+        <Collapse in={openCollapse} timeout="auto">
+          <List>
+            {lists.map((list) =>
+              list.id === listId ? (
+                <ListItemButton disabled key={list.id} sx={{ pl: 4 }}>
+                  <ListItemText>{list.title} (текущая)</ListItemText>
+                </ListItemButton>
+              ) : (
+                <ListItemButton
+                  onClick={() => {
+                    dispatch(
+                      cardsMovedAnotherList({
+                        currentListId: listId,
+                        newListId: list.id,
+                      })
+                    );
+                    handleClose();
+                  }}
+                  key={list.id}
+                  sx={{ pl: 4 }}
+                >
+                  <ListItemText>{list.title}</ListItemText>
+                </ListItemButton>
+              )
+            )}
+          </List>
+        </Collapse>
+      ),
     },
     {
       id: nanoid(),
       text: "Архивировать все карточки в этом списке",
-      func: () => console.log("test"),
+      func: () => {
+        dispatch(cardsDeletedByListId({ listId }));
+        handleClose();
+      },
       divider: true,
     },
     {
       id: nanoid(),
       text: "Архивировать список",
       func: () => {
-        dispatch(listDeleted({ id }));
+        dispatch(listDeleted({ id: listId }));
         handleClose();
       },
       divider: false,
@@ -86,11 +134,10 @@ export default function ModalActionsWithList({ id }: Props) {
 
   const renderedListActions = actions.map((action) => (
     <div id={action.id}>
-      <ListItem disablePadding>
-        <ListItemButton onClick={action.func}>
-          <ListItemText>{action.text}</ListItemText>
-        </ListItemButton>
-      </ListItem>
+      <ListItemButton onClick={action.func}>
+        <ListItemText>{action.text}</ListItemText>
+      </ListItemButton>
+      {action.collapse}
       {action.divider && <Divider />}
     </div>
   ));

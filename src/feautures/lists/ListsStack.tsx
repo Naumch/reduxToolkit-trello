@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function ListsStack({ boardId }: Props) {
-  const [edit, setEdit] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const lists = useAppSelector((state) =>
     selectListsdByBoardId(state, boardId)
@@ -22,12 +22,12 @@ export default function ListsStack({ boardId }: Props) {
   return (
     <Stack mt={5} direction="row" alignItems="start" spacing={2}>
       {renderedLists}
-      {edit ? (
-        <FormAddNewList boardId={boardId} setEdit={setEdit} />
+      {isEditing ? (
+        <FormAddNewList boardId={boardId} setIsEditing={setIsEditing} />
       ) : (
         <Button
           sx={{ width: 272 }}
-          onClick={() => setEdit(true)}
+          onClick={() => setIsEditing(true)}
           variant="contained"
         >
           {renderedLists.length
