@@ -4,6 +4,8 @@ import { listAdded } from "./listsSlice";
 import { Box, Button, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
+import { useClickAway } from "@uidotdev/usehooks";
+
 type Props = {
   boardId: string;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
@@ -20,6 +22,10 @@ export default function FormAddNewList({ boardId, setIsEditing }: Props) {
     setIsEditing(false);
   };
 
+  const ref = useClickAway(() => {
+    setIsEditing(false);
+  });
+
   return (
     <Box
       sx={{
@@ -29,6 +35,7 @@ export default function FormAddNewList({ boardId, setIsEditing }: Props) {
         padding: 1,
         borderRadius: 2,
       }}
+      ref={ref}
     >
       <TextField
         fullWidth

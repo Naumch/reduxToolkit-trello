@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
 import { boardTitleUpdated, toggleFavourites } from "./boardsSlice";
+import { useClickAway } from "@uidotdev/usehooks";
 
 import {
   Box,
@@ -27,6 +28,10 @@ export default function Header({ board }: Props) {
     setIsEditing(false);
   };
 
+  const ref = useClickAway(() => {
+    updateTitle();
+  });
+
   return (
     <Box
       sx={{
@@ -46,6 +51,7 @@ export default function Header({ board }: Props) {
             value={title}
             sx={{ backgroundColor: "white", mr: 2 }}
             onKeyDown={(event) => pressedEnter(event, updateTitle)}
+            inputRef={ref}
           />
         ) : (
           <Box

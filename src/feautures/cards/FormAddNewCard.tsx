@@ -1,8 +1,9 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
-import { Button, IconButton, TextField } from "@mui/material";
+import { Button, IconButton, TextField, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { cardAdded } from "./cardsSlice";
+import { useClickAway } from "@uidotdev/usehooks";
 
 type Props = {
   listId: string;
@@ -19,8 +20,13 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
     setTitle("");
   };
 
+  const ref = useClickAway(() => {
+    saveNewCard();
+    setIsAddingCard(false);
+  });
+
   return (
-    <>
+    <Box mt={1} ref={ref}>
       <TextField
         fullWidth
         placeholder="Ввести заголовок для этой карточки"
@@ -41,6 +47,6 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
       <IconButton onClick={() => setIsAddingCard(false)}>
         <CloseIcon fontSize="small" htmlColor="black" />
       </IconButton>
-    </>
+    </Box>
   );
 }
