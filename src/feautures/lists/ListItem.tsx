@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 import { Box, Typography, TextField, Stack, Button } from "@mui/material";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import ModalActionsWithList from "./ModalActionsWithList";
 import { pressedEnter, useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectCardsdByListId } from "../cards/cardsSlice";
 import { listTitleUpdated } from "./listsSlice";
 import CardItem from "../cards/CardItem";
 import FormAddNewCard from "../cards/FormAddNewCard";
-import { useClickAway } from "@uidotdev/usehooks";
 
 type Props = {
   list: List;
@@ -28,10 +28,6 @@ export default function ListItem({ list }: Props) {
   const cards = useAppSelector((state) => selectCardsdByListId(state, list.id));
   const renderedCards = cards.map((card) => <CardItem card={card} />);
 
-  const ref = useClickAway(() => {
-    updateTitle();
-  });
-
   return (
     <Box
       sx={{
@@ -51,14 +47,15 @@ export default function ListItem({ list }: Props) {
         }}
       >
         {isEditing ? (
-          <TextField
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            size="small"
-            sx={{ backgroundColor: "white" }}
-            onKeyDown={(event) => pressedEnter(event, updateTitle)}
-            inputRef={ref}
-          />
+          <ClickAwayListener onClickAway={updateTitle}>
+            <TextField
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              size="small"
+              sx={{ backgroundColor: "white" }}
+              onKeyDown={(event) => pressedEnter(event, updateTitle)}
+            />
+          </ClickAwayListener>
         ) : (
           <Typography
             sx={{ cursor: "pointer", pl: 1.7 }}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
 import { boardTitleUpdated, toggleFavourites } from "./boardsSlice";
-import { useClickAway } from "@uidotdev/usehooks";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 import {
   Box,
@@ -28,10 +28,6 @@ export default function Header({ board }: Props) {
     setIsEditing(false);
   };
 
-  const ref = useClickAway(() => {
-    updateTitle();
-  });
-
   return (
     <Box
       sx={{
@@ -45,14 +41,15 @@ export default function Header({ board }: Props) {
     >
       <Container sx={{ display: "flex", alignItems: "center" }}>
         {isEditing ? (
-          <TextField
-            onChange={(event) => setTitle(event.target.value)}
-            size="small"
-            value={title}
-            sx={{ backgroundColor: "white", mr: 2 }}
-            onKeyDown={(event) => pressedEnter(event, updateTitle)}
-            inputRef={ref}
-          />
+          <ClickAwayListener onClickAway={updateTitle}>
+            <TextField
+              onChange={(event) => setTitle(event.target.value)}
+              size="small"
+              value={title}
+              sx={{ backgroundColor: "white", mr: 2 }}
+              onKeyDown={(event) => pressedEnter(event, updateTitle)}
+            />
+          </ClickAwayListener>
         ) : (
           <Box
             onClick={() => setIsEditing(true)}
