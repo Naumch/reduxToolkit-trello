@@ -54,10 +54,15 @@ const boardsSlice = createSlice({
         existingBoard.favourites = !existingBoard.favourites;
       }
     },
+    boardDeleted(state, action: PayloadAction<{ id: string }>) {
+      const { id } = action.payload;
+
+      return state.filter((board) => board.id !== id);
+    },
   },
 });
 
-export const { boardAdded, boardTitleUpdated, toggleFavourites } =
+export const { boardAdded, boardTitleUpdated, toggleFavourites, boardDeleted } =
   boardsSlice.actions;
 
 export default boardsSlice.reducer;
