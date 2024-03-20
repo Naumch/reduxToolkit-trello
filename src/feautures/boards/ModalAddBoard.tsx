@@ -7,7 +7,6 @@ import { boardAdded } from "./boardsSlice";
 import { Box, Button, Typography, TextField, Stack } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import SampleBoard from "./SampleBoard";
-import HeaderModal from "../../components/ModalHeader";
 import ModalWrapper from "../../components/ModalWrapper";
 
 const gradients = [
@@ -55,8 +54,7 @@ export default function ModalAddBoard() {
       >
         Создать доску
       </Button>
-      <ModalWrapper open={open} onClose={handleClose}>
-        <HeaderModal title="Создать доску" onClick={handleClose} />
+      <ModalWrapper title="Создать доску" open={open} onClose={handleClose}>
         <SampleBoard color={color} />
         <Box mb={3}>
           <Typography variant="body2" fontWeight={500} mb={0.5}>

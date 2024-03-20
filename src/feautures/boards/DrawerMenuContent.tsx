@@ -9,6 +9,8 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  Typography,
+  Button,
 } from "@mui/material";
 
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -19,6 +21,8 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { useAppDispatch } from "../../app/hooks";
 import { boardDeleted } from "./boardsSlice";
 import DrawerMenuContentWrapper from "./DrawerMenuContentWrapper";
+import MarksList from "../marks/MarksList";
+import ModalWrapper from "../../components/ModalWrapper";
 
 type Props = {
   board: Board;
@@ -38,6 +42,7 @@ export default function DrawerMenuContent({ board, setOpenDrawer }: Props) {
   const [isOpeningArchive, setIsOpeningArchive] = useState(false);
   const [isChangingBackground, setIsChangingBackground] = useState(false);
   const [isOpeningMarks, setIsOpeningMarks] = useState(false);
+  const [isDeletingBoard, setIsDeletingBoard] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -84,10 +89,7 @@ export default function DrawerMenuContent({ board, setOpenDrawer }: Props) {
       id: nanoid(),
       icon: <DeleteOutlineOutlinedIcon />,
       text: "Удалить доску",
-      func: () => {
-        dispatch(boardDeleted({ id: board.id }));
-        navigate("/");
-      },
+      func: () => setIsDeletingBoard(true),
       divider: false,
     },
   ];
@@ -142,7 +144,7 @@ export default function DrawerMenuContent({ board, setOpenDrawer }: Props) {
         setOpenDrawer={setOpenDrawer}
         onClick={() => setIsOpeningMarks(false)}
       >
-        Hello
+        <MarksList />
       </DrawerMenuContentWrapper>
     );
   }
@@ -154,6 +156,26 @@ export default function DrawerMenuContent({ board, setOpenDrawer }: Props) {
       onClick={() => console.log("test")}
     >
       <List>{renderedBoardActions}</List>
+      <ModalWrapper
+        open={isDeletingBoard}
+        onClose={() => setIsDeletingBoard(false)}
+        title="Удалить доску"
+      >
+        <Typography textAlign="center" my={2}>
+          Доска будет удалена навсегда. Это действие нельзя отменить.
+        </Typography>
+        <Button
+          color="error"
+          fullWidth
+          variant="contained"
+          onClick={() => {
+            dispatch(boardDeleted({ id: board.id }));
+            navigate("/");
+          }}
+        >
+          Удалить
+        </Button>
+      </ModalWrapper>
     </DrawerMenuContentWrapper>
   );
 }

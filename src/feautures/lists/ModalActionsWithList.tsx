@@ -11,7 +11,6 @@ import {
   Divider,
   Collapse,
 } from "@mui/material";
-import ModalHeader from "../../components/ModalHeader";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import ModalWrapper from "../../components/ModalWrapper";
@@ -147,8 +146,11 @@ export default function ModalActionsWithList({
       <IconButton onClick={handleOpen}>
         <MoreHorizIcon />
       </IconButton>
-      <ModalWrapper open={open} onClose={handleClose}>
-        <ModalHeader title="Действия со списком" onClick={handleClose} />
+      <ModalWrapper
+        title="Действия со списком"
+        open={open}
+        onClose={handleClose}
+      >
         <List>{renderedListActions}</List>
       </ModalWrapper>
     </>

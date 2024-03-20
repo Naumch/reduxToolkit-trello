@@ -16,3 +16,10 @@ type Card = {
   title: string;
   list: string;
 };
+
+type Mark = {
+  id: string;
+  color: string;
+  colorName: string;
+  title: string;
+};
