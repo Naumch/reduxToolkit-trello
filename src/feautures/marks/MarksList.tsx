@@ -1,57 +1,76 @@
-import { Box, Stack, Tooltip, Typography, IconButton } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { useAppSelector } from "../../app/hooks";
 import { useState } from "react";
-import Modal from "./ModalAddMark";
+import { nanoid } from "@reduxjs/toolkit";
+import { selectAllMarks } from "./marksSlice";
+import store from "../../app/store";
+
+import { Box, Stack, Typography, IconButton, Button } from "@mui/material";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { green } from "@mui/material/colors";
+
+import ModalContent from "./ModalAddMark";
+import ModalWrapper from "../../components/ModalWrapper";
+import MarkItem from "./MarkItem";
+
+const newMark: Mark = {
+  id: nanoid(),
+  title: "",
+  bgColor: green[400],
+  fontColor: "black",
+  colorName: "зеленый",
+};
 
 export default function MarksList() {
-  const marks = useAppSelector((state) => state.marks);
-  const [mark, setMark] = useState<Mark>(marks[0]);
+  const marks = selectAllMarks(store.getState());
+
   const [openModal, setOpenModal] = useState(false);
+  const [editableMark, setEditableMark] = useState<Mark>(newMark);
+  const [isCreatingNewMark, setIsCreatingNewMark] = useState(false);
 
   const handleOpenModal = (mark: Mark) => {
-    setMark(mark);
+    setEditableMark(mark);
     setOpenModal(true);
   };
 
-  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setEditableMark(newMark);
+    setIsCreatingNewMark(false);
+  };
 
-  const renderedMarks = marks.map((mark) => {
-    const titleTooltip = `Цвет: ${mark.colorName}, название: "${
-      mark.title ? mark.title : "без названия"
-    }"`;
-
-    return (
-      <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-        <Tooltip title={titleTooltip}>
-          <Box
-            sx={{
-              width: "100%",
-              height: 36,
-              mb: 0.5,
-              mr: 0.5,
-              borderRadius: 1,
-              backgroundColor: mark.color,
-              cursor: "pointer",
-            }}
-            key={mark.id}
-            onClick={() => handleOpenModal(mark)}
-          />
-        </Tooltip>
-        <IconButton onClick={() => handleOpenModal(mark)}>
-          <EditOutlinedIcon sx={{ fontSize: 16 }} />
-        </IconButton>
-      </Box>
-    );
-  });
+  const renderedMarks = marks.map((mark) => (
+    <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+      <MarkItem mark={mark} onClick={() => handleOpenModal(mark)} />
+      <IconButton sx={{ ml: 0.5 }} onClick={() => handleOpenModal(mark)}>
+        <EditOutlinedIcon sx={{ fontSize: 16 }} />
+      </IconButton>
+    </Box>
+  ));
 
   return (
     <>
-      <Typography mb={1} variant="body2">
+      <Typography my={1} variant="body2">
         Метки
       </Typography>
-      <Stack>{renderedMarks}</Stack>
-      <Modal mark={mark} handleClose={handleCloseModal} open={openModal} />
+      <Stack mb={2}>{renderedMarks}</Stack>
+      <Button
+        onClick={() => {
+          setIsCreatingNewMark(true);
+          setOpenModal(true);
+        }}
+        fullWidth
+        variant="contained"
+      >
+        Создать новую метку
+      </Button>
+      <ModalWrapper title="Метки" open={openModal} onClose={handleCloseModal}>
+        <ModalContent
+          mark={editableMark}
+          setMark={setEditableMark}
+          handleCloseModal={handleCloseModal}
+          isCreatingNewMark={isCreatingNewMark}
+          setIsCreatingNewMark={setIsCreatingNewMark}
+        />
+      </ModalWrapper>
     </>
   );
 }

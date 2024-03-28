@@ -1,49 +1,74 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice, nanoid } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { green, yellow, orange, red, purple, blue } from "@mui/material/colors";
 
-const initialState: Mark[] = [
+const tone = 400;
+
+const marksInitial: Mark[] = [
   {
     id: nanoid(),
-    color: "#4bce97",
-    colorName: "Зелёная",
-    title: "Hello",
-  },
-  {
-    id: nanoid(),
-    color: "#f5cd47",
-    colorName: "Жёлтая",
-    title: "World",
-  },
-  {
-    id: nanoid(),
-    color: "#fea362",
-    colorName: "Оранжевая",
     title: "",
+    bgColor: green[tone],
+    fontColor: "black",
+    colorName: "зеленый",
   },
   {
     id: nanoid(),
-    color: "#f87168",
-    colorName: "Красная",
     title: "",
+    bgColor: yellow[tone],
+    fontColor: "black",
+    colorName: "желтый",
   },
   {
     id: nanoid(),
-    color: "#9f8fef",
-    colorName: "Пурпурная",
     title: "",
+    bgColor: orange[tone],
+    fontColor: "black",
+    colorName: "оранжевый",
   },
-  { id: nanoid(), color: "#579dff", colorName: "Синяя", title: "" },
+  {
+    id: nanoid(),
+    title: "",
+    bgColor: red[tone],
+    fontColor: "black",
+    colorName: "красный",
+  },
+  {
+    id: nanoid(),
+    title: "",
+    bgColor: purple[tone],
+    fontColor: "black",
+    colorName: "фиолетовый",
+  },
+  {
+    id: nanoid(),
+    title: "",
+    bgColor: blue[tone],
+    fontColor: "black",
+    colorName: "синий",
+  },
 ];
+
+const marksAdapter = createEntityAdapter<Mark>();
+
+const initialState = marksAdapter.setAll(
+  marksAdapter.getInitialState(),
+  marksInitial
+);
 
 const marksSlice = createSlice({
   name: "marks",
   initialState,
-  reducers: {},
+  reducers: {
+    markDeleted: marksAdapter.removeOne,
+    markUpdated: marksAdapter.setOne,
+    markAdded: marksAdapter.addOne,
+  },
 });
 
 export default marksSlice.reducer;
 
-export const {} = marksSlice.actions;
+export const { markDeleted, markUpdated, markAdded } = marksSlice.actions;
 
-export const selectMarkById = (state: RootState, markId: string) =>
-  state.marks.find((mark) => markId === mark.id);
+export const { selectAll: selectAllMarks } =
+  marksAdapter.getSelectors<RootState>((state) => state.marks);

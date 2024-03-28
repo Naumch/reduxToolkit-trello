@@ -17,9 +17,13 @@ type Card = {
   list: string;
 };
 
-type Mark = {
-  id: string;
-  color: string;
+interface ColorMark {
+  bgColor: string;
+  fontColor: "white" | "black";
   colorName: string;
+}
+
+interface Mark extends ColorMark {
+  id: string;
   title: string;
-};
+}
