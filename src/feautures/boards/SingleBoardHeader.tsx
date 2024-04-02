@@ -16,7 +16,8 @@ import {
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import DrawerMenuContent from "./DrawerMenuContent";
+import DrawerContent from "./Drawer/DrawerContent";
+import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
   board: Board;
@@ -106,7 +107,18 @@ export default function Header({ board }: Props) {
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
         >
-          <DrawerMenuContent board={board} setOpenDrawer={setOpenDrawer} />
+          <Box
+            sx={{ width: 320, px: 1, position: "relative" }}
+            role="presentation"
+          >
+            <IconButton
+              sx={{ position: "absolute", right: 8, top: 14 }}
+              onClick={() => setOpenDrawer(false)}
+            >
+              <CloseIcon fontSize="small" htmlColor="black" />
+            </IconButton>
+            <DrawerContent board={board} />
+          </Box>
         </Drawer>
       </Container>
     </Box>

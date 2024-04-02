@@ -20,11 +20,11 @@ export default function SingleBoardPage() {
   }
 
   return (
-    <div>
+    <>
       <Header board={board} />
       <Container>
         <ListsStack boardId={board.id} />
       </Container>
-    </div>
+    </>
   );
 }

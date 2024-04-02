@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
 
@@ -18,15 +18,16 @@ import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-import { useAppDispatch } from "../../app/hooks";
-import { boardDeleted } from "./boardsSlice";
-import DrawerMenuContentWrapper from "./DrawerMenuContentWrapper";
-import MarksList from "../marks/MarksList";
-import ModalWrapper from "../../components/ModalWrapper";
+import { useAppDispatch } from "../../../app/hooks";
+import { boardDeleted } from "../boardsSlice";
+import MarksList from "../../marks/MarksList";
+import ModalWrapper from "../../../components/ModalWrapper";
+import ChangeBackground from "./ChangeBackground";
+import OpenArchive from "./OpenArchive";
+import EditDescription from "./EditDescription";
 
 type Props = {
   board: Board;
-  setOpenDrawer: Dispatch<SetStateAction<boolean>>;
 };
 
 type Actions = {
@@ -37,7 +38,7 @@ type Actions = {
   divider: boolean;
 };
 
-export default function DrawerMenuContent({ board, setOpenDrawer }: Props) {
+export default function DrawerMenuContent({ board }: Props) {
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isOpeningArchive, setIsOpeningArchive] = useState(false);
   const [isChangingBackground, setIsChangingBackground] = useState(false);
@@ -100,61 +101,40 @@ export default function DrawerMenuContent({ board, setOpenDrawer }: Props) {
         <ListItemIcon>{action.icon}</ListItemIcon>
         <ListItemText>{action.text}</ListItemText>
       </ListItemButton>
-
       {action.divider && <Divider />}
     </div>
   ));
 
   if (isEditingDescription) {
     return (
-      <DrawerMenuContentWrapper
-        title="О доске"
-        setOpenDrawer={setOpenDrawer}
-        onClick={() => setIsEditingDescription(false)}
-      ></DrawerMenuContentWrapper>
+      <EditDescription handleClickPrev={() => setIsEditingDescription(false)} />
     );
   }
 
   if (isOpeningArchive) {
-    return (
-      <DrawerMenuContentWrapper
-        title="Архив"
-        setOpenDrawer={setOpenDrawer}
-        onClick={() => setIsOpeningArchive(false)}
-      ></DrawerMenuContentWrapper>
-    );
+    return <OpenArchive handleClickPrev={() => setIsOpeningArchive(false)} />;
   }
 
   if (isChangingBackground) {
     return (
-      <DrawerMenuContentWrapper
-        title="Смена фона"
-        setOpenDrawer={setOpenDrawer}
-        onClick={() => setIsChangingBackground(false)}
-      >
-        Hello
-      </DrawerMenuContentWrapper>
+      <ChangeBackground
+        handleClickPrev={() => setIsChangingBackground(false)}
+      />
     );
   }
 
   if (isOpeningMarks) {
-    return (
-      <DrawerMenuContentWrapper
-        title="Метки"
-        setOpenDrawer={setOpenDrawer}
-        onClick={() => setIsOpeningMarks(false)}
-      >
-        <MarksList />
-      </DrawerMenuContentWrapper>
-    );
+    return <MarksList handleClickPrev={() => setIsOpeningMarks(false)} />;
   }
 
   return (
-    <DrawerMenuContentWrapper
-      title="Меню"
-      setOpenDrawer={setOpenDrawer}
-      onClick={() => console.log("test")}
-    >
+    <>
+      <Box sx={{ py: 2 }}>
+        <Typography align="center" variant="h6">
+          Меню
+        </Typography>
+      </Box>
+      <Divider />
       <List>{renderedBoardActions}</List>
       <ModalWrapper
         open={isDeletingBoard}
@@ -176,6 +156,6 @@ export default function DrawerMenuContent({ board, setOpenDrawer }: Props) {
           Удалить
         </Button>
       </ModalWrapper>
-    </DrawerMenuContentWrapper>
+    </>
   );
 }
