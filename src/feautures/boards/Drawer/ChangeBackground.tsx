@@ -35,7 +35,13 @@ export default function ChangeBackground({ handleClickPrev }: Props) {
             alt="photos"
             height="100"
             image={photosImg}
-            sx={{ borderRadius: 2 }}
+            sx={{
+              borderRadius: 2,
+              opacity: 0.99,
+              "&:hover": {
+                opacity: 0.9,
+              },
+            }}
           />
           <Typography variant="body2" textAlign="center" mt={1}>
             Фотографии
@@ -50,7 +56,13 @@ export default function ChangeBackground({ handleClickPrev }: Props) {
             alt="colors"
             height="100"
             image={colorsImg}
-            sx={{ borderRadius: 2 }}
+            sx={{
+              borderRadius: 2,
+              opacity: 0.99,
+              "&:hover": {
+                opacity: 0.9,
+              },
+            }}
           />
           <Typography variant="body2" textAlign="center" mt={1}>
             Цвета
@@ -58,7 +70,7 @@ export default function ChangeBackground({ handleClickPrev }: Props) {
         </Card>
       </Stack>
       <Divider />
-      <Typography variant="h6" mt={2}>
+      <Typography fontWeight={500} mt={2}>
         Пользовательские
       </Typography>
     </>

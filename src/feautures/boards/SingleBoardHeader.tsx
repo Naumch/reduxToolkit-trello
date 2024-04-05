@@ -112,7 +112,7 @@ export default function Header({ board }: Props) {
             role="presentation"
           >
             <IconButton
-              sx={{ position: "absolute", right: 8, top: 14 }}
+              sx={{ position: "absolute", right: 8, top: 10 }}
               onClick={() => setOpenDrawer(false)}
             >
               <CloseIcon fontSize="small" htmlColor="black" />

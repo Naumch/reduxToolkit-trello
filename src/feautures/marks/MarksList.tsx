@@ -3,21 +3,14 @@ import { nanoid } from "@reduxjs/toolkit";
 import { selectAllMarks } from "./marksSlice";
 import store from "../../app/store";
 
-import {
-  Box,
-  Stack,
-  Typography,
-  IconButton,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Box, Stack, Typography, IconButton, Button } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import { green } from "@mui/material/colors";
 
 import ModalContent from "./ModalAddMark";
 import ModalWrapper from "../../components/ModalWrapper";
 import MarkItem from "./MarkItem";
+import DrawerHeader from "../boards/Drawer/DrawerHeader";
 
 type Props = {
   handleClickPrev: () => void;
@@ -51,7 +44,11 @@ export default function MarksList({ handleClickPrev }: Props) {
 
   const renderedMarks = marks.map((mark) => (
     <Box sx={{ display: "flex", alignItems: "flex-start" }}>
-      <MarkItem mark={mark} onClick={() => handleOpenModal(mark)} />
+      <MarkItem
+        mark={mark}
+        onClick={() => handleOpenModal(mark)}
+        hoverChanges
+      />
       <IconButton sx={{ ml: 0.5 }} onClick={() => handleOpenModal(mark)}>
         <EditOutlinedIcon sx={{ fontSize: 16 }} />
       </IconButton>
@@ -60,18 +57,7 @@ export default function MarksList({ handleClickPrev }: Props) {
 
   return (
     <>
-      <Box sx={{ py: 2 }}>
-        <IconButton
-          sx={{ position: "absolute", top: 12 }}
-          onClick={handleClickPrev}
-        >
-          <ChevronLeftOutlinedIcon htmlColor="black" />
-        </IconButton>
-        <Typography align="center" variant="h6">
-          Метки
-        </Typography>
-      </Box>
-      <Divider />
+      <DrawerHeader title="Метки" handleClickPrev={handleClickPrev} />
       <Typography my={1} variant="body2">
         Метки
       </Typography>
@@ -92,7 +78,6 @@ export default function MarksList({ handleClickPrev }: Props) {
           setMark={setEditableMark}
           handleCloseModal={handleCloseModal}
           isCreatingNewMark={isCreatingNewMark}
-          setIsCreatingNewMark={setIsCreatingNewMark}
         />
       </ModalWrapper>
     </>

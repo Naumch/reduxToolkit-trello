@@ -30,7 +30,7 @@ export default function ModalWrapper({
         }}
       >
         <Box sx={{ position: "relative" }}>
-          <Typography align="center" variant="body1" fontWeight={500}>
+          <Typography align="center" fontWeight={500}>
             {title}
           </Typography>
           <IconButton

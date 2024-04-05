@@ -11,12 +11,12 @@ export default function DrawerHeader({ handleClickPrev, title }: Props) {
     <>
       <Box sx={{ py: 2 }}>
         <IconButton
-          sx={{ position: "absolute", top: 12 }}
+          sx={{ position: "absolute", top: 8 }}
           onClick={handleClickPrev}
         >
           <ChevronLeftOutlinedIcon htmlColor="black" />
         </IconButton>
-        <Typography align="center" variant="h6">
+        <Typography align="center" fontWeight={500}>
           {title}
         </Typography>
       </Box>

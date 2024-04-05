@@ -130,7 +130,7 @@ export default function DrawerMenuContent({ board }: Props) {
   return (
     <>
       <Box sx={{ py: 2 }}>
-        <Typography align="center" variant="h6">
+        <Typography align="center" fontWeight={500}>
           Меню
         </Typography>
       </Box>
