@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { markAdded, markDeleted, markUpdated } from "./marksSlice";
 
@@ -10,7 +10,9 @@ import {
   Typography,
   Divider,
   Stack,
+  IconButton,
 } from "@mui/material";
+import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import GridColorBlocks from "./GridColorBlocks";
 
 type Props = {
@@ -26,7 +28,35 @@ export default function ModalAddMark({
   handleCloseModal,
   isCreatingNewMark,
 }: Props) {
+  const [isDeleting, setIsDeleting] = useState(false);
   const dispatch = useAppDispatch();
+
+  if (isDeleting) {
+    return (
+      <Box>
+        <IconButton
+          sx={{ position: "absolute", top: 8, left: 8 }}
+          onClick={() => setIsDeleting(false)}
+        >
+          <ChevronLeftOutlinedIcon htmlColor="black" />
+        </IconButton>
+        <Typography textAlign="center" my={2}>
+          Метка будет удалена со всех карточек. Это действие нельзя отменить.
+        </Typography>
+        <Button
+          color="error"
+          fullWidth
+          variant="contained"
+          onClick={() => {
+            dispatch(markDeleted(mark.id));
+            handleCloseModal();
+          }}
+        >
+          Удалить
+        </Button>
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -81,10 +111,7 @@ export default function ModalAddMark({
             Сохранить
           </Button>
           <Button
-            onClick={() => {
-              dispatch(markDeleted(mark.id));
-              handleCloseModal();
-            }}
+            onClick={() => setIsDeleting(true)}
             color="error"
             size="small"
             variant="contained"

@@ -16,15 +16,15 @@ type Props = {
   handleClickPrev: () => void;
 };
 
-const newMark: Mark = {
-  id: nanoid(),
-  title: "",
-  bgColor: green[400],
-  fontColor: "black",
-  colorName: "зеленый",
-};
-
 export default function MarksList({ handleClickPrev }: Props) {
+  const newMark: Mark = {
+    id: nanoid(),
+    title: "",
+    bgColor: green[400],
+    fontColor: "black",
+    colorName: "зеленый",
+  };
+
   const marks = selectAllMarks(store.getState());
 
   const [openModal, setOpenModal] = useState(false);
