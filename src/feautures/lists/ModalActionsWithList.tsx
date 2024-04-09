@@ -1,6 +1,6 @@
 import { useState, ReactNode, Dispatch, SetStateAction } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import { listDeleted } from "./listsSlice";
+import { listToggleArchive } from "./listsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
@@ -124,7 +124,7 @@ export default function ModalActionsWithList({
       id: nanoid(),
       text: "Архивировать список",
       func: () => {
-        dispatch(listDeleted({ id: listId }));
+        dispatch(listToggleArchive({ listId }));
         handleClose();
       },
       divider: false,

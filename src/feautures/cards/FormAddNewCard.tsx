@@ -4,6 +4,7 @@ import { Button, IconButton, TextField, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { cardAdded } from "./cardsSlice";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { useParams } from "react-router-dom";
 
 type Props = {
   listId: string;
@@ -11,12 +12,13 @@ type Props = {
 };
 
 export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
+  const { boardId } = useParams();
   const [title, setTitle] = useState("");
 
   const dispatch = useAppDispatch();
 
   const saveNewCard = () => {
-    dispatch(cardAdded({ title, listId }));
+    dispatch(cardAdded({ title, listId, boardId }));
     setTitle("");
   };
 

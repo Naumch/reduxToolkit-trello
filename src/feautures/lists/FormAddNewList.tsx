@@ -17,9 +17,11 @@ export default function FormAddNewList({ boardId, setIsEditing }: Props) {
   const dispatch = useAppDispatch();
 
   const saveNewList = () => {
-    dispatch(listAdded({ title, boardId }));
-    setTitle("");
-    setIsEditing(false);
+    if (title) {
+      dispatch(listAdded({ title, boardId }));
+      setTitle("");
+      setIsEditing(false);
+    }
   };
 
   return (

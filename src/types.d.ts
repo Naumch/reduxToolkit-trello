@@ -9,12 +9,15 @@ type List = {
   id: string;
   title: string;
   board: string;
+  archive: boolean
 };
 
 type Card = {
   id: string;
   title: string;
   list: string;
+  board: string;
+  archive: boolean
 };
 
 interface ColorMark {

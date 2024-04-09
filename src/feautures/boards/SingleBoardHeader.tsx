@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
-import { boardTitleUpdated, toggleFavourites } from "./boardsSlice";
+import { boardTitleUpdated, boardToggleFavourites } from "./boardsSlice";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 import {
@@ -31,7 +31,7 @@ export default function Header({ board }: Props) {
   const dispatch = useAppDispatch();
 
   const updateTitle = () => {
-    dispatch(boardTitleUpdated({ id: board.id, title }));
+    dispatch(boardTitleUpdated({ boardId: board.id, title }));
     setIsEditing(false);
   };
 
@@ -89,7 +89,9 @@ export default function Header({ board }: Props) {
             )}
             <IconButton
               sx={{ ml: 1 }}
-              onClick={() => dispatch(toggleFavourites({ id: board.id }))}
+              onClick={() =>
+                dispatch(boardToggleFavourites({ boardId: board.id }))
+              }
             >
               {board.favourites ? (
                 <StarIcon sx={{ fill: "orange", fontSize: 20 }} />

@@ -21,7 +21,7 @@ export default function ListItem({ list }: Props) {
   const dispatch = useAppDispatch();
 
   const updateTitle = () => {
-    dispatch(listTitleUpdated({ id: list.id, title }));
+    dispatch(listTitleUpdated({ listId: list.id, title }));
     setIsEditing(false);
   };
 

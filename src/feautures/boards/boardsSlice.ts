@@ -24,10 +24,10 @@ const boardsSlice = createSlice({
       reducer(state, action: PayloadAction<Board>) {
         state.push(action.payload);
       },
-      prepare({ id, title, color }) {
+      prepare({ boardId, title, color }) {
         return {
           payload: {
-            id,
+            id: boardId,
             title,
             color,
             favourites: false,
@@ -37,32 +37,32 @@ const boardsSlice = createSlice({
     },
     boardTitleUpdated(
       state,
-      action: PayloadAction<{ id: string; title: string }>
+      action: PayloadAction<{ boardId: string; title: string }>
     ) {
-      const { id, title } = action.payload;
-      const existingBoard = state.find((board) => board.id === id);
+      const { boardId, title } = action.payload;
+      const existingBoard = state.find((board) => board.id === boardId);
 
       if (existingBoard) {
         existingBoard.title = title;
       }
     },
-    toggleFavourites(state, action: PayloadAction<{ id: string }>) {
-      const { id } = action.payload;
-      const existingBoard = state.find((board) => board.id === id);
+    boardToggleFavourites(state, action: PayloadAction<{ boardId: string }>) {
+      const { boardId } = action.payload;
+      const existingBoard = state.find((board) => board.id === boardId);
 
       if (existingBoard) {
         existingBoard.favourites = !existingBoard.favourites;
       }
     },
-    boardDeleted(state, action: PayloadAction<{ id: string }>) {
-      const { id } = action.payload;
+    boardDeleted(state, action: PayloadAction<{ boardId: string }>) {
+      const { boardId } = action.payload;
 
-      return state.filter((board) => board.id !== id);
+      return state.filter((board) => board.id !== boardId);
     },
   },
 });
 
-export const { boardAdded, boardTitleUpdated, toggleFavourites, boardDeleted } =
+export const { boardAdded, boardTitleUpdated, boardToggleFavourites, boardDeleted } =
   boardsSlice.actions;
 
 export default boardsSlice.reducer;
