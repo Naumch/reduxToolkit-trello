@@ -3,8 +3,8 @@ import { RootState } from "../../app/store";
 
 const initialState: Card[] = [
   { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
-  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: false },
-  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: false },
+  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
+  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
 ];
 
 const cardsSlice = createSlice({
@@ -30,6 +30,10 @@ const cardsSlice = createSlice({
     cardsDeletedByListId(state, action: PayloadAction<{ listId: string }>) {
       const { listId } = action.payload;
       return state.filter((card) => card.list !== listId);
+    },
+    cardDeleted(state, action: PayloadAction<{ cardId: string }>) {
+      const { cardId } = action.payload;
+      return state.filter((card) => card.id !== cardId);
     },
     cardsMovedAnotherList(
       state,
@@ -61,6 +65,7 @@ export const {
   cardsDeletedByListId,
   cardsMovedAnotherList,
   cardToggleArchive,
+  cardDeleted,
 } = cardsSlice.actions;
 
 export const selectCardsdByListId = (state: RootState, listId: string) =>

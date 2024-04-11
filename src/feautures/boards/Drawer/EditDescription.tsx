@@ -19,12 +19,12 @@ export default function EditDescription({ handleClickPrev }: Props) {
       </Typography>
       <Box
         sx={{
-          backgroundColor: "#091E420F",
+          backgroundColor: "secondary.main",
           p: 1,
           mt: 1,
           cursor: "pointer",
           "&:hover": {
-            backgroundColor: "#091E4224",
+            backgroundColor: "secondary.dark",
           },
         }}
         onClick={() => setIsEditing(true)}
