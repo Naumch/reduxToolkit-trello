@@ -7,20 +7,12 @@ import {
   selectCardsdByBoardIdAndArchive,
 } from "../cards/cardsSlice";
 
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Link,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 
 import ModalWrapper from "../../components/ModalWrapper";
 import BoxNotElement from "../../components/BoxNotElement";
 import ButtonLink from "../../components/ButtonLink";
-import { text } from "stream/consumers";
 
 type Props = {
   filter: string;
@@ -32,21 +24,23 @@ export default function ArchiveCards({ filter }: Props) {
 
   const dispatch = useAppDispatch();
 
-  const allCards = useAppSelector((state) =>
+  const allArchiveCards = useAppSelector((state) =>
     selectCardsdByBoardIdAndArchive(state, boardId!)
   );
 
-  const filterCards = allCards.filter((card) => card.title.includes(filter));
+  const filterArchiveCards = allArchiveCards.filter((card) =>
+    card.title.toLowerCase().includes(filter)
+  );
 
-  if (!filterCards.length) {
+  if (!filterArchiveCards.length) {
     return <BoxNotElement title="Нет архивных карточек" />;
   }
 
-  const renderedArchiveCards = filterCards.map((card) => (
+  const renderedArchiveCards = filterArchiveCards.map((card) => (
     <Box key={card.id} mb={2}>
       <Box
         sx={{
-          boxShadow: 1,
+          boxShadow: 2,
           borderRadius: 2,
           mx: 1,
           py: 1,

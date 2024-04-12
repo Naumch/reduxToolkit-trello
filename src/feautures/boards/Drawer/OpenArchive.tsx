@@ -24,6 +24,7 @@ export default function OpenArchive({ handleClickPrev }: Props) {
         <TextField
           size="small"
           sx={{ minWidth: "60%" }}
+          placeholder="Поиск в архиве..."
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
@@ -36,8 +37,12 @@ export default function OpenArchive({ handleClickPrev }: Props) {
           text={toggleContentArchive === "cards" ? "К спискам" : "К карточкам"}
         />
       </Box>
-      {toggleContentArchive === "lists" && <ArchiveLists filter={value} />}
-      {toggleContentArchive === "cards" && <ArchiveCards filter={value} />}
+      {toggleContentArchive === "lists" && (
+        <ArchiveLists filter={value.toLowerCase()} />
+      )}
+      {toggleContentArchive === "cards" && (
+        <ArchiveCards filter={value.toLowerCase()} />
+      )}
     </>
   );
 }

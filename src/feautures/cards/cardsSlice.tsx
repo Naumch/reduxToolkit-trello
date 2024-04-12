@@ -2,7 +2,7 @@ import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 const initialState: Card[] = [
-  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
+  { id: nanoid(), title: "Карточка", list: "1", board: "1", archive: true },
   { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
   { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
 ];

@@ -6,7 +6,9 @@ import {
 } from "../lists/listsSlice";
 import { Box, Divider, Typography } from "@mui/material";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
+
 import ButtonSecondary from "../../components/ButtonSecondary";
+import BoxNotElement from "../../components/BoxNotElement";
 
 const textButton = (
   <>
@@ -24,13 +26,19 @@ export default function ArchiveLists({ filter }: Props) {
 
   const dispatch = useAppDispatch();
 
-  const allLists = useAppSelector((state) =>
+  const allArchiveLists = useAppSelector((state) =>
     selectListsdByBoardIdAndArchive(state, boardId!)
   );
 
-  const filterLists = allLists.filter((list) => list.title.includes(filter));
+  const filterArchiveLists = allArchiveLists.filter((list) =>
+    list.title.toLowerCase().includes(filter)
+  );
 
-  const renderedArchiveLists = filterLists.map((list) => (
+  if (!filterArchiveLists.length) {
+    return <BoxNotElement title="Нет архивных списков" />;
+  }
+
+  const renderedArchiveLists = filterArchiveLists.map((list) => (
     <Box key={list.id}>
       <Box
         sx={{
