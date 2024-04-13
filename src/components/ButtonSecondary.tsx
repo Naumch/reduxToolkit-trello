@@ -4,9 +4,10 @@ import { ReactNode } from "react";
 type Props = {
   onClick: () => void;
   text: ReactNode;
+  nowrap?: boolean;
 };
 
-export default function ButtonSecondary({ onClick, text }: Props) {
+export default function ButtonSecondary({ onClick, text, nowrap }: Props) {
   return (
     <Button
       variant="contained"
@@ -18,7 +19,7 @@ export default function ButtonSecondary({ onClick, text }: Props) {
         fontWeight: 400,
         fontSize: 16,
         borderRadius: 1,
-        whiteSpace: "nowrap",
+        whiteSpace: nowrap ? "nowrap" : "wrap",
         transition: ".3s",
         "&:hover": {
           backgroundColor: "secondary.dark",

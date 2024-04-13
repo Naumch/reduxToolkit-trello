@@ -34,9 +34,9 @@ export default function ModalAddBoard() {
   };
 
   const createNewBoard = () => {
-    const id = nanoid();
-    dispatch(boardAdded({ title, id, color }));
-    navigate(id);
+    const boardId = nanoid();
+    dispatch(boardAdded({ title, boardId, color }));
+    navigate(boardId);
   };
 
   return (
