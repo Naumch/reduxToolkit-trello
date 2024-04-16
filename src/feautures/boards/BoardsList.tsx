@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { selectAllBoards } from "./boardsSlice";
 
@@ -11,10 +10,6 @@ export default function BoardsList() {
   const boards = useAppSelector(selectAllBoards);
   const favouritesBoards = boards.filter((board) => board.favourites);
 
-  useEffect(() => {
-    document.body.style.backgroundImage = "";
-  });
-
   const renderedAllBoards = boards.map((board) => <BoardItem board={board} />);
   const renderedFavouritesBoards = favouritesBoards.map((board) => (
     <BoardItem board={board} />
@@ -22,7 +17,7 @@ export default function BoardsList() {
 
   return (
     <Container>
-      {renderedFavouritesBoards.length ? (
+      {favouritesBoards.length ? (
         <Box mt={6}>
           <BoardsListTitle title="Отмеченные доски" />
           <Grid container mt={2} gap={1}>

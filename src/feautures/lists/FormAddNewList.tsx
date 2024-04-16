@@ -20,7 +20,6 @@ export default function FormAddNewList({ boardId, setIsEditing }: Props) {
     if (title) {
       dispatch(listAdded({ title, boardId }));
       setTitle("");
-      setIsEditing(false);
     }
   };
 

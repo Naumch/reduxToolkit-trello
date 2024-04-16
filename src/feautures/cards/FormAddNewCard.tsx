@@ -32,6 +32,7 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
       <Box mt={1}>
         <TextField
           fullWidth
+          multiline
           placeholder="Ввести заголовок для этой карточки"
           size="small"
           value={title}

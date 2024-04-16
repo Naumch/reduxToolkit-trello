@@ -16,12 +16,16 @@ type Props = {
 export default function ListItem({ list }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [isAddingCard, setIsAddingCard] = useState(false);
-  const [title, setTitle] = useState(list.title);
+  const [title, setTitle] = useState("");
 
   const dispatch = useAppDispatch();
 
   const updateTitle = () => {
-    dispatch(listTitleUpdated({ listId: list.id, title }));
+    if (title) {
+      dispatch(listTitleUpdated({ listId: list.id, title }));
+    } else {
+      setTitle(list.title);
+    }
     setIsEditing(false);
   };
 
@@ -59,7 +63,10 @@ export default function ListItem({ list }: Props) {
         ) : (
           <Typography
             sx={{ cursor: "pointer", pl: 1.7 }}
-            onClick={() => setIsEditing(true)}
+            onClick={() => {
+              setTitle(list.title);
+              setIsEditing(true);
+            }}
           >
             {list.title}
           </Typography>
