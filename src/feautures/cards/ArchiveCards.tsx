@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   cardDeleted,
-  cardToggleArchive,
+  cardUpdated,
   selectCardsdByBoardIdAndArchive,
 } from "../cards/cardsSlice";
 
@@ -24,8 +24,8 @@ export default function ArchiveCards({ filter }: Props) {
 
   const dispatch = useAppDispatch();
 
-  const allArchiveCards = useAppSelector((state) =>
-    selectCardsdByBoardIdAndArchive(state, boardId!)
+  const allArchiveCards = useAppSelector(
+    selectCardsdByBoardIdAndArchive(boardId!)
   );
 
   const filterArchiveCards = allArchiveCards.filter((card) =>
@@ -68,7 +68,9 @@ export default function ArchiveCards({ filter }: Props) {
       </Box>
       <Box ml={3} display="flex" gap={1} mt={0.2}>
         <ButtonLink
-          onClick={() => dispatch(cardToggleArchive({ cardId: card.id }))}
+          onClick={() => {
+            dispatch(cardUpdated({ id: card.id, changes: { archive: false } }));
+          }}
           text="Отправить на доску"
         />
         <ButtonLink onClick={() => setIsDeletingCard(true)} text="Удалить" />
@@ -87,7 +89,7 @@ export default function ArchiveCards({ filter }: Props) {
           fullWidth
           variant="contained"
           onClick={() => {
-            dispatch(cardDeleted({ cardId: card.id }));
+            dispatch(cardDeleted(card.id));
             setIsDeletingCard(false);
           }}
         >

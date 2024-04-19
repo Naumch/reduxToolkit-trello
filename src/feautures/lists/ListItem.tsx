@@ -29,7 +29,8 @@ export default function ListItem({ list }: Props) {
     setIsEditing(false);
   };
 
-  const cards = useAppSelector((state) => selectCardsdByListId(state, list.id));
+  const cards = useAppSelector(selectCardsdByListId(list.id));
+
   const renderedCards = cards.map((card) => <CardItem card={card} />);
 
   return (
@@ -77,7 +78,6 @@ export default function ListItem({ list }: Props) {
         />
       </Box>
       <Stack>{renderedCards}</Stack>
-
       {isAddingCard ? (
         <FormAddNewCard listId={list.id} setIsAddingCard={setIsAddingCard} />
       ) : (

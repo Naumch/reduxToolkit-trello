@@ -1,11 +1,24 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import {
+  nanoid,
+  createEntityAdapter,
+  createSlice,
+  PayloadAction,
+  createSelector,
+} from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-const initialState: Card[] = [
+const cardsInitial: Card[] = [
   { id: nanoid(), title: "Карточка", list: "1", board: "1", archive: true },
-  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
-  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: true },
+  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: false },
+  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: false },
 ];
+
+const cardsAdapter = createEntityAdapter<Card>();
+
+const initialState = cardsAdapter.setAll(
+  cardsAdapter.getInitialState(),
+  cardsInitial
+);
 
 const cardsSlice = createSlice({
   name: "cards",
@@ -13,7 +26,7 @@ const cardsSlice = createSlice({
   reducers: {
     cardAdded: {
       reducer(state, action: PayloadAction<Card>) {
-        state.push(action.payload);
+        cardsAdapter.addOne(state, action.payload);
       },
       prepare({ title, listId, boardId }) {
         return {
@@ -27,33 +40,31 @@ const cardsSlice = createSlice({
         };
       },
     },
-    cardsDeletedByListId(state, action: PayloadAction<{ listId: string }>) {
-      const { listId } = action.payload;
-      return state.filter((card) => card.list !== listId);
-    },
-    cardDeleted(state, action: PayloadAction<{ cardId: string }>) {
-      const { cardId } = action.payload;
-      return state.filter((card) => card.id !== cardId);
-    },
+    cardUpdated: cardsAdapter.updateOne,
+    cardDeleted: cardsAdapter.removeOne,
     cardsMovedAnotherList(
       state,
       action: PayloadAction<{ currentListId: string; newListId: string }>
     ) {
       const { currentListId, newListId } = action.payload;
 
-      state.forEach((card) => {
+      Object.values(state.entities).forEach((card) => {
         if (card.list === currentListId) {
           card.list = newListId;
         }
       });
     },
-    cardToggleArchive(state, action: PayloadAction<{ cardId: string }>) {
-      const { cardId } = action.payload;
-      const existingCard = state.find((card) => card.id === cardId);
+    cardsMovedToArchiveByListId(
+      state,
+      action: PayloadAction<{ listId: string }>
+    ) {
+      const { listId } = action.payload;
 
-      if (existingCard) {
-        existingCard.archive = !existingCard.archive;
-      }
+      Object.values(state.entities).forEach((card) => {
+        if (card.list === listId) {
+          card.archive = true;
+        }
+      });
     },
   },
 });
@@ -62,16 +73,21 @@ export default cardsSlice.reducer;
 
 export const {
   cardAdded,
-  cardsDeletedByListId,
-  cardsMovedAnotherList,
-  cardToggleArchive,
+  cardUpdated,
   cardDeleted,
+  cardsMovedToArchiveByListId,
+  cardsMovedAnotherList,
 } = cardsSlice.actions;
 
-export const selectCardsdByListId = (state: RootState, listId: string) =>
-  state.cards.filter((card) => listId === card.list && !card.archive);
+export const { selectAll: selectAllCards } =
+  cardsAdapter.getSelectors<RootState>((state) => state.cards);
 
-export const selectCardsdByBoardIdAndArchive = (
-  state: RootState,
-  boardId: string
-) => state.cards.filter((card) => boardId === card.board && card.archive);
+export const selectCardsdByListId = (listId: string) =>
+  createSelector(selectAllCards, (cards) =>
+    cards.filter((card) => card.list === listId && !card.archive)
+  );
+
+export const selectCardsdByBoardIdAndArchive = (boardId: string) =>
+  createSelector(selectAllCards, (cards) =>
+    cards.filter((card) => card.board === boardId && card.archive)
+  );

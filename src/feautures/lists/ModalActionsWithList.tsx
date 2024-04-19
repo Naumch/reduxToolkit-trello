@@ -1,6 +1,6 @@
 import { useState, ReactNode, Dispatch, SetStateAction } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import { listToggleArchive } from "./listsSlice";
+import { listToggleArchive, selectListsdByBoardId } from "./listsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
@@ -15,9 +15,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import ModalWrapper from "../../components/ModalWrapper";
 import {
-  cardsDeletedByListId,
   cardsMovedAnotherList,
+  cardsMovedToArchiveByListId,
 } from "../cards/cardsSlice";
+import { useParams } from "react-router-dom";
 
 type Props = {
   listId: string;
@@ -38,6 +39,7 @@ export default function ModalActionsWithList({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [openCollapse, setOpenCollapse] = useState(false);
+  const { boardId } = useParams();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -46,7 +48,9 @@ export default function ModalActionsWithList({
   };
 
   const dispatch = useAppDispatch();
-  const lists = useAppSelector((state) => state.lists);
+  const lists = useAppSelector((state) =>
+    selectListsdByBoardId(state, boardId!)
+  );
 
   const actions: Action[] = [
     {
@@ -115,7 +119,7 @@ export default function ModalActionsWithList({
       id: nanoid(),
       text: "Архивировать все карточки в этом списке",
       func: () => {
-        dispatch(cardsDeletedByListId({ listId }));
+        dispatch(cardsMovedToArchiveByListId({ listId }));
         handleClose();
       },
       divider: true,

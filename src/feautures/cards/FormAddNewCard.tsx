@@ -18,8 +18,12 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
   const dispatch = useAppDispatch();
 
   const saveNewCard = () => {
-    dispatch(cardAdded({ title, listId, boardId }));
-    setTitle("");
+    if (title) {
+      dispatch(cardAdded({ title, listId, boardId }));
+      setTitle("");
+    } else {
+      setIsAddingCard(false);
+    }
   };
 
   return (
@@ -32,7 +36,6 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
       <Box mt={1}>
         <TextField
           fullWidth
-          multiline
           placeholder="Ввести заголовок для этой карточки"
           size="small"
           value={title}
