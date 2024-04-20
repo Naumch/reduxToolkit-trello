@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { boardToggleFavourites } from "./boardsSlice";
+import { boardUpdated } from "./boardsSlice";
 
 import { Box, Typography, IconButton } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -38,7 +38,12 @@ export default function BoardItem({ board }: Props) {
       <IconButton
         onClick={(e) => {
           e.stopPropagation();
-          dispatch(boardToggleFavourites({ boardId: board.id }));
+          dispatch(
+            boardUpdated({
+              id: board.id,
+              changes: { favourites: !board.favourites },
+            })
+          );
         }}
         sx={{ position: "absolute", bottom: 4, right: 4 }}
       >

@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-const initialState: Board[] = [
+const boardsInitial: Board[] = [
   {
     id: "1",
     title: "Test",
@@ -16,13 +16,20 @@ const initialState: Board[] = [
   },
 ];
 
+const boardsAdapter = createEntityAdapter<Board>()
+
+const initialState = boardsAdapter.setAll(
+  boardsAdapter.getInitialState(),
+  boardsInitial
+)
+
 const boardsSlice = createSlice({
   name: "boards",
   initialState,
   reducers: {
     boardAdded: {
       reducer(state, action: PayloadAction<Board>) {
-        state.push(action.payload);
+        boardsAdapter.addOne(state, action.payload)
       },
       prepare({ boardId, title, color }) {
         return {
@@ -35,38 +42,15 @@ const boardsSlice = createSlice({
         };
       },
     },
-    boardTitleUpdated(
-      state,
-      action: PayloadAction<{ boardId: string; title: string }>
-    ) {
-      const { boardId, title } = action.payload;
-      const existingBoard = state.find((board) => board.id === boardId);
-
-      if (existingBoard) {
-        existingBoard.title = title;
-      }
-    },
-    boardToggleFavourites(state, action: PayloadAction<{ boardId: string }>) {
-      const { boardId } = action.payload;
-      const existingBoard = state.find((board) => board.id === boardId);
-
-      if (existingBoard) {
-        existingBoard.favourites = !existingBoard.favourites;
-      }
-    },
-    boardDeleted(state, action: PayloadAction<{ boardId: string }>) {
-      const { boardId } = action.payload;
-
-      return state.filter((board) => board.id !== boardId);
-    },
+    boardUpdated: boardsAdapter.updateOne,
+    boardDeleted: boardsAdapter.removeOne
   },
 });
 
-export const { boardAdded, boardTitleUpdated, boardToggleFavourites, boardDeleted } =
-  boardsSlice.actions;
-
 export default boardsSlice.reducer;
 
-export const selectAllBoards = (state: RootState) => state.boards;
-export const selectBoardById = (state: RootState, boardId: string) =>
-  state.boards.find((board) => boardId === board.id);
+export const { boardAdded, boardUpdated, boardDeleted } =
+  boardsSlice.actions;
+
+export const {selectAll: selectAllBoards, selectById: selectBoardById} = boardsAdapter.getSelectors<RootState>(state => state.boards)
+

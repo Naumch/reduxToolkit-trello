@@ -13,9 +13,7 @@ type Props = {
 export default function ListsStack({ boardId }: Props) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const lists = useAppSelector((state) =>
-    selectListsdByBoardId(state, boardId)
-  );
+  const lists = useAppSelector(selectListsdByBoardId(boardId));
 
   const renderedLists = lists.map((list) => <ListItem list={list} />);
 

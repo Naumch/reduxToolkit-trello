@@ -5,7 +5,7 @@ import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import ModalActionsWithList from "./ModalActionsWithList";
 import { pressedEnter, useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectCardsdByListId } from "../cards/cardsSlice";
-import { listTitleUpdated } from "./listsSlice";
+import { listUpdated } from "./listsSlice";
 import CardItem from "../cards/CardItem";
 import FormAddNewCard from "../cards/FormAddNewCard";
 
@@ -22,7 +22,7 @@ export default function ListItem({ list }: Props) {
 
   const updateTitle = () => {
     if (title) {
-      dispatch(listTitleUpdated({ listId: list.id, title }));
+      dispatch(listUpdated({ id: list.id, changes: { title } }));
     } else {
       setTitle(list.title);
     }

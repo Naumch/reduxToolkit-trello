@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
-import { boardTitleUpdated, boardToggleFavourites } from "./boardsSlice";
+import { boardUpdated } from "./boardsSlice";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 import {
@@ -32,7 +32,7 @@ export default function Header({ board }: Props) {
 
   const updateTitle = () => {
     if (title) {
-      dispatch(boardTitleUpdated({ boardId: board.id, title }));
+      dispatch(boardUpdated({ id: board.id, changes: { title } }));
     } else {
       setTitle(board.title);
     }
@@ -94,7 +94,12 @@ export default function Header({ board }: Props) {
             <IconButton
               sx={{ ml: 1 }}
               onClick={() =>
-                dispatch(boardToggleFavourites({ boardId: board.id }))
+                dispatch(
+                  boardUpdated({
+                    id: board.id,
+                    changes: { favourites: !board.favourites },
+                  })
+                )
               }
             >
               {board.favourites ? (

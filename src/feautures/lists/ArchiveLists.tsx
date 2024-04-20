@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-  listToggleArchive,
   selectListsdByBoardIdAndArchive,
+  listUpdated,
 } from "../lists/listsSlice";
 import { Box, Divider, Typography } from "@mui/material";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
@@ -26,8 +26,8 @@ export default function ArchiveLists({ filter }: Props) {
 
   const dispatch = useAppDispatch();
 
-  const allArchiveLists = useAppSelector((state) =>
-    selectListsdByBoardIdAndArchive(state, boardId!)
+  const allArchiveLists = useAppSelector(
+    selectListsdByBoardIdAndArchive(boardId!)
   );
 
   const filterArchiveLists = allArchiveLists.filter((list) =>
@@ -50,7 +50,9 @@ export default function ArchiveLists({ filter }: Props) {
       >
         <Typography ml={1}>{list.title}</Typography>
         <ButtonSecondary
-          onClick={() => dispatch(listToggleArchive({ listId: list.id }))}
+          onClick={() =>
+            dispatch(listUpdated({ id: list.id, changes: { archive: false } }))
+          }
           text={textButton}
         />
       </Box>

@@ -1,6 +1,6 @@
 import { useState, ReactNode, Dispatch, SetStateAction } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import { listToggleArchive, selectListsdByBoardId } from "./listsSlice";
+import { listUpdated, selectListsdByBoardId } from "./listsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import {
@@ -48,9 +48,7 @@ export default function ModalActionsWithList({
   };
 
   const dispatch = useAppDispatch();
-  const lists = useAppSelector((state) =>
-    selectListsdByBoardId(state, boardId!)
-  );
+  const lists = useAppSelector(selectListsdByBoardId(boardId!));
 
   const actions: Action[] = [
     {
@@ -128,7 +126,7 @@ export default function ModalActionsWithList({
       id: nanoid(),
       text: "Архивировать список",
       func: () => {
-        dispatch(listToggleArchive({ listId }));
+        dispatch(listUpdated({ id: listId, changes: { archive: true } }));
         handleClose();
       },
       divider: false,

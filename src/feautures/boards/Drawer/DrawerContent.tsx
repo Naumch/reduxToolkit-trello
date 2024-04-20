@@ -149,7 +149,7 @@ export default function DrawerMenuContent({ board }: Props) {
           fullWidth
           variant="contained"
           onClick={() => {
-            dispatch(boardDeleted({ boardId: board.id }));
+            dispatch(boardDeleted(board.id));
             navigate("/");
           }}
         >

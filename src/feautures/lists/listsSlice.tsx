@@ -1,11 +1,24 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+  nanoid,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
-const initialState: List[] = [
+const listsInitial: List[] = [
   { id: "1", title: "Нужно сделать", board: "1", archive: false },
   { id: nanoid(), title: "В процессе", board: "1", archive: true },
   { id: nanoid(), title: "Готово", board: "1", archive: true },
 ];
+
+const listsAdapter = createEntityAdapter<List>();
+
+const initialState = listsAdapter.setAll(
+  listsAdapter.getInitialState(),
+  listsInitial
+);
 
 const listsSlice = createSlice({
   name: "lists",
@@ -13,7 +26,7 @@ const listsSlice = createSlice({
   reducers: {
     listAdded: {
       reducer(state, action: PayloadAction<List>) {
-        state.push(action.payload);
+        listsAdapter.addOne(state, action.payload);
       },
       prepare({ title, boardId }) {
         return {
@@ -26,37 +39,23 @@ const listsSlice = createSlice({
         };
       },
     },
-    listToggleArchive(state, action: PayloadAction<{ listId: string }>) {
-      const { listId } = action.payload;
-      const existingList = state.find((list) => list.id === listId);
-
-      if (existingList) {
-        existingList.archive = !existingList.archive;
-      }
-    },
-    listTitleUpdated(
-      state,
-      action: PayloadAction<{ listId: string; title: string }>
-    ) {
-      const { listId, title } = action.payload;
-      const existingList = state.find((list) => list.id === listId);
-
-      if (existingList) {
-        existingList.title = title;
-      }
-    },
+    listUpdated: listsAdapter.updateOne,
   },
 });
 
 export default listsSlice.reducer;
 
-export const { listAdded, listToggleArchive, listTitleUpdated } =
-  listsSlice.actions;
+export const { listAdded, listUpdated } = listsSlice.actions;
 
-export const selectListsdByBoardId = (state: RootState, boardId: string) =>
-  state.lists.filter((list) => boardId === list.board && !list.archive);
+export const { selectAll: selectAllLists } =
+  listsAdapter.getSelectors<RootState>((state) => state.lists);
 
-export const selectListsdByBoardIdAndArchive = (
-  state: RootState,
-  boardId: string
-) => state.lists.filter((list) => boardId === list.board && list.archive);
+export const selectListsdByBoardId = (boardId: string) =>
+  createSelector(selectAllLists, (lists) =>
+    lists.filter((list) => boardId === list.board && !list.archive)
+  );
+
+export const selectListsdByBoardIdAndArchive = (boardId: string) =>
+  createSelector(selectAllLists, (lists) =>
+    lists.filter((list) => boardId === list.board && list.archive)
+  );
