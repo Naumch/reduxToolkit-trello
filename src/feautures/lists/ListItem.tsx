@@ -1,11 +1,22 @@
 import { useState } from "react";
-
-import { Box, Typography, TextField, Stack, Button } from "@mui/material";
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
-import ModalActionsWithList from "./ModalActionsWithList";
 import { pressedEnter, useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectCardsdByListId } from "../cards/cardsSlice";
 import { listUpdated } from "./listsSlice";
+import { selectCardsdByListId } from "../cards/cardsSlice";
+
+import {
+  Box,
+  Typography,
+  TextField,
+  Stack,
+  Button,
+  IconButton,
+  Modal,
+} from "@mui/material";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import CloseIcon from "@mui/icons-material/Close";
+
+import ModalContent from "./Modal/ModalContent";
 import CardItem from "../cards/CardItem";
 import FormAddNewCard from "../cards/FormAddNewCard";
 
@@ -14,9 +25,10 @@ type Props = {
 };
 
 export default function ListItem({ list }: Props) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isAddingCard, setIsAddingCard] = useState(false);
   const [title, setTitle] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -26,7 +38,11 @@ export default function ListItem({ list }: Props) {
     } else {
       setTitle(list.title);
     }
-    setIsEditing(false);
+    setIsEditingTitle(false);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
 
   const cards = useAppSelector(selectCardsdByListId(list.id));
@@ -51,7 +67,7 @@ export default function ListItem({ list }: Props) {
           alignItems: "center",
         }}
       >
-        {isEditing ? (
+        {isEditingTitle ? (
           <ClickAwayListener onClickAway={updateTitle}>
             <TextField
               value={title}
@@ -66,17 +82,44 @@ export default function ListItem({ list }: Props) {
             sx={{ cursor: "pointer", pl: 1.7 }}
             onClick={() => {
               setTitle(list.title);
-              setIsEditing(true);
+              setIsEditingTitle(true);
             }}
           >
             {list.title}
           </Typography>
         )}
-        <ModalActionsWithList
-          listId={list.id}
-          setIsAddingCard={setIsAddingCard}
-        />
+        <IconButton onClick={() => setOpenModal(true)}>
+          <MoreHorizIcon />
+        </IconButton>
       </Box>
+      <Modal open={openModal} onClose={() => setOpenModal(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "25%",
+            left: "50%",
+            transform: "translate(-50%, -25%)",
+            width: 344,
+            bgcolor: "background.paper",
+            p: 2,
+            borderRadius: 2,
+          }}
+        >
+          <Box sx={{ position: "relative" }}>
+            <ModalContent
+              listId={list.id}
+              setIsAddingCard={setIsAddingCard}
+              handleCloseModal={handleCloseModal}
+            />
+            <IconButton
+              onClick={() => setOpenModal(false)}
+              sx={{ position: "absolute", top: -5, right: -6 }}
+            >
+              <CloseIcon fontSize="small" htmlColor="black" />
+            </IconButton>
+          </Box>
+        </Box>
+      </Modal>
       <Stack>{renderedCards}</Stack>
       {isAddingCard ? (
         <FormAddNewCard listId={list.id} setIsAddingCard={setIsAddingCard} />
