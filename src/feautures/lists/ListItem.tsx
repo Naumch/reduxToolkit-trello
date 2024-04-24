@@ -10,15 +10,14 @@ import {
   Stack,
   Button,
   IconButton,
-  Modal,
 } from "@mui/material";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import CloseIcon from "@mui/icons-material/Close";
 
 import ModalContent from "./Modal/ModalContent";
 import CardItem from "../cards/CardItem";
 import FormAddNewCard from "../cards/FormAddNewCard";
+import ModalWrapper from "../../components/ModalWrapper";
 
 type Props = {
   list: List;
@@ -92,34 +91,13 @@ export default function ListItem({ list }: Props) {
           <MoreHorizIcon />
         </IconButton>
       </Box>
-      <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "25%",
-            left: "50%",
-            transform: "translate(-50%, -25%)",
-            width: 344,
-            bgcolor: "background.paper",
-            p: 2,
-            borderRadius: 2,
-          }}
-        >
-          <Box sx={{ position: "relative" }}>
-            <ModalContent
-              listId={list.id}
-              setIsAddingCard={setIsAddingCard}
-              handleCloseModal={handleCloseModal}
-            />
-            <IconButton
-              onClick={() => setOpenModal(false)}
-              sx={{ position: "absolute", top: -5, right: -6 }}
-            >
-              <CloseIcon fontSize="small" htmlColor="black" />
-            </IconButton>
-          </Box>
-        </Box>
-      </Modal>
+      <ModalWrapper open={openModal} onClose={handleCloseModal}>
+        <ModalContent
+          listId={list.id}
+          setIsAddingCard={setIsAddingCard}
+          handleCloseModal={handleCloseModal}
+        />
+      </ModalWrapper>
       <Stack>{renderedCards}</Stack>
       {isAddingCard ? (
         <FormAddNewCard listId={list.id} setIsAddingCard={setIsAddingCard} />

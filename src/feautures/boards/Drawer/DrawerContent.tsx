@@ -25,6 +25,8 @@ import ModalWrapper from "../../../components/ModalWrapper";
 import ChangeBackground from "./ChangeBackground";
 import OpenArchive from "./OpenArchive";
 import EditDescription from "./EditDescription";
+import ModalContentDelete from "../../../components/ModalContentDelete";
+import ModalHeader from "../../../components/ModalHeader";
 
 type Props = {
   board: Board;
@@ -139,22 +141,15 @@ export default function DrawerMenuContent({ board }: Props) {
       <ModalWrapper
         open={isDeletingBoard}
         onClose={() => setIsDeletingBoard(false)}
-        title="Удалить доску"
       >
-        <Typography textAlign="center" my={2}>
-          Доска будет удалена навсегда. Это действие нельзя отменить.
-        </Typography>
-        <Button
-          color="error"
-          fullWidth
-          variant="contained"
+        <ModalHeader title="Удалить доску?" />
+        <ModalContentDelete
+          text="Доска будет удалена навсегда. Это действие нельзя отменить."
           onClick={() => {
             dispatch(boardDeleted(board.id));
             navigate("/");
           }}
-        >
-          Удалить
-        </Button>
+        />
       </ModalWrapper>
     </>
   );

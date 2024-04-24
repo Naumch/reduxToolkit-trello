@@ -10,10 +10,10 @@ import {
   Typography,
   Divider,
   Stack,
-  IconButton,
 } from "@mui/material";
-import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import GridColorBlocks from "./GridColorBlocks";
+import ModalContentDelete from "../../components/ModalContentDelete";
+import ModalHeader from "../../components/ModalHeader";
 
 type Props = {
   mark: Mark;
@@ -33,33 +33,25 @@ export default function ModalAddMark({
 
   if (isDeleting) {
     return (
-      <Box>
-        <IconButton
-          sx={{ position: "absolute", top: 8, left: 8 }}
-          onClick={() => setIsDeleting(false)}
-        >
-          <ChevronLeftOutlinedIcon htmlColor="black" />
-        </IconButton>
-        <Typography textAlign="center" my={2}>
-          Метка будет удалена со всех карточек. Это действие нельзя отменить.
-        </Typography>
-        <Button
-          color="error"
-          fullWidth
-          variant="contained"
+      <>
+        <ModalHeader
+          title="Удалить метку?"
+          handleClickPrev={() => setIsDeleting(false)}
+        />
+        <ModalContentDelete
+          text="Метка будет удалена со всех карточек. Это действие нельзя отменить."
           onClick={() => {
             dispatch(markDeleted(mark.id));
             handleCloseModal();
           }}
-        >
-          Удалить
-        </Button>
-      </Box>
+        />
+      </>
     );
   }
 
   return (
     <>
+      <ModalHeader title="Метки" />
       <Box
         sx={{
           backgroundColor: "#F7F8F9",
@@ -72,7 +64,7 @@ export default function ModalAddMark({
       >
         <MarkItem mark={mark} />
       </Box>
-      <Typography my={1} variant="body2">
+      <Typography variant="body2" my={1}>
         Название
       </Typography>
       <TextField
@@ -81,7 +73,7 @@ export default function ModalAddMark({
         onChange={(e) => setMark({ ...mark, title: e.target.value })}
         fullWidth
       />
-      <Typography mt={2} mb={1} variant="body2">
+      <Typography variant="body2" mt={2} mb={1}>
         Цвет
       </Typography>
       <GridColorBlocks mark={mark} setMark={setMark} />

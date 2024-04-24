@@ -1,6 +1,5 @@
-import { Box, IconButton } from "@mui/material";
-
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Box } from "@mui/material";
+import ButtonEdit from "../../components/ButtonEdit";
 
 type Props = {
   card: Card;
@@ -23,9 +22,7 @@ export default function CardItem({ card }: Props) {
       }}
     >
       {card.title}
-      <IconButton>
-        <EditOutlinedIcon sx={{ fontSize: 16 }} />
-      </IconButton>
+      <ButtonEdit onClick={() => console.log("test")} />
     </Box>
   );
 }

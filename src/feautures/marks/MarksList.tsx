@@ -3,14 +3,14 @@ import { nanoid } from "@reduxjs/toolkit";
 import { selectAllMarks } from "./marksSlice";
 import store from "../../app/store";
 
-import { Box, Stack, Typography, IconButton, Button } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { Box, Stack, Typography, Button } from "@mui/material";
 import { green } from "@mui/material/colors";
 
 import ModalContent from "./ModalAddMark";
 import ModalWrapper from "../../components/ModalWrapper";
 import MarkItem from "./MarkItem";
 import DrawerHeader from "../boards/Drawer/DrawerHeader";
+import ButtonEdit from "../../components/ButtonEdit";
 
 type Props = {
   handleClickPrev: () => void;
@@ -43,22 +43,20 @@ export default function MarksList({ handleClickPrev }: Props) {
   };
 
   const renderedMarks = marks.map((mark) => (
-    <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+    <Box sx={{ display: "flex", alignItems: "flex-start", gap: 0.5 }}>
       <MarkItem
         mark={mark}
         onClick={() => handleOpenModal(mark)}
         hoverChanges
       />
-      <IconButton sx={{ ml: 0.5 }} onClick={() => handleOpenModal(mark)}>
-        <EditOutlinedIcon sx={{ fontSize: 16 }} />
-      </IconButton>
+      <ButtonEdit onClick={() => handleOpenModal(mark)} />
     </Box>
   ));
 
   return (
     <>
       <DrawerHeader title="Метки" handleClickPrev={handleClickPrev} />
-      <Typography my={1} variant="body2">
+      <Typography variant="body2" my={1}>
         Метки
       </Typography>
       <Stack mb={2}>{renderedMarks}</Stack>
@@ -72,7 +70,7 @@ export default function MarksList({ handleClickPrev }: Props) {
       >
         Создать новую метку
       </Button>
-      <ModalWrapper title="Метки" open={openModal} onClose={handleCloseModal}>
+      <ModalWrapper open={openModal} onClose={handleCloseModal}>
         <ModalContent
           mark={editableMark}
           setMark={setEditableMark}

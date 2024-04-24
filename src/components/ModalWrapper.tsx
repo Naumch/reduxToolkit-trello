@@ -1,20 +1,14 @@
 import { ReactNode } from "react";
-import { Modal, Box, Typography, IconButton } from "@mui/material";
+import { Modal, Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
-  title: string;
-  children: ReactNode;
   open: boolean;
   onClose: () => void;
+  children: ReactNode;
 };
 
-export default function ModalWrapper({
-  title,
-  children,
-  open,
-  onClose,
-}: Props) {
+export default function ModalWrapper({ open, onClose, children }: Props) {
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -30,9 +24,7 @@ export default function ModalWrapper({
         }}
       >
         <Box sx={{ position: "relative" }}>
-          <Typography align="center" fontWeight={500}>
-            {title}
-          </Typography>
+          {children}
           <IconButton
             onClick={onClose}
             sx={{ position: "absolute", top: -5, right: -6 }}
@@ -40,7 +32,6 @@ export default function ModalWrapper({
             <CloseIcon fontSize="small" htmlColor="black" />
           </IconButton>
         </Box>
-        {children}
       </Box>
     </Modal>
   );

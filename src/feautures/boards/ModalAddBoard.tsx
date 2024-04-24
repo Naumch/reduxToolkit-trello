@@ -8,6 +8,7 @@ import { Box, Button, Typography, TextField, Stack } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import SampleBoard from "./SampleBoard";
 import ModalWrapper from "../../components/ModalWrapper";
+import ModalHeader from "../../components/ModalHeader";
 
 const gradients = [
   "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
@@ -54,10 +55,11 @@ export default function ModalAddBoard() {
       >
         Создать доску
       </Button>
-      <ModalWrapper title="Создать доску" open={open} onClose={handleClose}>
+      <ModalWrapper open={open} onClose={handleClose}>
+        <ModalHeader title="Создать доску" />
         <SampleBoard color={color} />
         <Box mb={3}>
-          <Typography variant="body2" fontWeight={500} mb={0.5}>
+          <Typography variant="body2" mb={0.5}>
             Фон
           </Typography>
           <Stack direction="row" spacing={1}>
@@ -85,9 +87,7 @@ export default function ModalAddBoard() {
           </Stack>
         </Box>
         <Box>
-          <Typography variant="body2" fontWeight={500}>
-            Заголовок доски
-          </Typography>
+          <Typography variant="body2">Заголовок доски</Typography>
           <TextField
             size="small"
             margin="dense"

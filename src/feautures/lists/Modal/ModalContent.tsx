@@ -3,13 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { listUpdated, selectListsdByBoardId } from "../listsSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
-import {
-  List,
-  ListItemButton,
-  ListItemText,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { List, ListItemButton, ListItemText, Divider } from "@mui/material";
 
 import { cardsMovedAnotherList } from "../../cards/cardsSlice";
 import { useParams } from "react-router-dom";
@@ -18,6 +12,7 @@ import MoveCards from "./MoveCards";
 import MoveList from "./MoveList";
 import SortList from "./SortList";
 import MoveCardsToArchive from "./MoveCardsToArchive";
+import ModalHeader from "../../../components/ModalHeader";
 
 type Props = {
   listId: string;
@@ -148,6 +143,8 @@ export default function ModalContent({
     return (
       <MoveCardsToArchive
         handleClickPrev={() => setIsMovingCardsToArchive(false)}
+        handleCloseModal={handleCloseModal}
+        listId={listId}
       />
     );
   }
@@ -163,9 +160,7 @@ export default function ModalContent({
 
   return (
     <>
-      <Typography align="center" fontWeight={500}>
-        Действия со списком
-      </Typography>
+      <ModalHeader title="Действия со списком" />
       <List>{renderedListActions}</List>
     </>
   );

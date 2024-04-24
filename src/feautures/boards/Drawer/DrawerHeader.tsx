@@ -1,5 +1,5 @@
 import { Typography, Divider, Box, IconButton } from "@mui/material";
-import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
+import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 
 type Props = {
   handleClickPrev: () => void;
@@ -11,10 +11,13 @@ export default function DrawerHeader({ handleClickPrev, title }: Props) {
     <>
       <Box sx={{ py: 2 }}>
         <IconButton
-          sx={{ position: "absolute", top: 8 }}
+          sx={{ position: "absolute", top: 12 }}
           onClick={handleClickPrev}
         >
-          <ChevronLeftOutlinedIcon htmlColor="black" />
+          <ArrowBackIosNewOutlinedIcon
+            htmlColor="black"
+            sx={{ fontSize: 16 }}
+          />
         </IconButton>
         <Typography align="center" fontWeight={500}>
           {title}

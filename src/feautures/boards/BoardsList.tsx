@@ -2,7 +2,7 @@ import { useAppSelector } from "../../app/hooks";
 import { selectAllBoards } from "./boardsSlice";
 
 import { Box, Container, Grid } from "@mui/material";
-import Modal from "./ModalAddBoard";
+import ModalAddBoard from "./ModalAddBoard";
 import BoardsListTitle from "./BoardsListTitle";
 import BoardItem from "./BoardItem";
 
@@ -29,7 +29,7 @@ export default function BoardsList() {
         <BoardsListTitle title="Мои доски" />
         <Grid container mt={2} gap={1}>
           {renderedAllBoards}
-          <Modal />
+          <ModalAddBoard />
         </Grid>
       </Box>
     </Container>

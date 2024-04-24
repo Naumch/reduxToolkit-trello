@@ -8,8 +8,8 @@ type Props = {
 export default function ButtonLink({ onClick, text }: Props) {
   return (
     <Link
-      component="button"
       variant="body2"
+      component="button"
       underline="hover"
       sx={{
         color: "#000",

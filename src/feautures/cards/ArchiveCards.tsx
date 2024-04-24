@@ -13,6 +13,8 @@ import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import ModalWrapper from "../../components/ModalWrapper";
 import BoxNotElement from "../../components/BoxNotElement";
 import ButtonLink from "../../components/ButtonLink";
+import ModalContentDelete from "../../components/ModalContentDelete";
+import ModalHeader from "../../components/ModalHeader";
 
 type Props = {
   filter: string;
@@ -78,23 +80,16 @@ export default function ArchiveCards({ filter }: Props) {
       <ModalWrapper
         open={isDeletingCard}
         onClose={() => setIsDeletingCard(false)}
-        title="Удалить карточку?"
       >
-        <Typography textAlign="center" my={2}>
-          Все действия будут удалены из ленты, и вы не сможете повторно открыть
-          карточку. Отмена невозможна.
-        </Typography>
-        <Button
-          color="error"
-          fullWidth
-          variant="contained"
+        <ModalHeader title="Удалить карточку?" />
+        <ModalContentDelete
+          text="Все действия будут удалены из ленты, и вы не сможете повторно открыть
+          карточку. Отмена невозможна."
           onClick={() => {
             dispatch(cardDeleted(card.id));
             setIsDeletingCard(false);
           }}
-        >
-          Удалить
-        </Button>
+        />
       </ModalWrapper>
     </Box>
   ));
