@@ -95,11 +95,23 @@ export default function ModalContent({
   ];
 
   if (isCopyingList) {
-    return <CopyList handleClickPrev={() => setIsCopyingList(false)} />;
+    return (
+      <CopyList
+        handleClickPrev={() => setIsCopyingList(false)}
+        handleCloseModal={handleCloseModal}
+        listId={listId}
+      />
+    );
   }
 
   if (isMovingList) {
-    return <MoveList handleClickPrev={() => setIsMovingList(false)} />;
+    return (
+      <MoveList
+        listId={listId}
+        handleClickPrev={() => setIsMovingList(false)}
+        handleCloseModal={handleCloseModal}
+      />
+    );
   }
 
   if (isSortingList) {

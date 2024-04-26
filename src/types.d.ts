@@ -16,7 +16,6 @@ type Card = {
   id: string;
   title: string;
   list: string;
-  board: string;
   archive: boolean
 };
 

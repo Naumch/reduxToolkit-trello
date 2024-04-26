@@ -6,11 +6,12 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { selectListsdByBoardId } from "../lists/listsSlice";
 
 const cardsInitial: Card[] = [
-  { id: nanoid(), title: "Карточка", list: "1", board: "1", archive: true },
-  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: false },
-  { id: nanoid(), title: "карточка", list: "1", board: "1", archive: false },
+  { id: nanoid(), title: "Карточка", list: "1", archive: true },
+  { id: nanoid(), title: "карточка", list: "1", archive: true },
+  { id: nanoid(), title: "карточка", list: "1", archive: false },
 ];
 
 const cardsAdapter = createEntityAdapter<Card>();
@@ -88,6 +89,18 @@ export const selectCardsdByListId = (listId: string) =>
   );
 
 export const selectCardsdByBoardIdAndArchive = (boardId: string) =>
-  createSelector(selectAllCards, (cards) =>
-    cards.filter((card) => card.board === boardId && card.archive)
+  createSelector(
+    selectListsdByBoardId(boardId),
+    selectAllCards,
+    (lists, cards) => {
+      const archiveCardsAtTheBoard: Card[] = [];
+      lists.forEach((list) => {
+        cards.forEach((card) => {
+          if (card.list === list.id && card.archive) {
+            archiveCardsAtTheBoard.push(card);
+          }
+        });
+      });
+      return archiveCardsAtTheBoard;
+    }
   );

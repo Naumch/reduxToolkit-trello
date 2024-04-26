@@ -47,7 +47,7 @@ export default listsSlice.reducer;
 
 export const { listAdded, listUpdated } = listsSlice.actions;
 
-export const { selectAll: selectAllLists } =
+export const { selectAll: selectAllLists, selectById: selectListById } =
   listsAdapter.getSelectors<RootState>((state) => state.lists);
 
 export const selectListsdByBoardId = (boardId: string) =>
