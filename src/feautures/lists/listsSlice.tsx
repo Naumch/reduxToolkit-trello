@@ -8,9 +8,27 @@ import {
 import { RootState } from "../../app/store";
 
 const listsInitial: List[] = [
-  { id: "1", title: "Нужно сделать", board: "1", archive: false },
-  { id: nanoid(), title: "В процессе", board: "1", archive: true },
-  { id: nanoid(), title: "Готово", board: "1", archive: true },
+  {
+    id: "1",
+    title: "Нужно сделать",
+    board: { id: "1", position: 1 },
+    archive: false,
+    sort: "old",
+  },
+  {
+    id: nanoid(),
+    title: "В процессе",
+    board: { id: "1", position: 2 },
+    archive: true,
+    sort: "new",
+  },
+  {
+    id: nanoid(),
+    title: "Готово",
+    board: { id: "1", position: 3 },
+    archive: true,
+    sort: "alphabet",
+  },
 ];
 
 const listsAdapter = createEntityAdapter<List>();
@@ -33,8 +51,9 @@ const listsSlice = createSlice({
           payload: {
             id: nanoid(),
             title,
-            board: boardId,
+            board: { id: boardId, position: 10 },
             archive: false,
+            sort: "old" as Sorting,
           },
         };
       },
@@ -52,10 +71,10 @@ export const { selectAll: selectAllLists, selectById: selectListById } =
 
 export const selectListsdByBoardId = (boardId: string) =>
   createSelector(selectAllLists, (lists) =>
-    lists.filter((list) => boardId === list.board && !list.archive)
+    lists.filter((list) => boardId === list.board.id && !list.archive)
   );
 
 export const selectListsdByBoardIdAndArchive = (boardId: string) =>
   createSelector(selectAllLists, (lists) =>
-    lists.filter((list) => boardId === list.board && list.archive)
+    lists.filter((list) => boardId === list.board.id && list.archive)
   );

@@ -19,6 +19,16 @@ import CardItem from "../cards/CardItem";
 import FormAddNewCard from "../cards/FormAddNewCard";
 import ModalWrapper from "../../components/ModalWrapper";
 
+const sort = (array: Card[], sorting: Sorting) => {
+  if (sorting === "new") {
+    return array.sort((a, b) => b.time.localeCompare(a.time));
+  } else if (sorting === "old") {
+    return array.sort((a, b) => a.time.localeCompare(b.time));
+  } else {
+    return array.sort((a, b) => a.title.localeCompare(b.title));
+  }
+};
+
 type Props = {
   list: List;
 };
@@ -45,8 +55,8 @@ export default function ListItem({ list }: Props) {
   };
 
   const cards = useAppSelector(selectCardsdByListId(list.id));
-
-  const renderedCards = cards.map((card) => <CardItem card={card} />);
+  const sorttedCards = sort(cards, list.sort);
+  const renderedCards = sorttedCards.map((card) => <CardItem card={card} />);
 
   return (
     <Box

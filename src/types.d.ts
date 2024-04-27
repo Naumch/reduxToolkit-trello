@@ -8,8 +8,9 @@ type Board = {
 type List = {
   id: string;
   title: string;
-  board: string;
+  board: {id: string, position: number}
   archive: boolean
+  sort: Sorting
 };
 
 type Card = {
@@ -17,6 +18,7 @@ type Card = {
   title: string;
   list: string;
   archive: boolean
+  time: string
 };
 
 interface ColorMark {
@@ -29,3 +31,5 @@ interface Mark extends ColorMark {
   id: string;
   title: string;
 }
+
+type Sorting = "new" | "old" | "alphabet"

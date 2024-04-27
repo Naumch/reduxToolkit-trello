@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectAllBoards } from "../../boards/boardsSlice";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { listUpdated } from "../listsSlice";
+import { listUpdated, selectListsdByBoardId } from "../listsSlice";
 
 type Props = {
   listId: string;
@@ -18,10 +18,15 @@ export default function MoveList({
   handleCloseModal,
 }: Props) {
   const { boardId } = useParams();
+
   const boards = useAppSelector(selectAllBoards);
   const currentBoard = boards.find((board) => board.id === boardId);
 
-  const [newBoardId, setNewBoardId] = useState(currentBoard?.id);
+  const lists = useAppSelector(selectListsdByBoardId(boardId!));
+  const currentList = lists.find((list) => list.id === listId);
+
+  const [newBoardId, setNewBoardId] = useState(currentBoard!.id);
+  const [newPosition, setNewPosition] = useState(currentList!.board.position);
 
   const dispatch = useAppDispatch();
 
@@ -31,8 +36,19 @@ export default function MoveList({
     </MenuItem>
   ));
 
+  const menuItemPositionRendered = lists.map((list) => (
+    <MenuItem key={list.id} value={list.board.position}>
+      {list.board.position}
+    </MenuItem>
+  ));
+
   const handleClick = () => {
-    dispatch(listUpdated({ id: listId, changes: { board: newBoardId } }));
+    dispatch(
+      listUpdated({
+        id: listId,
+        changes: { board: { id: newBoardId, position: newPosition } },
+      })
+    );
     handleCloseModal();
   };
 
@@ -53,6 +69,17 @@ export default function MoveList({
           fullWidth
         >
           {menuItemBoardRendered}
+        </Select>
+        <Typography variant="body2" mb={0.5} mt={2}>
+          Позиция
+        </Typography>
+        <Select
+          value={newPosition}
+          size="small"
+          onChange={(e) => setNewPosition(+e.target.value)}
+          fullWidth
+        >
+          {menuItemPositionRendered}
         </Select>
       </Box>
       <Button variant="contained" size="small" onClick={handleClick}>

@@ -9,9 +9,27 @@ import { RootState } from "../../app/store";
 import { selectListsdByBoardId } from "../lists/listsSlice";
 
 const cardsInitial: Card[] = [
-  { id: nanoid(), title: "Карточка", list: "1", archive: true },
-  { id: nanoid(), title: "карточка", list: "1", archive: true },
-  { id: nanoid(), title: "карточка", list: "1", archive: false },
+  {
+    id: nanoid(),
+    title: "Карточка",
+    list: "1",
+    archive: true,
+    time: new Date().toISOString(),
+  },
+  {
+    id: nanoid(),
+    title: "карточка",
+    list: "1",
+    archive: true,
+    time: new Date().toISOString(),
+  },
+  {
+    id: nanoid(),
+    title: "карточка",
+    list: "1",
+    archive: false,
+    time: new Date().toISOString(),
+  },
 ];
 
 const cardsAdapter = createEntityAdapter<Card>();
@@ -37,6 +55,7 @@ const cardsSlice = createSlice({
             list: listId,
             board: boardId,
             archive: false,
+            time: new Date().toISOString(),
           },
         };
       },

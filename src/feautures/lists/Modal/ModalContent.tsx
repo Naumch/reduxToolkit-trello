@@ -115,7 +115,13 @@ export default function ModalContent({
   }
 
   if (isSortingList) {
-    return <SortList handleClickPrev={() => setIsSortingList(false)} />;
+    return (
+      <SortList
+        listId={listId}
+        handleClickPrev={() => setIsSortingList(false)}
+        handleCloseModal={handleCloseModal}
+      />
+    );
   }
 
   if (isMovingCards) {
