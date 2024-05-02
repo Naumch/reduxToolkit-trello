@@ -1,10 +1,11 @@
 import { useState } from "react";
+
 import { Stack, CardMedia, Card, Typography, Divider } from "@mui/material";
-import photosImg from "../../../images/photos.jpg";
-import colorsImg from "../../../images/colors.png";
+import DrawerHeader from "./DrawerHeader";
 import ChoosePhoto from "./ChoosePhoto";
 import ChooseColor from "./ChooseColor";
-import DrawerHeader from "./DrawerHeader";
+import photosImg from "../../../images/photos.jpg";
+import colorsImg from "../../../images/colors.png";
 
 type Props = {
   handleClickPrev: () => void;

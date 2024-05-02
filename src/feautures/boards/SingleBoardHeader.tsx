@@ -1,8 +1,6 @@
 import { useState } from "react";
-
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
 import { boardUpdated } from "./boardsSlice";
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 import {
   Box,
@@ -13,11 +11,12 @@ import {
   Stack,
   Drawer,
 } from "@mui/material";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import DrawerContent from "./Drawer/DrawerContent";
 import CloseIcon from "@mui/icons-material/Close";
+import DrawerContent from "./Drawer/DrawerContent";
 
 type Props = {
   board: Board;

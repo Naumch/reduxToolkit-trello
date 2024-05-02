@@ -4,9 +4,9 @@ import {
   selectListsdByBoardIdAndArchive,
   listUpdated,
 } from "../lists/listsSlice";
+
 import { Box, Divider, Typography } from "@mui/material";
 import ReplayOutlinedIcon from "@mui/icons-material/ReplayOutlined";
-
 import ButtonSecondary from "../../components/ButtonSecondary";
 import BoxNotElement from "../../components/BoxNotElement";
 

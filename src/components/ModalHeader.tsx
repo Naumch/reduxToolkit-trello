@@ -1,4 +1,4 @@
-import { Typography, IconButton, Box } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 
 type Props = {

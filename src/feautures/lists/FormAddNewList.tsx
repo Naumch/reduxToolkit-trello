@@ -1,9 +1,9 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
 import { listAdded } from "./listsSlice";
+
 import { Box, Button, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 
 type Props = {

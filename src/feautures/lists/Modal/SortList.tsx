@@ -1,8 +1,9 @@
-import { List, ListItemButton, ListItemText, Snackbar } from "@mui/material";
-import ModalHeader from "../../../components/ModalHeader";
+import { nanoid } from "@reduxjs/toolkit";
 import { useAppDispatch } from "../../../app/hooks";
 import { listUpdated } from "../listsSlice";
-import { nanoid } from "@reduxjs/toolkit";
+
+import { List, ListItemButton, ListItemText } from "@mui/material";
+import ModalHeader from "../../../components/ModalHeader";
 
 type Props = {
   listId: string;

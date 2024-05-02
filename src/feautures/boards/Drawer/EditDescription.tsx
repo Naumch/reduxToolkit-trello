@@ -1,8 +1,9 @@
-import { Box, Typography } from "@mui/material";
-import DrawerHeader from "./DrawerHeader";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { useState } from "react";
+
+import { Typography } from "@mui/material";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import ButtonSecondary from "../../../components/ButtonSecondary";
+import DrawerHeader from "./DrawerHeader";
 
 type Props = {
   handleClickPrev: () => void;

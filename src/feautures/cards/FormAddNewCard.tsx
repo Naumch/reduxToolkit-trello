@@ -1,10 +1,11 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
+import { cardAdded } from "./cardsSlice";
+import { useParams } from "react-router-dom";
+
 import { Button, IconButton, TextField, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { cardAdded } from "./cardsSlice";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
-import { useParams } from "react-router-dom";
 
 type Props = {
   listId: string;

@@ -1,12 +1,11 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { nanoid } from "@reduxjs/toolkit";
+import { useParams } from "react-router-dom";
 import { listUpdated, selectListsdByBoardId } from "../listsSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { cardsMovedAnotherList } from "../../cards/cardsSlice";
 
 import { List, ListItemButton, ListItemText, Divider } from "@mui/material";
-
-import { cardsMovedAnotherList } from "../../cards/cardsSlice";
-import { useParams } from "react-router-dom";
 import CopyList from "./CopyList";
 import MoveCards from "./MoveCards";
 import MoveList from "./MoveList";

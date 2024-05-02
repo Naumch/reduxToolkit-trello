@@ -1,6 +1,8 @@
 import { ReactNode, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../app/hooks";
+import { boardDeleted } from "../boardsSlice";
 
 import {
   Divider,
@@ -10,23 +12,19 @@ import {
   ListItemText,
   Box,
   Typography,
-  Button,
 } from "@mui/material";
-
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-import { useAppDispatch } from "../../../app/hooks";
-import { boardDeleted } from "../boardsSlice";
-import MarksList from "../../marks/MarksList";
 import ModalWrapper from "../../../components/ModalWrapper";
+import ModalHeader from "../../../components/ModalHeader";
+import ModalContentDelete from "../../../components/ModalContentDelete";
+import MarksList from "../../marks/MarksList";
 import ChangeBackground from "./ChangeBackground";
 import OpenArchive from "./OpenArchive";
 import EditDescription from "./EditDescription";
-import ModalContentDelete from "../../../components/ModalContentDelete";
-import ModalHeader from "../../../components/ModalHeader";
 
 type Props = {
   board: Board;

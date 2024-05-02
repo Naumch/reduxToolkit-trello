@@ -1,10 +1,11 @@
-import { Select, MenuItem, Typography, Box, Button } from "@mui/material";
-import ModalHeader from "../../../components/ModalHeader";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectAllBoards } from "../../boards/boardsSlice";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
 import { listUpdated, selectListsdByBoardId } from "../listsSlice";
+
+import { Select, MenuItem, Typography, Box, Button } from "@mui/material";
+import ModalHeader from "../../../components/ModalHeader";
 
 type Props = {
   listId: string;
