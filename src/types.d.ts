@@ -30,6 +30,14 @@ interface ColorMark {
 interface Mark extends ColorMark {
   id: string;
   title: string;
+  board: string
 }
 
 type Sorting = "new" | "old" | "alphabet"
+
+type CardAction = "openCard" 
+| "changeMarks" 
+| "changeCover" 
+| "changeDate" 
+| "moveCard" 
+| "copyCard"

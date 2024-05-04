@@ -13,14 +13,14 @@ const cardsInitial: Card[] = [
     id: nanoid(),
     title: "Карточка",
     list: "1",
-    archive: true,
+    archive: false,
     time: new Date().toISOString(),
   },
   {
     id: nanoid(),
     title: "карточка",
     list: "1",
-    archive: true,
+    archive: false,
     time: new Date().toISOString(),
   },
   {

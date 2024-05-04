@@ -9,6 +9,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import SampleBoard from "./SampleBoard";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalHeader from "../../components/ModalHeader";
+import { marksAddedWhenCreatingBoard } from "../marks/marksSlice";
 
 const gradients = [
   "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
@@ -37,6 +38,7 @@ export default function ModalAddBoard() {
   const createNewBoard = () => {
     const boardId = nanoid();
     dispatch(boardAdded({ title, boardId, color }));
+    dispatch(marksAddedWhenCreatingBoard({ boardId }));
     navigate(boardId);
   };
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import { selectAllMarks } from "./marksSlice";
+import { selectAllMarks, selectMarksdByBoardId } from "./marksSlice";
 import store from "../../app/store";
 
 import { Box, Stack, Typography, Button } from "@mui/material";
@@ -10,21 +10,26 @@ import ModalWrapper from "../../components/ModalWrapper";
 import MarkItem from "./MarkItem";
 import DrawerHeader from "../boards/Drawer/DrawerHeader";
 import ButtonEdit from "../../components/ButtonEdit";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 
 type Props = {
   handleClickPrev: () => void;
 };
 
 export default function MarksList({ handleClickPrev }: Props) {
+  const { boardId } = useParams();
+
   const newMark: Mark = {
     id: nanoid(),
     title: "",
+    board: boardId!,
     bgColor: green[400],
     fontColor: "black",
     colorName: "зеленый",
   };
 
-  const marks = selectAllMarks(store.getState());
+  const marks = useAppSelector(selectMarksdByBoardId(boardId!));
 
   const [openModal, setOpenModal] = useState(false);
   const [editableMark, setEditableMark] = useState<Mark>(newMark);
