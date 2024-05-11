@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { listAdded, selectListById } from "../listsSlice";
+import { listAdded, listCopyied, selectListById } from "../listsSlice";
 
 import { Button, TextField, Typography } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
+import { nanoid } from "@reduxjs/toolkit";
 
 type Props = {
   handleClickPrev: () => void;
@@ -22,6 +23,7 @@ export default function CopyList({
   const [title, setTitle] = useState(list.title);
 
   const dispatch = useAppDispatch();
+  const id = nanoid();
 
   return (
     <>
@@ -43,7 +45,9 @@ export default function CopyList({
         size="small"
         sx={{ mt: 2 }}
         onClick={() => {
-          dispatch(listAdded({ boardId, title }));
+          dispatch(
+            listCopyied({ currentListId: listId, newListId: id, title })
+          );
           handleCloseModal();
         }}
       >

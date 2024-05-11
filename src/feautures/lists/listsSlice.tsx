@@ -59,12 +59,33 @@ const listsSlice = createSlice({
       },
     },
     listUpdated: listsAdapter.updateOne,
+    listCopyied(
+      state,
+      action: PayloadAction<{
+        currentListId: string;
+        newListId: string;
+        title: string;
+      }>
+    ) {
+      const { currentListId, newListId, title } = action.payload;
+
+      const list = Object.values(state.entities).find(
+        (list) => list.id === currentListId
+      );
+
+      if (list) {
+        const copiedList = Object.assign({}, list);
+        copiedList.id = newListId;
+        copiedList.title = title;
+        listsAdapter.addOne(state, copiedList);
+      }
+    },
   },
 });
 
 export default listsSlice.reducer;
 
-export const { listAdded, listUpdated } = listsSlice.actions;
+export const { listAdded, listUpdated, listCopyied } = listsSlice.actions;
 
 export const { selectAll: selectAllLists, selectById: selectListById } =
   listsAdapter.getSelectors<RootState>((state) => state.lists);
