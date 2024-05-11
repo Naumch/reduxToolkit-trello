@@ -39,28 +39,27 @@ type Actions = {
 };
 
 export default function DrawerMenuContent({ board }: Props) {
-  const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [isOpeningArchive, setIsOpeningArchive] = useState(false);
-  const [isChangingBackground, setIsChangingBackground] = useState(false);
-  const [isOpeningMarks, setIsOpeningMarks] = useState(false);
-  const [isDeletingBoard, setIsDeletingBoard] = useState(false);
+  const [boardAction, setBoardAction] = useState<BoardAction>("default");
+  const [openModal, setOpenModal] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const handleClickPrev = () => setBoardAction("default");
 
   const actions: Actions[] = [
     {
       id: nanoid(),
       icon: <InfoOutlinedIcon />,
       text: "О доске",
-      func: () => setIsEditingDescription(true),
+      func: () => setBoardAction("editDescription"),
       divider: false,
     },
     {
       id: nanoid(),
       icon: <ArchiveOutlinedIcon />,
       text: "Архив",
-      func: () => setIsOpeningArchive(true),
+      func: () => setBoardAction("openArchive"),
       divider: true,
     },
     {
@@ -76,21 +75,21 @@ export default function DrawerMenuContent({ board }: Props) {
         />
       ),
       text: "Сменить фон",
-      func: () => setIsChangingBackground(true),
+      func: () => setBoardAction("changeBackground"),
       divider: false,
     },
     {
       id: nanoid(),
       icon: <BookmarkBorderOutlinedIcon />,
       text: "Метки",
-      func: () => setIsOpeningMarks(true),
+      func: () => setBoardAction("openMarks"),
       divider: true,
     },
     {
       id: nanoid(),
       icon: <DeleteOutlineOutlinedIcon />,
       text: "Удалить доску",
-      func: () => setIsDeletingBoard(true),
+      func: () => setOpenModal(true),
       divider: false,
     },
   ];
@@ -105,50 +104,35 @@ export default function DrawerMenuContent({ board }: Props) {
     </div>
   ));
 
-  if (isEditingDescription) {
+  if (boardAction === "editDescription") {
+    return <EditDescription handleClickPrev={handleClickPrev} />;
+  } else if (boardAction === "openArchive") {
+    return <OpenArchive handleClickPrev={handleClickPrev} />;
+  } else if (boardAction === "changeBackground") {
+    return <ChangeBackground handleClickPrev={handleClickPrev} />;
+  } else if (boardAction === "openMarks") {
+    return <MarksList handleClickPrev={handleClickPrev} />;
+  } else {
     return (
-      <EditDescription handleClickPrev={() => setIsEditingDescription(false)} />
+      <>
+        <Box sx={{ py: 2 }}>
+          <Typography align="center" fontWeight={500}>
+            Меню
+          </Typography>
+        </Box>
+        <Divider />
+        <List>{renderedBoardActions}</List>
+        <ModalWrapper open={openModal} onClose={() => setOpenModal(false)}>
+          <ModalHeader title="Удалить доску?" />
+          <ModalContentDelete
+            text="Доска будет удалена навсегда. Это действие нельзя отменить."
+            onClick={() => {
+              dispatch(boardDeleted(board.id));
+              navigate("/");
+            }}
+          />
+        </ModalWrapper>
+      </>
     );
   }
-
-  if (isOpeningArchive) {
-    return <OpenArchive handleClickPrev={() => setIsOpeningArchive(false)} />;
-  }
-
-  if (isChangingBackground) {
-    return (
-      <ChangeBackground
-        handleClickPrev={() => setIsChangingBackground(false)}
-      />
-    );
-  }
-
-  if (isOpeningMarks) {
-    return <MarksList handleClickPrev={() => setIsOpeningMarks(false)} />;
-  }
-
-  return (
-    <>
-      <Box sx={{ py: 2 }}>
-        <Typography align="center" fontWeight={500}>
-          Меню
-        </Typography>
-      </Box>
-      <Divider />
-      <List>{renderedBoardActions}</List>
-      <ModalWrapper
-        open={isDeletingBoard}
-        onClose={() => setIsDeletingBoard(false)}
-      >
-        <ModalHeader title="Удалить доску?" />
-        <ModalContentDelete
-          text="Доска будет удалена навсегда. Это действие нельзя отменить."
-          onClick={() => {
-            dispatch(boardDeleted(board.id));
-            navigate("/");
-          }}
-        />
-      </ModalWrapper>
-    </>
-  );
 }

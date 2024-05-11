@@ -1,9 +1,7 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import { useParams } from "react-router-dom";
-import { listUpdated, selectListsdByBoardId } from "../listsSlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { cardsMovedAnotherList } from "../../cards/cardsSlice";
+import { listUpdated } from "../listsSlice";
+import { useAppDispatch } from "../../../app/hooks";
 
 import { List, ListItemButton, ListItemText, Divider } from "@mui/material";
 import CopyList from "./CopyList";
@@ -31,16 +29,10 @@ export default function ModalContent({
   setIsAddingCard,
   handleCloseModal,
 }: Props) {
-  const { boardId } = useParams();
+  const [listAction, setListAction] = useState<ListAction>("default");
 
-  const [isCopyingList, setIsCopyingList] = useState(false);
-  const [isMovingList, setIsMovingList] = useState(false);
-  const [isSortingList, setIsSortingList] = useState(false);
-  const [isMovingCards, setIsMovingCards] = useState(false);
-  const [isMovingCardsToArchive, setIsMovingCardsToArchive] = useState(false);
-
+  const handleClickPrev = () => setListAction("default");
   const dispatch = useAppDispatch();
-  const lists = useAppSelector(selectListsdByBoardId(boardId!));
 
   const actions: Action[] = [
     {
@@ -55,31 +47,31 @@ export default function ModalContent({
     {
       id: nanoid(),
       text: "Копирование списка",
-      func: () => setIsCopyingList(true),
+      func: () => setListAction("copyList"),
       divider: false,
     },
     {
       id: nanoid(),
       text: "Перемещение списка",
-      func: () => setIsMovingList(true),
+      func: () => setListAction("moveList"),
       divider: true,
     },
     {
       id: nanoid(),
       text: "Сортировать по...",
-      func: () => setIsSortingList(true),
+      func: () => setListAction("sortList"),
       divider: true,
     },
     {
       id: nanoid(),
       text: "Переместить все карточки в этом списке",
-      func: () => setIsMovingCards(true),
+      func: () => setListAction("moveCards"),
       divider: false,
     },
     {
       id: nanoid(),
       text: "Архивировать все карточки в этом списке",
-      func: () => setIsMovingCardsToArchive(true),
+      func: () => setListAction("moveCardsToArchive"),
       divider: true,
     },
     {
@@ -93,80 +85,7 @@ export default function ModalContent({
     },
   ];
 
-  if (isCopyingList) {
-    return (
-      <CopyList
-        handleClickPrev={() => setIsCopyingList(false)}
-        handleCloseModal={handleCloseModal}
-        listId={listId}
-      />
-    );
-  }
-
-  if (isMovingList) {
-    return (
-      <MoveList
-        listId={listId}
-        handleClickPrev={() => setIsMovingList(false)}
-        handleCloseModal={handleCloseModal}
-      />
-    );
-  }
-
-  if (isSortingList) {
-    return (
-      <SortList
-        listId={listId}
-        handleClickPrev={() => setIsSortingList(false)}
-        handleCloseModal={handleCloseModal}
-      />
-    );
-  }
-
-  if (isMovingCards) {
-    return (
-      <>
-        <MoveCards handleClickPrev={() => setIsMovingCards(false)} />
-        <List>
-          {lists.map((list) =>
-            list.id === listId ? (
-              <ListItemButton disabled key={list.id} sx={{ pl: 4 }}>
-                <ListItemText>{list.title} (текущая)</ListItemText>
-              </ListItemButton>
-            ) : (
-              <ListItemButton
-                onClick={() => {
-                  dispatch(
-                    cardsMovedAnotherList({
-                      currentListId: listId,
-                      newListId: list.id,
-                    })
-                  );
-                  handleCloseModal();
-                }}
-                key={list.id}
-                sx={{ pl: 4 }}
-              >
-                <ListItemText>{list.title}</ListItemText>
-              </ListItemButton>
-            )
-          )}
-        </List>
-      </>
-    );
-  }
-
-  if (isMovingCardsToArchive) {
-    return (
-      <MoveCardsToArchive
-        handleClickPrev={() => setIsMovingCardsToArchive(false)}
-        handleCloseModal={handleCloseModal}
-        listId={listId}
-      />
-    );
-  }
-
-  const renderedListActions = actions.map((action) => (
+  const renderedListItems = actions.map((action) => (
     <div id={action.id}>
       <ListItemButton onClick={action.func}>
         <ListItemText>{action.text}</ListItemText>
@@ -175,10 +94,52 @@ export default function ModalContent({
     </div>
   ));
 
-  return (
-    <>
-      <ModalHeader title="Действия со списком" />
-      <List>{renderedListActions}</List>
-    </>
-  );
+  if (listAction === "copyList") {
+    return (
+      <CopyList
+        handleClickPrev={handleClickPrev}
+        handleCloseModal={handleCloseModal}
+        listId={listId}
+      />
+    );
+  } else if (listAction === "moveList") {
+    return (
+      <MoveList
+        listId={listId}
+        handleClickPrev={handleClickPrev}
+        handleCloseModal={handleCloseModal}
+      />
+    );
+  } else if (listAction === "sortList") {
+    return (
+      <SortList
+        listId={listId}
+        handleClickPrev={handleClickPrev}
+        handleCloseModal={handleCloseModal}
+      />
+    );
+  } else if (listAction === "moveCards") {
+    return (
+      <MoveCards
+        listId={listId}
+        handleClickPrev={handleClickPrev}
+        handleCloseModal={handleCloseModal}
+      />
+    );
+  } else if (listAction === "moveCardsToArchive") {
+    return (
+      <MoveCardsToArchive
+        handleClickPrev={handleClickPrev}
+        handleCloseModal={handleCloseModal}
+        listId={listId}
+      />
+    );
+  } else {
+    return (
+      <>
+        <ModalHeader title="Действия со списком" />
+        <List>{renderedListItems}</List>
+      </>
+    );
+  }
 }

@@ -8,7 +8,7 @@ type Board = {
 type List = {
   id: string;
   title: string;
-  board: {id: string, position: number}
+  board: string
   archive: boolean
   sort: Sorting
 };
@@ -35,9 +35,24 @@ interface Mark extends ColorMark {
 
 type Sorting = "new" | "old" | "alphabet"
 
+type BoardAction = "default" 
+| "editDescription" 
+| "openArchive" 
+| "changeBackground" 
+| "openMarks" 
+
+type ListAction = "default" 
+| "copyList" 
+| "moveCards" 
+| "moveCardsToArchive" 
+| "moveList" 
+| "sortList"
+
 type CardAction = "openCard" 
 | "changeMarks" 
 | "changeCover" 
 | "changeDate" 
 | "moveCard" 
 | "copyCard"
+
+

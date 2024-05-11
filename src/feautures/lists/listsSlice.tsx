@@ -11,21 +11,21 @@ const listsInitial: List[] = [
   {
     id: "1",
     title: "Нужно сделать",
-    board: { id: "1", position: 1 },
+    board: "1",
     archive: false,
     sort: "old",
   },
   {
     id: nanoid(),
     title: "В процессе",
-    board: { id: "1", position: 2 },
+    board: "1",
     archive: true,
     sort: "new",
   },
   {
     id: nanoid(),
     title: "Готово",
-    board: { id: "1", position: 3 },
+    board: "1",
     archive: true,
     sort: "alphabet",
   },
@@ -51,7 +51,7 @@ const listsSlice = createSlice({
           payload: {
             id: nanoid(),
             title,
-            board: { id: boardId, position: 10 },
+            board: boardId,
             archive: false,
             sort: "old" as Sorting,
           },
@@ -92,10 +92,10 @@ export const { selectAll: selectAllLists, selectById: selectListById } =
 
 export const selectListsdByBoardId = (boardId: string) =>
   createSelector(selectAllLists, (lists) =>
-    lists.filter((list) => boardId === list.board.id && !list.archive)
+    lists.filter((list) => boardId === list.board && !list.archive)
   );
 
 export const selectListsdByBoardIdAndArchive = (boardId: string) =>
   createSelector(selectAllLists, (lists) =>
-    lists.filter((list) => boardId === list.board.id && list.archive)
+    lists.filter((list) => boardId === list.board && list.archive)
   );
