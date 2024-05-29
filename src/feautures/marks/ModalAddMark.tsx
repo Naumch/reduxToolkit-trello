@@ -51,7 +51,6 @@ export default function ModalAddMark({
 
   return (
     <>
-      <ModalHeader title="Метки" />
       <Box
         sx={{
           backgroundColor: "#F7F8F9",

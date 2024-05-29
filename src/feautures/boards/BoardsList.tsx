@@ -5,6 +5,7 @@ import { Box, Container, Grid } from "@mui/material";
 import ModalAddBoard from "./ModalAddBoard";
 import BoardsListTitle from "./BoardsListTitle";
 import BoardItem from "./BoardItem";
+import { useEffect } from "react";
 
 export default function BoardsList() {
   const boards = useAppSelector(selectAllBoards);

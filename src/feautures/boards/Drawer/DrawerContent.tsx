@@ -25,6 +25,7 @@ import MarksList from "../../marks/MarksList";
 import ChangeBackground from "./ChangeBackground";
 import OpenArchive from "./OpenArchive";
 import EditDescription from "./EditDescription";
+import DrawerHeader from "./DrawerHeader";
 
 type Props = {
   board: Board;
@@ -111,7 +112,15 @@ export default function DrawerMenuContent({ board }: Props) {
   } else if (boardAction === "changeBackground") {
     return <ChangeBackground handleClickPrev={handleClickPrev} />;
   } else if (boardAction === "openMarks") {
-    return <MarksList handleClickPrev={handleClickPrev} />;
+    return (
+      <>
+        <DrawerHeader title="Метки" handleClickPrev={handleClickPrev} />
+        <Typography variant="body2" my={1}>
+          Метки
+        </Typography>
+        <MarksList />
+      </>
+    );
   } else {
     return (
       <>

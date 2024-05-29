@@ -21,7 +21,9 @@ export default function BoardItem({ board }: Props) {
       sx={{
         width: 200,
         height: 100,
-        backgroundImage: board.color,
+        backgroundImage: board.color.includes("unsplash")
+          ? `url(${board.color})`
+          : board.color,
         position: "relative",
         border: 1,
         boxShadow: 1,

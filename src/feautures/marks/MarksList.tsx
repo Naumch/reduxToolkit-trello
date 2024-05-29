@@ -1,23 +1,19 @@
 import { useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import { selectAllMarks, selectMarksdByBoardId } from "./marksSlice";
-import store from "../../app/store";
+import { selectMarksdByBoardId } from "./marksSlice";
 
-import { Box, Stack, Typography, Button } from "@mui/material";
+import { Box, Stack, Button } from "@mui/material";
 import { green } from "@mui/material/colors";
 import ModalContent from "./ModalAddMark";
 import ModalWrapper from "../../components/ModalWrapper";
 import MarkItem from "./MarkItem";
-import DrawerHeader from "../boards/Drawer/DrawerHeader";
+
 import ButtonEdit from "../../components/ButtonEdit";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
+import ModalHeader from "../../components/ModalHeader";
 
-type Props = {
-  handleClickPrev: () => void;
-};
-
-export default function MarksList({ handleClickPrev }: Props) {
+export default function MarksList() {
   const { boardId } = useParams();
 
   const newMark: Mark = {
@@ -59,10 +55,6 @@ export default function MarksList({ handleClickPrev }: Props) {
 
   return (
     <>
-      <DrawerHeader title="Метки" handleClickPrev={handleClickPrev} />
-      <Typography variant="body2" my={1}>
-        Метки
-      </Typography>
       <Stack mb={2}>{renderedMarks}</Stack>
       <Button
         onClick={() => {
@@ -75,6 +67,7 @@ export default function MarksList({ handleClickPrev }: Props) {
         Создать новую метку
       </Button>
       <ModalWrapper open={openModal} onClose={handleCloseModal}>
+        <ModalHeader title="Метки" />
         <ModalContent
           mark={editableMark}
           setMark={setEditableMark}
