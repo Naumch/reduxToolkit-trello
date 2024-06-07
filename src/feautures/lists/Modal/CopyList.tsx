@@ -1,27 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { listCopied, selectListById } from "../listsSlice";
 
 import { Button, TextField, Typography } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
 import { nanoid } from "@reduxjs/toolkit";
+import { ContextModalList } from "../ListItem";
 
-type Props = {
-  handleClickPrev: () => void;
-  handleCloseModal: () => void;
-  listId: string;
-};
+export default function CopyList() {
+  const { listId, handleClickPrev, handleCloseModal } =
+    useContext(ContextModalList);
 
-export default function CopyList({
-  handleClickPrev,
-  handleCloseModal,
-  listId,
-}: Props) {
   const list = useAppSelector((state) => selectListById(state, listId));
   const [title, setTitle] = useState(list.title);
 
   const dispatch = useAppDispatch();
-  const id = nanoid();
+  const newListId = nanoid();
 
   return (
     <>
@@ -44,7 +38,7 @@ export default function CopyList({
         size="small"
         sx={{ mt: 2 }}
         onClick={() => {
-          dispatch(listCopied({ currentListId: listId, newListId: id, title }));
+          dispatch(listCopied({ currentListId: listId, newListId, title }));
           handleCloseModal();
         }}
       >

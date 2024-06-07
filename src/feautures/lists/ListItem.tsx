@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { pressedEnter, useAppDispatch, useAppSelector } from "../../app/hooks";
 import { listUpdated } from "./listsSlice";
 import { selectCardsdByListId } from "../cards/cardsSlice";
@@ -28,6 +28,20 @@ const sort = (array: Card[], sorting: Sorting) => {
   }
 };
 
+interface IContextModalList {
+  listId: string;
+  handleCloseModal: () => void;
+  handleClickPrev: () => void;
+  listAction: ListAction;
+}
+
+export const ContextModalList = createContext<IContextModalList>({
+  listId: "",
+  handleCloseModal: () => {},
+  handleClickPrev: () => {},
+  listAction: "default",
+});
+
 type Props = {
   list: List;
 };
@@ -35,6 +49,7 @@ type Props = {
 export default function ListItem({ list }: Props) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isAddingCard, setIsAddingCard] = useState(false);
+  const [listAction, setListAction] = useState<ListAction>("default");
   const [title, setTitle] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
@@ -50,12 +65,20 @@ export default function ListItem({ list }: Props) {
   };
 
   const handleCloseModal = () => {
+    setListAction("default");
     setOpenModal(false);
+  };
+  const handleClickPrev = () => setListAction("default");
+  const valueContext: IContextModalList = {
+    listId: list.id,
+    handleCloseModal,
+    handleClickPrev,
+    listAction,
   };
 
   const cards = useAppSelector(selectCardsdByListId(list.id));
-  const sorttedCards = sort(cards, list.sort);
-  const renderedCards = sorttedCards.map((card) => <CardItem card={card} />);
+  const sortedCards = sort(cards, list.sort);
+  const renderedCards = sortedCards.map((card) => <CardItem card={card} />);
 
   return (
     <Box
@@ -100,13 +123,14 @@ export default function ListItem({ list }: Props) {
           <MoreHorizIcon />
         </IconButton>
       </Box>
-      <ModalWrapper open={openModal} onClose={handleCloseModal}>
-        <ModalContent
-          listId={list.id}
-          setIsAddingCard={setIsAddingCard}
-          handleCloseModal={handleCloseModal}
-        />
-      </ModalWrapper>
+      <ContextModalList.Provider value={valueContext}>
+        <ModalWrapper open={openModal} onClose={handleCloseModal}>
+          <ModalContent
+            setIsAddingCard={setIsAddingCard}
+            setListAction={setListAction}
+          />
+        </ModalWrapper>
+      </ContextModalList.Provider>
       <Stack>{renderedCards}</Stack>
       {isAddingCard ? (
         <FormAddNewCard listId={list.id} setIsAddingCard={setIsAddingCard} />

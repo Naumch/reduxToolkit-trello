@@ -3,24 +3,22 @@ import { useAppDispatch } from "../../../app/hooks";
 import ModalContentDelete from "../../../components/ModalContentDelete";
 import { cardsMovedToArchiveByListId } from "../../cards/cardsSlice";
 import ModalHeader from "../../../components/ModalHeader";
+import { useContext } from "react";
+import { ContextModalList } from "../ListItem";
 
-type Props = {
-  handleClickPrev: () => void;
-  handleCloseModal: () => void;
-  listId: string;
-};
+export default function MoveCardsToArchive() {
+  const { listId, handleClickPrev, handleCloseModal } =
+    useContext(ContextModalList);
 
-export default function MoveCardsToArchive({
-  handleClickPrev,
-  handleCloseModal,
-  listId,
-}: Props) {
   const dispatch = useAppDispatch();
 
   const onClick = () => {
     dispatch(cardsMovedToArchiveByListId({ listId }));
     handleCloseModal();
   };
+
+  const text =
+    "Все карточки этого списка будут убраны с этой доски. Чтобы увидеть архивные карточки и вернуть их на доску, нажмите «Меню > Архив».";
 
   return (
     <>
@@ -29,7 +27,7 @@ export default function MoveCardsToArchive({
         handleClickPrev={handleClickPrev}
       />
       <ModalContentDelete
-        text="Все карточки этого списка будут убраны с этой доски. Чтобы увидеть архивные карточки и вернуть их на доску, нажмите «Меню > Архив»."
+        text={text}
         onClick={onClick}
         textButton="Архивировать всё"
       />

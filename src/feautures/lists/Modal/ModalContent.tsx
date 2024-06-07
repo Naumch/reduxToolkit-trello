@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { listUpdated } from "../listsSlice";
 import { useAppDispatch } from "../../../app/hooks";
@@ -10,11 +10,11 @@ import MoveList from "./MoveList";
 import SortList from "./SortList";
 import MoveCardsToArchive from "./MoveCardsToArchive";
 import ModalHeader from "../../../components/ModalHeader";
+import { ContextModalList } from "../ListItem";
 
 type Props = {
-  listId: string;
   setIsAddingCard: Dispatch<SetStateAction<boolean>>;
-  handleCloseModal: () => void;
+  setListAction: Dispatch<SetStateAction<ListAction>>;
 };
 
 type Action = {
@@ -25,13 +25,11 @@ type Action = {
 };
 
 export default function ModalContent({
-  listId,
   setIsAddingCard,
-  handleCloseModal,
+  setListAction,
 }: Props) {
-  const [listAction, setListAction] = useState<ListAction>("default");
+  const { listId, handleCloseModal, listAction } = useContext(ContextModalList);
 
-  const handleClickPrev = () => setListAction("default");
   const dispatch = useAppDispatch();
 
   const actions: Action[] = [
@@ -54,13 +52,7 @@ export default function ModalContent({
       id: nanoid(),
       text: "Перемещение списка",
       func: () => setListAction("moveList"),
-      divider: true,
-    },
-    {
-      id: nanoid(),
-      text: "Сортировать по...",
-      func: () => setListAction("sortList"),
-      divider: true,
+      divider: false,
     },
     {
       id: nanoid(),
@@ -70,8 +62,8 @@ export default function ModalContent({
     },
     {
       id: nanoid(),
-      text: "Архивировать все карточки в этом списке",
-      func: () => setListAction("moveCardsToArchive"),
+      text: "Сортировать по...",
+      func: () => setListAction("sortList"),
       divider: true,
     },
     {
@@ -81,6 +73,12 @@ export default function ModalContent({
         dispatch(listUpdated({ id: listId, changes: { archive: true } }));
         handleCloseModal();
       },
+      divider: false,
+    },
+    {
+      id: nanoid(),
+      text: "Архивировать все карточки в этом списке",
+      func: () => setListAction("moveCardsToArchive"),
       divider: false,
     },
   ];
@@ -95,45 +93,15 @@ export default function ModalContent({
   ));
 
   if (listAction === "copyList") {
-    return (
-      <CopyList
-        handleClickPrev={handleClickPrev}
-        handleCloseModal={handleCloseModal}
-        listId={listId}
-      />
-    );
+    return <CopyList />;
   } else if (listAction === "moveList") {
-    return (
-      <MoveList
-        listId={listId}
-        handleClickPrev={handleClickPrev}
-        handleCloseModal={handleCloseModal}
-      />
-    );
+    return <MoveList />;
   } else if (listAction === "sortList") {
-    return (
-      <SortList
-        listId={listId}
-        handleClickPrev={handleClickPrev}
-        handleCloseModal={handleCloseModal}
-      />
-    );
+    return <SortList />;
   } else if (listAction === "moveCards") {
-    return (
-      <MoveCards
-        listId={listId}
-        handleClickPrev={handleClickPrev}
-        handleCloseModal={handleCloseModal}
-      />
-    );
+    return <MoveCards />;
   } else if (listAction === "moveCardsToArchive") {
-    return (
-      <MoveCardsToArchive
-        handleClickPrev={handleClickPrev}
-        handleCloseModal={handleCloseModal}
-        listId={listId}
-      />
-    );
+    return <MoveCardsToArchive />;
   } else {
     return (
       <>
