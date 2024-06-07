@@ -6,6 +6,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import cloneDeep from "lodash/cloneDeep";
 
 const listsInitial: List[] = [
   {
@@ -59,7 +60,7 @@ const listsSlice = createSlice({
       },
     },
     listUpdated: listsAdapter.updateOne,
-    listCopyied(
+    listCopied(
       state,
       action: PayloadAction<{
         currentListId: string;
@@ -74,7 +75,7 @@ const listsSlice = createSlice({
       );
 
       if (list) {
-        const copiedList = Object.assign({}, list);
+        const copiedList = cloneDeep(list);
         copiedList.id = newListId;
         copiedList.title = title;
         listsAdapter.addOne(state, copiedList);
@@ -85,7 +86,7 @@ const listsSlice = createSlice({
 
 export default listsSlice.reducer;
 
-export const { listAdded, listUpdated, listCopyied } = listsSlice.actions;
+export const { listAdded, listUpdated, listCopied } = listsSlice.actions;
 
 export const { selectAll: selectAllLists, selectById: selectListById } =
   listsAdapter.getSelectors<RootState>((state) => state.lists);

@@ -41,9 +41,9 @@ export default function Header({ board }: Props) {
   return (
     <Box
       sx={{
-        backgroundImage: board.color,
+        backdropFilter: "blur(3px)",
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
         boxShadow: 1,
-        filter: "brightness(90%)",
         minHeight: 80,
         display: "flex",
         alignItems: "center",
@@ -79,7 +79,6 @@ export default function Header({ board }: Props) {
                   padding: "8px 16px",
                   display: "inline-block",
                   borderRadius: 1,
-                  backgroundColor: board.color,
                   "&:hover": {
                     backgroundColor: "rgba(0, 0, 0, 0.04)",
                   },

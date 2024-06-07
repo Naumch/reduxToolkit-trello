@@ -2,14 +2,14 @@ import { Box } from "@mui/material";
 import SampleBoardSvg from "../../images/SampleBoardSvg";
 
 type Props = {
-  color: string;
+  background: string;
 };
 
-export default function SampleBoard({ color }: Props) {
+export default function SampleBoard({ background }: Props) {
   return (
     <Box
       sx={{
-        backgroundImage: color,
+        backgroundImage: background,
         borderRadius: 1,
         margin: "20px auto",
         textAlign: "center",

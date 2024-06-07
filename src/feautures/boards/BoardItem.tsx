@@ -21,9 +21,11 @@ export default function BoardItem({ board }: Props) {
       sx={{
         width: 200,
         height: 100,
-        backgroundImage: board.color.includes("unsplash")
-          ? `url(${board.color})`
-          : board.color,
+        backgroundImage:
+          typeof board.background === "object"
+            ? `url(${board.background.urlThumb})`
+            : board.background,
+        backgroundSize: "cover",
         position: "relative",
         border: 1,
         boxShadow: 1,
@@ -36,7 +38,16 @@ export default function BoardItem({ board }: Props) {
         },
       }}
     >
-      <Typography variant="h5">{board.title}</Typography>
+      <Typography
+        variant="h5"
+        color={
+          typeof board.background === "object"
+            ? board.background.contrastColorText
+            : "black"
+        }
+      >
+        {board.title}
+      </Typography>
       <IconButton
         onClick={(e) => {
           e.stopPropagation();
@@ -52,7 +63,15 @@ export default function BoardItem({ board }: Props) {
         {board.favourites ? (
           <StarIcon sx={{ fill: "orange", fontSize: 20 }} />
         ) : (
-          <StarBorderIcon sx={{ fontSize: 20 }} />
+          <StarBorderIcon
+            sx={{
+              fontSize: 20,
+              color:
+                typeof board.background === "object"
+                  ? board.background.contrastColorText
+                  : "black",
+            }}
+          />
         )}
       </IconButton>
     </Box>

@@ -9,7 +9,6 @@ import DoneIcon from "@mui/icons-material/Done";
 import SampleBoard from "./SampleBoard";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalHeader from "../../components/ModalHeader";
-import { marksAddedWhenCreatingBoard } from "../marks/marksSlice";
 
 const gradients = [
   "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
@@ -21,31 +20,29 @@ const gradients = [
 ];
 
 export default function ModalAddBoard() {
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState("");
-  const [color, setColor] = useState(gradients[0]);
+  const [background, setBackground] = useState(gradients[0]);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseModal = () => {
+    setOpenModal(false);
     setTitle("");
-    setColor(gradients[0]);
+    setBackground(gradients[0]);
   };
 
   const createNewBoard = () => {
     const boardId = nanoid();
-    dispatch(boardAdded({ title, boardId, color }));
-    dispatch(marksAddedWhenCreatingBoard({ boardId }));
+    dispatch(boardAdded({ title, boardId, background }));
     navigate(boardId);
   };
 
   return (
     <>
       <Button
-        onClick={handleOpen}
+        onClick={() => setOpenModal(true)}
         sx={{
           width: 200,
           height: 100,
@@ -57,9 +54,9 @@ export default function ModalAddBoard() {
       >
         Создать доску
       </Button>
-      <ModalWrapper open={open} onClose={handleClose}>
+      <ModalWrapper open={openModal} onClose={handleCloseModal}>
         <ModalHeader title="Создать доску" />
-        <SampleBoard color={color} />
+        <SampleBoard background={background} />
         <Box mb={3}>
           <Typography variant="body2" mb={0.5}>
             Фон
@@ -81,9 +78,9 @@ export default function ModalAddBoard() {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                onClick={() => setColor(gradient)}
+                onClick={() => setBackground(gradient)}
               >
-                {gradient === color && <DoneIcon />}
+                {gradient === background && <DoneIcon />}
               </Box>
             ))}
           </Stack>
@@ -97,6 +94,7 @@ export default function ModalAddBoard() {
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
             helperText="Укажите название доски"
+            autoFocus
           />
         </Box>
         {title.trim() && (

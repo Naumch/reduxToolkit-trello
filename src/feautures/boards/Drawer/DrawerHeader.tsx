@@ -1,9 +1,10 @@
 import { Typography, Divider, Box, IconButton } from "@mui/material";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import { ReactNode } from "react";
 
 type Props = {
   handleClickPrev: () => void;
-  title: string;
+  title: ReactNode;
 };
 
 export default function DrawerHeader({ handleClickPrev, title }: Props) {

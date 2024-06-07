@@ -41,7 +41,7 @@ type Actions = {
 
 export default function DrawerMenuContent({ board }: Props) {
   const [boardAction, setBoardAction] = useState<BoardAction>("default");
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalForDeleteBoard, setOpenModalForDeleteBoard] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -70,7 +70,11 @@ export default function DrawerMenuContent({ board }: Props) {
           sx={{
             width: 24,
             height: 24,
-            backgroundImage: board.color,
+            backgroundImage:
+              typeof board.background === "object"
+                ? `url(${board.background.urlThumb})`
+                : board.background,
+            backgroundSize: "cover",
             borderRadius: 1,
           }}
         />
@@ -90,7 +94,7 @@ export default function DrawerMenuContent({ board }: Props) {
       id: nanoid(),
       icon: <DeleteOutlineOutlinedIcon />,
       text: "Удалить доску",
-      func: () => setOpenModal(true),
+      func: () => setOpenModalForDeleteBoard(true),
       divider: false,
     },
   ];
@@ -131,7 +135,10 @@ export default function DrawerMenuContent({ board }: Props) {
         </Box>
         <Divider />
         <List>{renderedBoardActions}</List>
-        <ModalWrapper open={openModal} onClose={() => setOpenModal(false)}>
+        <ModalWrapper
+          open={openModalForDeleteBoard}
+          onClose={() => setOpenModalForDeleteBoard(false)}
+        >
           <ModalHeader title="Удалить доску?" />
           <ModalContentDelete
             text="Доска будет удалена навсегда. Это действие нельзя отменить."

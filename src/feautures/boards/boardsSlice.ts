@@ -5,13 +5,13 @@ const boardsInitial: Board[] = [
   {
     id: "1",
     title: "Test",
-    color: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
+    background: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
     favourites: false,
   },
   {
     id: "2",
     title: "Test2",
-    color: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
+    background: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
     favourites: true,
   },
 ];
@@ -31,12 +31,12 @@ const boardsSlice = createSlice({
       reducer(state, action: PayloadAction<Board>) {
         boardsAdapter.addOne(state, action.payload)
       },
-      prepare({ boardId, title, color }) {
+      prepare({ boardId, title, background }) {
         return {
           payload: {
             id: boardId,
             title,
-            color,
+            background,
             favourites: false,
           },
         };

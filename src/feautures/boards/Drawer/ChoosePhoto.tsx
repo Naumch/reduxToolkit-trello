@@ -8,90 +8,51 @@ import {
   LinearProgress,
   Link,
 } from "@mui/material";
-import { useAppDispatch } from "../../../app/hooks";
+import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../../app/hooks";
 import { boardUpdated } from "../boardsSlice";
 import { useParams } from "react-router-dom";
+import { getRequestUnsplashAPI } from "../../../app/apiUnsplash";
 
 type Props = {
   handleClickPrev: () => void;
 };
 
-type Photo = {
-  id: string;
-  alt: string;
-  urls: {
-    thumb: string;
-    regular: string;
-    raw: string;
-  };
-  user: {
-    name: string;
-    links: {
-      html: string;
-    };
-  };
-};
-
 export default function ChoosePhoto({ handleClickPrev }: Props) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [photos, setPhotos] = useState<PhotoUnsplash[]>([]);
   const { boardId } = useParams();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    async function getRandomPhotos() {
-      const accessKey = "iFtaen0uWARw-5L9HdN3Rzv5BFhbTJWnnjygBbAEsQw";
-
-      const url =
-        "https://api.unsplash.com/photos/random/?topics=bo8jQKTaE0Y;count=20;orientation=landscape";
-
-      const headers = new Headers({
-        "Accept-Version": "v1",
-        Authorization: `Client-ID ${accessKey}`,
-      });
-
+    const fetchDataForPhotos = async () => {
       try {
+        const photosData = await getRequestUnsplashAPI();
+        setPhotos(photosData);
         setError(null);
-        setIsLoading(true);
-
-        const response = await fetch(url, { headers });
-
-        if (response.ok) {
-          const photos = await response.json();
-          setPhotos(photos);
-          setIsLoading(false);
-        } else {
-          setIsLoading(false);
-          setError("Ошибка при получении фото");
-        }
       } catch (error) {
-        setIsLoading(false);
         setError("Ошибка при получении фото");
+        setPhotos([]);
+      } finally {
+        setIsLoading(false);
       }
-    }
+    };
 
-    getRandomPhotos();
+    fetchDataForPhotos();
   }, []);
+
+  const saveNewBackground = (photo: PhotoUnsplash) => {
+    const background = generateUrlsPhotoUnsplash(photo);
+    dispatch(boardUpdated({ id: boardId!, changes: { background } }));
+  };
 
   const renderedPhotos = photos.map((photo) => (
     <ImageListItem
       key={photo.id}
       sx={{ cursor: "pointer", border: "none", padding: 0 }}
       component="button"
-      onClick={() =>
-        dispatch(
-          boardUpdated({
-            id: boardId!,
-            changes: {
-              color:
-                photo.urls.raw +
-                `&w=${window.innerWidth}&dpr=${window.devicePixelRatio}`,
-            },
-          })
-        )
-      }
+      onClick={() => saveNewBackground(photo)}
     >
       <img
         src={photo.urls.thumb}
@@ -114,9 +75,18 @@ export default function ChoosePhoto({ handleClickPrev }: Props) {
     </ImageListItem>
   ));
 
+  const titleDrawer = (
+    <>
+      Фотографии{" "}
+      <Link component="a" href="https://unsplash.com" target="_blank">
+        Unsplash
+      </Link>
+    </>
+  );
+
   return (
     <>
-      <DrawerHeader title="Фотографии" handleClickPrev={handleClickPrev} />
+      <DrawerHeader title={titleDrawer} handleClickPrev={handleClickPrev} />
       {isLoading && <LinearProgress />}
       {error && <Alert severity="error">{error}</Alert>}
       <ImageList gap={8}>{renderedPhotos}</ImageList>

@@ -3,10 +3,10 @@ import {
   createSelector,
   createSlice,
   nanoid,
-  PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { green, yellow, orange, red, purple, blue } from "@mui/material/colors";
+import { boardAdded } from "../boards/boardsSlice";
 
 const tone = 400;
 
@@ -153,34 +153,27 @@ const marksSlice = createSlice({
   name: "marks",
   initialState,
   reducers: {
-    marksAddedWhenCreatingBoard: {
-      reducer(state, action: PayloadAction<Mark[]>) {
-        marksAdapter.addMany(state, action.payload);
-      },
-      prepare({ boardId }) {
-        const newMarks = initColors.map((color) => ({
-          ...{ id: nanoid(), title: "", board: boardId },
-          ...color,
-        }));
-        return {
-          payload: newMarks,
-        };
-      },
-    },
     markDeleted: marksAdapter.removeOne,
     markUpdated: marksAdapter.setOne,
     markAdded: marksAdapter.addOne,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(boardAdded, (state, action) => {
+      const { id } = action.payload;
+
+      const newMarks = initColors.map((color) => ({
+        ...{ id: nanoid(), title: "", board: id },
+        ...color,
+      }));
+
+      marksAdapter.addMany(state, newMarks);
+    });
   },
 });
 
 export default marksSlice.reducer;
 
-export const {
-  markDeleted,
-  markUpdated,
-  markAdded,
-  marksAddedWhenCreatingBoard,
-} = marksSlice.actions;
+export const { markDeleted, markUpdated, markAdded } = marksSlice.actions;
 
 export const { selectAll: selectAllMarks } =
   marksAdapter.getSelectors<RootState>((state) => state.marks);

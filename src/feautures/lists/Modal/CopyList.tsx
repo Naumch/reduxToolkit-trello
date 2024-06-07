@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { listAdded, listCopyied, selectListById } from "../listsSlice";
+import { listCopied, selectListById } from "../listsSlice";
 
 import { Button, TextField, Typography } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
@@ -19,7 +18,6 @@ export default function CopyList({
   listId,
 }: Props) {
   const list = useAppSelector((state) => selectListById(state, listId));
-  const { boardId } = useParams();
   const [title, setTitle] = useState(list.title);
 
   const dispatch = useAppDispatch();
@@ -37,6 +35,7 @@ export default function CopyList({
       <TextField
         size="small"
         fullWidth
+        autoFocus
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
@@ -45,9 +44,7 @@ export default function CopyList({
         size="small"
         sx={{ mt: 2 }}
         onClick={() => {
-          dispatch(
-            listCopyied({ currentListId: listId, newListId: id, title })
-          );
+          dispatch(listCopied({ currentListId: listId, newListId: id, title }));
           handleCloseModal();
         }}
       >

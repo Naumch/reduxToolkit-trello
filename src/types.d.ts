@@ -1,9 +1,15 @@
 type Board = {
   id: string;
   title: string;
-  color: string;
+  background: string | BoardBackgroundPhoto
   favourites: boolean;
 };
+
+type BoardBackgroundPhoto = {
+  urlMain: string
+  urlThumb: string
+  contrastColorText: string
+}
 
 type List = {
   id: string;
@@ -32,6 +38,22 @@ interface Mark extends ColorMark {
   title: string;
   board: string
 }
+
+type PhotoUnsplash = {
+  id: string;
+  alt: string;
+  color: string;
+  urls: {
+    thumb: string;
+    raw: string;
+  };
+  user: {
+    name: string;
+    links: {
+      html: string;
+    };
+  };
+};
 
 type Sorting = "new" | "old" | "alphabet"
 

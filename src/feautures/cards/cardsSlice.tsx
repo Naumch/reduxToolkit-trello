@@ -6,14 +6,15 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { selectListsdByBoardId } from "../lists/listsSlice";
+import { listCopied, selectListsdByBoardId } from "../lists/listsSlice";
+import cloneDeep from "lodash/cloneDeep";
 
 const cardsInitial: Card[] = [
   {
     id: nanoid(),
     title: "Карточка",
     list: "1",
-    archive: false,
+    archive: true,
     time: new Date().toISOString(),
   },
   {
@@ -86,6 +87,25 @@ const cardsSlice = createSlice({
         }
       });
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(listCopied, (state, action) => {
+      const { currentListId, newListId } = action.payload;
+
+      const cards: Card[] = Object.values(state.entities).filter(
+        (card) => card.list === currentListId
+      );
+
+      if (cards.length) {
+        const copiedCards = cloneDeep(cards);
+        copiedCards.forEach((card) => {
+          card.id = nanoid();
+          card.list = newListId;
+        });
+
+        cardsAdapter.addMany(state, copiedCards);
+      }
+    });
   },
 });
 

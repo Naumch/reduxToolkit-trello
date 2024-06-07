@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { selectBoardById } from "./boardsSlice";
@@ -19,10 +18,12 @@ export default function SingleBoardPage() {
     <Box
       sx={{
         height: "100vh",
-        backgroundImage: board.color.includes("unsplash")
-          ? `url(${board.color})`
-          : board.color,
+        backgroundImage:
+          typeof board.background === "object"
+            ? `url(${board.background.urlMain})`
+            : board.background,
         backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }}
     >
       <Header board={board} />
