@@ -7,9 +7,15 @@ import OpenCard from "./OpenCard";
 
 type Props = {
   typeAction: CardAction;
+  card: Card;
+  handleCloseModal: () => void;
 };
 
-export default function ModalContent({ typeAction }: Props) {
+export default function ModalContent({
+  typeAction,
+  card,
+  handleCloseModal,
+}: Props) {
   if (typeAction === "changeMarks") {
     return <ChangeMarks />;
   } else if (typeAction === "changeCover") {
@@ -17,7 +23,7 @@ export default function ModalContent({ typeAction }: Props) {
   } else if (typeAction === "changeDate") {
     return <ChangeDate />;
   } else if (typeAction === "moveCard") {
-    return <MoveCard />;
+    return <MoveCard card={card} handleCloseModal={handleCloseModal} />;
   } else if (typeAction === "copyCard") {
     return <CopyCard />;
   } else {

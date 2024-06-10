@@ -136,6 +136,11 @@ export default function CardItem({ card }: Props) {
     />
   ));
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setOpenChildModal(false);
+  };
+
   return (
     <Box
       key={card.id}
@@ -160,7 +165,11 @@ export default function CardItem({ card }: Props) {
             open={openChildModal}
             onClose={() => setOpenChildModal(false)}
           >
-            <ModalContent typeAction={typeAction} />
+            <ModalContent
+              typeAction={typeAction}
+              card={card}
+              handleCloseModal={handleCloseModal}
+            />
           </ModalWrapper>
         </Box>
       </Modal>

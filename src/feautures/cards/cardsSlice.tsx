@@ -12,21 +12,21 @@ import cloneDeep from "lodash/cloneDeep";
 const cardsInitial: Card[] = [
   {
     id: nanoid(),
-    title: "Карточка",
-    list: "1",
-    archive: true,
-    time: new Date().toISOString(),
-  },
-  {
-    id: nanoid(),
-    title: "карточка",
+    title: "1",
     list: "1",
     archive: false,
     time: new Date().toISOString(),
   },
   {
     id: nanoid(),
-    title: "карточка",
+    title: "2",
+    list: "1",
+    archive: false,
+    time: new Date().toISOString(),
+  },
+  {
+    id: nanoid(),
+    title: "3",
     list: "1",
     archive: false,
     time: new Date().toISOString(),

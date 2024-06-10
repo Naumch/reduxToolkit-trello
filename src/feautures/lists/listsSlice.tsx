@@ -20,14 +20,14 @@ const listsInitial: List[] = [
     id: nanoid(),
     title: "В процессе",
     board: "1",
-    archive: true,
+    archive: false,
     sort: "new",
   },
   {
     id: nanoid(),
     title: "Готово",
     board: "1",
-    archive: true,
+    archive: false,
     sort: "alphabet",
   },
 ];
