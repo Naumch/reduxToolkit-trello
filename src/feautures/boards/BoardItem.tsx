@@ -27,7 +27,7 @@ export default function BoardItem({ board }: Props) {
             : board.background,
         backgroundSize: "cover",
         position: "relative",
-        border: 1,
+        border: 0.5,
         boxShadow: 1,
         borderRadius: 1,
         cursor: "pointer",

@@ -15,7 +15,9 @@ export default function ListsStack({ boardId }: Props) {
 
   const lists = useAppSelector(selectListsdByBoardId(boardId));
 
-  const renderedLists = lists.map((list) => <ListItem list={list} />);
+  const renderedLists = lists.map((list) => (
+    <ListItem key={list.id} list={list} />
+  ));
 
   return (
     <Stack mt={5} direction="row" alignItems="start" spacing={2}>
@@ -24,7 +26,7 @@ export default function ListsStack({ boardId }: Props) {
         <FormAddNewList boardId={boardId} setIsEditing={setIsEditing} />
       ) : (
         <Button
-          sx={{ width: 272 }}
+          sx={{ minWidth: 272 }}
           onClick={() => setIsEditing(true)}
           variant="contained"
         >

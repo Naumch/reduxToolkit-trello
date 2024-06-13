@@ -1,16 +1,23 @@
 import { ReactNode } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, SxProps, Typography } from "@mui/material";
 
 type Props = {
   onClick: () => void;
   text: ReactNode;
-  nowrap?: boolean;
+  fullWidth?: boolean;
+  sx?: SxProps;
 };
 
-export default function ButtonSecondary({ onClick, text, nowrap }: Props) {
+export default function ButtonSecondary({
+  onClick,
+  text,
+  fullWidth,
+  sx,
+}: Props) {
   return (
     <Button
       variant="contained"
+      fullWidth={fullWidth}
       sx={{
         backgroundColor: "secondary.main",
         color: "secondary.contrastText",
@@ -19,12 +26,12 @@ export default function ButtonSecondary({ onClick, text, nowrap }: Props) {
         fontWeight: 400,
         fontSize: 16,
         borderRadius: 1,
-        whiteSpace: nowrap ? "nowrap" : "wrap",
         transition: ".3s",
         "&:hover": {
           backgroundColor: "secondary.dark",
           boxShadow: 0,
         },
+        ...sx,
       }}
       onClick={onClick}
     >

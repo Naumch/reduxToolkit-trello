@@ -28,7 +28,7 @@ export default function ChoosePhoto({ handleClickPrev }: Props) {
   useEffect(() => {
     const fetchDataForPhotos = async () => {
       try {
-        const photosData = await getRequestUnsplashAPI();
+        const photosData = await getRequestUnsplashAPI(20);
         setPhotos(photosData);
         setError(null);
       } catch (error) {

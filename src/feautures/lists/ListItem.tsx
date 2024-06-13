@@ -1,22 +1,17 @@
-import { createContext, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
 import { pressedEnter, useAppDispatch, useAppSelector } from "../../app/hooks";
 import { listUpdated } from "./listsSlice";
 import { selectCardsdByListId } from "../cards/cardsSlice";
 
-import {
-  Box,
-  Typography,
-  TextField,
-  Stack,
-  Button,
-  IconButton,
-} from "@mui/material";
+import { Box, Typography, TextField, Stack, IconButton } from "@mui/material";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AddIcon from "@mui/icons-material/Add";
 import ModalContent from "./Modal/ModalContent";
 import CardItem from "../cards/CardItem";
 import FormAddNewCard from "../cards/FormAddNewCard";
 import ModalWrapper from "../../components/ModalWrapper";
+import ButtonSecondary from "../../components/ButtonSecondary";
 
 const sort = (array: Card[], sorting: Sorting) => {
   if (sorting === "new") {
@@ -33,6 +28,7 @@ interface IContextModalList {
   handleCloseModal: () => void;
   handleClickPrev: () => void;
   listAction: ListAction;
+  setIsAddingCard?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ContextModalList = createContext<IContextModalList>({
@@ -69,16 +65,25 @@ export default function ListItem({ list }: Props) {
     setOpenModal(false);
   };
   const handleClickPrev = () => setListAction("default");
+
   const valueContext: IContextModalList = {
     listId: list.id,
     handleCloseModal,
     handleClickPrev,
     listAction,
+    setIsAddingCard,
   };
 
   const cards = useAppSelector(selectCardsdByListId(list.id));
   const sortedCards = sort(cards, list.sort);
   const renderedCards = sortedCards.map((card) => <CardItem card={card} />);
+
+  const textButton = (
+    <>
+      <AddIcon fontSize="small" sx={{ mr: 1, mb: "-5px" }} />
+      Добавить карточку
+    </>
+  );
 
   return (
     <Box
@@ -125,26 +130,20 @@ export default function ListItem({ list }: Props) {
       </Box>
       <ContextModalList.Provider value={valueContext}>
         <ModalWrapper open={openModal} onClose={handleCloseModal}>
-          <ModalContent
-            setIsAddingCard={setIsAddingCard}
-            setListAction={setListAction}
-          />
+          <ModalContent setListAction={setListAction} />
         </ModalWrapper>
+        <Stack>{renderedCards}</Stack>
+        {isAddingCard ? (
+          <FormAddNewCard />
+        ) : (
+          <ButtonSecondary
+            onClick={() => setIsAddingCard(true)}
+            text={textButton}
+            fullWidth
+            sx={{ mt: 2 }}
+          />
+        )}
       </ContextModalList.Provider>
-      <Stack>{renderedCards}</Stack>
-      {isAddingCard ? (
-        <FormAddNewCard listId={list.id} setIsAddingCard={setIsAddingCard} />
-      ) : (
-        <Button
-          onClick={() => setIsAddingCard(true)}
-          sx={{ mt: 2 }}
-          size="small"
-          variant="contained"
-          fullWidth
-        >
-          Добавить карточку
-        </Button>
-      )}
     </Box>
   );
 }

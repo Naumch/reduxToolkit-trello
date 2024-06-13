@@ -28,7 +28,7 @@ export default function OpenArchive({ handleClickPrev }: Props) {
           onChange={(e) => setValue(e.target.value)}
         />
         <ButtonSecondary
-          nowrap={true}
+          sx={{ whiteSpace: "nowrap" }}
           onClick={() =>
             setToggleContentArchive((prevState) =>
               prevState === "cards" ? "lists" : "cards"

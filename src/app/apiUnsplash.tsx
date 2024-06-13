@@ -1,6 +1,5 @@
-export const getRequestUnsplashAPI = async () => {
-  const url =
-    "https://api.unsplash.com/photos/random/?topics=bo8jQKTaE0Y;count=20;orientation=landscape";
+export const getRequestUnsplashAPI = async (count: number) => {
+  const url = `https://api.unsplash.com/photos/random/?topics=bo8jQKTaE0Y;count=${count};orientation=landscape`;
 
   const headers = new Headers({
     "Accept-Version": "v1",

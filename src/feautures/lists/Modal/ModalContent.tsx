@@ -13,7 +13,6 @@ import ModalHeader from "../../../components/ModalHeader";
 import { ContextModalList } from "../ListItem";
 
 type Props = {
-  setIsAddingCard: Dispatch<SetStateAction<boolean>>;
   setListAction: Dispatch<SetStateAction<ListAction>>;
 };
 
@@ -24,11 +23,9 @@ type Action = {
   divider: boolean;
 };
 
-export default function ModalContent({
-  setIsAddingCard,
-  setListAction,
-}: Props) {
-  const { listId, handleCloseModal, listAction } = useContext(ContextModalList);
+export default function ModalContent({ setListAction }: Props) {
+  const { listId, handleCloseModal, listAction, setIsAddingCard } =
+    useContext(ContextModalList);
 
   const dispatch = useAppDispatch();
 
@@ -37,7 +34,7 @@ export default function ModalContent({
       id: nanoid(),
       text: "Добавить карточку",
       func: () => {
-        setIsAddingCard(true);
+        setIsAddingCard!(true);
         handleCloseModal();
       },
       divider: false,

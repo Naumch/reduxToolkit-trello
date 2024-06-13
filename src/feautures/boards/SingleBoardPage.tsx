@@ -27,9 +27,11 @@ export default function SingleBoardPage() {
       }}
     >
       <Header board={board} />
-      <Container>
-        <ListsStack boardId={board.id} />
-      </Container>
+      <Box sx={{ overflowX: "scroll", height: "calc(100vh - 80px)" }}>
+        <Container>
+          <ListsStack boardId={board.id} />
+        </Container>
+      </Box>
     </Box>
   );
 }

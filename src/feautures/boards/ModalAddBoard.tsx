@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../app/hooks";
 import { boardAdded } from "./boardsSlice";
 
 import { Box, Button, Typography, TextField, Stack } from "@mui/material";
-import DoneIcon from "@mui/icons-material/Done";
 import SampleBoard from "./SampleBoard";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalHeader from "../../components/ModalHeader";
+import { getRequestUnsplashAPI } from "../../app/apiUnsplash";
+import ButtonSecondary from "../../components/ButtonSecondary";
+import BoxSampleBackground from "./BoxSampleBackground";
 
 const gradients = [
   "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
@@ -22,10 +24,27 @@ const gradients = [
 export default function ModalAddBoard() {
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState("");
-  const [background, setBackground] = useState(gradients[0]);
+  const [photos, setPhotos] = useState<PhotoUnsplash[]>([]);
+  const [background, setBackground] = useState<string | BoardBackgroundPhoto>(
+    gradients[0]
+  );
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchDataForPhotos = async () => {
+      try {
+        const photosData = await getRequestUnsplashAPI(4);
+        setPhotos(photosData);
+      } catch (error) {
+        console.error(error);
+        setPhotos([]);
+      }
+    };
+
+    fetchDataForPhotos();
+  }, []);
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -41,19 +60,11 @@ export default function ModalAddBoard() {
 
   return (
     <>
-      <Button
+      <ButtonSecondary
         onClick={() => setOpenModal(true)}
-        sx={{
-          width: 200,
-          height: 100,
-          border: 1,
-          boxShadow: 1,
-          borderRadius: 1,
-          cursor: "pointer",
-        }}
-      >
-        Создать доску
-      </Button>
+        text="Создать доску"
+        sx={{ width: 200, height: 100 }}
+      />
       <ModalWrapper open={openModal} onClose={handleCloseModal}>
         <ModalHeader title="Создать доску" />
         <SampleBoard background={background} />
@@ -61,27 +72,41 @@ export default function ModalAddBoard() {
           <Typography variant="body2" mb={0.5}>
             Фон
           </Typography>
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={0.8} mb={0.6}>
             {gradients.map((gradient) => (
-              <Box
-                sx={{
+              <BoxSampleBackground
+                key={gradient}
+                background={gradient}
+                onClick={() => setBackground(gradient)}
+                withIcon={gradient === background}
+                style={{
                   width: 50,
                   height: 35,
-                  backgroundImage: gradient,
-                  borderRadius: 1,
-                  cursor: "pointer",
                   "&:hover": {
-                    filter: "contrast(90%)",
+                    filter: "brightness(0.9)",
                   },
-                  color: "white",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
                 }}
-                onClick={() => setBackground(gradient)}
-              >
-                {gradient === background && <DoneIcon />}
-              </Box>
+              />
+            ))}
+          </Stack>
+          <Stack direction="row" spacing={0.6}>
+            {photos.map((photo) => (
+              <BoxSampleBackground
+                key={photo.id}
+                background={`url(${photo.urls.thumb})`}
+                onClick={() => setBackground(generateUrlsPhotoUnsplash(photo))}
+                withIcon={
+                  typeof background === "object" &&
+                  photo.urls.thumb === background.urlThumb
+                }
+                style={{
+                  width: 80,
+                  height: 46,
+                  "&:hover": {
+                    filter: "brightness(0.75)",
+                  },
+                }}
+              />
             ))}
           </Stack>
         </Box>

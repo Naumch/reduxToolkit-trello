@@ -54,6 +54,7 @@ export default function ArchiveLists({ filter }: Props) {
             dispatch(listUpdated({ id: list.id, changes: { archive: false } }))
           }
           text={textButton}
+          sx={{ whiteSpace: "nowrap" }}
         />
       </Box>
       <Divider />

@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, useContext } from "react";
 import { useAppDispatch, pressedEnter } from "../../app/hooks";
 import { cardAdded } from "./cardsSlice";
 import { useParams } from "react-router-dom";
@@ -6,13 +6,10 @@ import { useParams } from "react-router-dom";
 import { Button, IconButton, TextField, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { ContextModalList } from "../lists/ListItem";
 
-type Props = {
-  listId: string;
-  setIsAddingCard: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
+export default function FormAddNewCard() {
+  const { listId, setIsAddingCard } = useContext(ContextModalList);
   const { boardId } = useParams();
   const [title, setTitle] = useState("");
 
@@ -23,7 +20,7 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
       dispatch(cardAdded({ title, listId, boardId }));
       setTitle("");
     } else {
-      setIsAddingCard(false);
+      setIsAddingCard!(false);
     }
   };
 
@@ -31,7 +28,7 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
     <ClickAwayListener
       onClickAway={() => {
         saveNewCard();
-        setIsAddingCard(false);
+        setIsAddingCard!(false);
       }}
     >
       <Box mt={1}>
@@ -52,7 +49,7 @@ export default function FormAddNewCard({ listId, setIsAddingCard }: Props) {
         >
           Добавить карточку
         </Button>
-        <IconButton onClick={() => setIsAddingCard(false)}>
+        <IconButton onClick={() => setIsAddingCard!(false)}>
           <CloseIcon fontSize="small" htmlColor="black" />
         </IconButton>
       </Box>

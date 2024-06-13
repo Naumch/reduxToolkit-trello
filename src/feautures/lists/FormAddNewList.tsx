@@ -33,7 +33,7 @@ export default function FormAddNewList({ boardId, setIsEditing }: Props) {
         sx={{
           backgroundColor: "#F1F2F4",
           boxShadow: 1,
-          width: 272,
+          minWidth: 272,
           padding: 1,
           borderRadius: 2,
         }}
