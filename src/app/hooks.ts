@@ -24,3 +24,9 @@ export const generateUrlsPhotoUnsplash = (photo: PhotoUnsplash): BoardBackground
  return urls
 }
 
+export const createTooltipTextForMark = (mark: Mark) => {
+  return `Цвет: ${mark.colorName}, название: "${
+    mark.title ? mark.title : "без названия"
+  }"`;
+}
+

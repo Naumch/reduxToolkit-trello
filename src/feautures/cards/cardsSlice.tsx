@@ -16,6 +16,7 @@ const cardsInitial: Card[] = [
     list: "1",
     archive: false,
     time: new Date().toISOString(),
+    marks: ["1", "2"],
   },
   {
     id: nanoid(),
@@ -23,6 +24,7 @@ const cardsInitial: Card[] = [
     list: "1",
     archive: false,
     time: new Date().toISOString(),
+    marks: [],
   },
   {
     id: nanoid(),
@@ -30,6 +32,7 @@ const cardsInitial: Card[] = [
     list: "1",
     archive: false,
     time: new Date().toISOString(),
+    marks: [],
   },
 ];
 
@@ -57,13 +60,14 @@ const cardsSlice = createSlice({
             board: boardId,
             archive: false,
             time: new Date().toISOString(),
+            marks: [],
           },
         };
       },
     },
     cardUpdated: cardsAdapter.updateOne,
     cardDeleted: cardsAdapter.removeOne,
-    cardsMovedAnotherList(
+    cardsMovedToAnotherList(
       state,
       action: PayloadAction<{ currentListId: string; newListId: string }>
     ) {
@@ -75,10 +79,7 @@ const cardsSlice = createSlice({
         }
       });
     },
-    cardsMovedToArchiveByListId(
-      state,
-      action: PayloadAction<{ listId: string }>
-    ) {
+    cardsMovedToArchive(state, action: PayloadAction<{ listId: string }>) {
       const { listId } = action.payload;
 
       Object.values(state.entities).forEach((card) => {
@@ -86,6 +87,21 @@ const cardsSlice = createSlice({
           card.archive = true;
         }
       });
+    },
+    cardChangedMark(
+      state,
+      action: PayloadAction<{ cardId: string; markId: string }>
+    ) {
+      const { cardId, markId } = action.payload;
+      const card = Object.values(state.entities).find(
+        (card) => card.id === cardId
+      );
+
+      if (!card?.marks.includes(markId)) {
+        card?.marks.push(markId);
+      } else {
+        card.marks = card?.marks.filter((mark) => mark !== markId);
+      }
     },
   },
   extraReducers: (builder) => {
@@ -115,11 +131,12 @@ export const {
   cardAdded,
   cardUpdated,
   cardDeleted,
-  cardsMovedToArchiveByListId,
-  cardsMovedAnotherList,
+  cardsMovedToArchive,
+  cardsMovedToAnotherList,
+  cardChangedMark,
 } = cardsSlice.actions;
 
-export const { selectAll: selectAllCards } =
+export const { selectAll: selectAllCards, selectById: selectCardById } =
   cardsAdapter.getSelectors<RootState>((state) => state.cards);
 
 export const selectCardsdByListId = (listId: string) =>

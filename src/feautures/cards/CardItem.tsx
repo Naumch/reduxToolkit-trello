@@ -16,6 +16,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { cardUpdated } from "./cardsSlice";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalContent from "./Modal/ModalContent";
+import SmallMark from "../marks/SmallMark";
 
 type Props = {
   card: Card;
@@ -136,6 +137,10 @@ export default function CardItem({ card }: Props) {
     />
   ));
 
+  const renderedMarks = card.marks.map((markId) => (
+    <SmallMark key={markId} id={markId} />
+  ));
+
   const handleCloseModal = () => {
     setOpenModal(false);
     setOpenChildModal(false);
@@ -143,7 +148,6 @@ export default function CardItem({ card }: Props) {
 
   return (
     <Box
-      key={card.id}
       sx={{
         p: 1,
         mt: 1,
@@ -151,28 +155,37 @@ export default function CardItem({ card }: Props) {
         boxShadow: 1,
         backgroundColor: "#fff",
         cursor: "pointer",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
       }}
     >
-      {card.title}
-      <ButtonEdit onClick={() => setOpenModal(true)} />
-      <Modal open={openModal} onClose={() => setOpenModal(false)}>
-        <Box>
-          <Stack alignItems="start">{renderedButtons}</Stack>
-          <ModalWrapper
-            open={openChildModal}
-            onClose={() => setOpenChildModal(false)}
-          >
-            <ModalContent
-              typeAction={typeAction}
-              card={card}
-              handleCloseModal={handleCloseModal}
-            />
-          </ModalWrapper>
-        </Box>
-      </Modal>
+      <Stack direction="row" gap={1}>
+        {renderedMarks}
+      </Stack>
+      <Box
+        key={card.id}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {card.title}
+        <ButtonEdit onClick={() => setOpenModal(true)} />
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
+          <Box>
+            <Stack alignItems="start">{renderedButtons}</Stack>
+            <ModalWrapper
+              open={openChildModal}
+              onClose={() => setOpenChildModal(false)}
+            >
+              <ModalContent
+                typeAction={typeAction}
+                card={card}
+                handleCloseModal={handleCloseModal}
+              />
+            </ModalWrapper>
+          </Box>
+        </Modal>
+      </Box>
     </Box>
   );
 }

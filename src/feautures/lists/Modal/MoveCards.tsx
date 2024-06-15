@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectListsdByBoardId } from "../listsSlice";
-import { cardsMovedAnotherList } from "../../cards/cardsSlice";
+import { cardsMovedToAnotherList } from "../../cards/cardsSlice";
 
 import ModalHeader from "../../../components/ModalHeader";
 import { List, ListItemButton, ListItemText } from "@mui/material";
@@ -17,7 +17,7 @@ export default function MoveCards() {
   const dispatch = useAppDispatch();
 
   const handleClick = (newListId: string) => {
-    dispatch(cardsMovedAnotherList({ currentListId: listId, newListId }));
+    dispatch(cardsMovedToAnotherList({ currentListId: listId, newListId }));
     handleCloseModal();
   };
 

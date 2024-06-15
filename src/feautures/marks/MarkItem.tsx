@@ -1,4 +1,5 @@
 import { Box, Tooltip, Typography } from "@mui/material";
+import { createTooltipTextForMark } from "../../app/hooks";
 
 type Props = {
   mark: Mark;
@@ -7,13 +8,9 @@ type Props = {
 };
 
 export default function MarkItem({ mark, onClick, hoverChanges }: Props) {
-  const tooltipText = `Цвет: ${mark.colorName}, название: "${
-    mark.title ? mark.title : "без названия"
-  }"`;
-
   return (
     <Tooltip
-      title={tooltipText}
+      title={createTooltipTextForMark(mark)}
       disableInteractive
       slotProps={{
         popper: {

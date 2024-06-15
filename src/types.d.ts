@@ -25,6 +25,7 @@ type Card = {
   list: string;
   archive: boolean
   time: string
+  marks: string[]
 };
 
 interface ColorMark {

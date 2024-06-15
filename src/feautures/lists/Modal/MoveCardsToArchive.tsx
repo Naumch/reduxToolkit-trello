@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../../../app/hooks";
 
 import ModalContentDelete from "../../../components/ModalContentDelete";
-import { cardsMovedToArchiveByListId } from "../../cards/cardsSlice";
+import { cardsMovedToArchive } from "../../cards/cardsSlice";
 import ModalHeader from "../../../components/ModalHeader";
 import { useContext } from "react";
 import { ContextModalList } from "../ListItem";
@@ -13,7 +13,7 @@ export default function MoveCardsToArchive() {
   const dispatch = useAppDispatch();
 
   const onClick = () => {
-    dispatch(cardsMovedToArchiveByListId({ listId }));
+    dispatch(cardsMovedToArchive({ listId }));
     handleCloseModal();
   };
 

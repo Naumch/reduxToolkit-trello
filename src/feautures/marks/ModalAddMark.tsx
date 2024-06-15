@@ -71,6 +71,7 @@ export default function ModalAddMark({
         value={mark.title}
         onChange={(e) => setMark({ ...mark, title: e.target.value })}
         fullWidth
+        autoFocus
       />
       <Typography variant="body2" mt={2} mb={1}>
         Цвет

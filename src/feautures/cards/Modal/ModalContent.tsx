@@ -17,7 +17,7 @@ export default function ModalContent({
   handleCloseModal,
 }: Props) {
   if (typeAction === "changeMarks") {
-    return <ChangeMarks />;
+    return <ChangeMarks card={card} />;
   } else if (typeAction === "changeCover") {
     return <ChangeCover />;
   } else if (typeAction === "changeDate") {

@@ -12,7 +12,7 @@ const tone = 400;
 
 const marksInitial: Mark[] = [
   {
-    id: nanoid(),
+    id: "1",
     title: "",
     board: "1",
     bgColor: green[tone],
@@ -20,8 +20,8 @@ const marksInitial: Mark[] = [
     colorName: "зеленый",
   },
   {
-    id: nanoid(),
-    title: "",
+    id: "2",
+    title: "test2",
     board: "1",
     bgColor: yellow[tone],
     fontColor: "black",
@@ -162,7 +162,7 @@ const marksSlice = createSlice({
       const { id } = action.payload;
 
       const newMarks = initColors.map((color) => ({
-        ...{ id: nanoid(), title: "", board: id },
+        ...{ id: nanoid(), title: "", board: id, card: [] },
         ...color,
       }));
 
@@ -175,7 +175,7 @@ export default marksSlice.reducer;
 
 export const { markDeleted, markUpdated, markAdded } = marksSlice.actions;
 
-export const { selectAll: selectAllMarks } =
+export const { selectAll: selectAllMarks, selectById: selectMarkById } =
   marksAdapter.getSelectors<RootState>((state) => state.marks);
 
 export const selectMarksdByBoardId = (boardId: string) =>

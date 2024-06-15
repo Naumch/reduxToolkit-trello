@@ -2,7 +2,7 @@ import { useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { selectMarksdByBoardId } from "./marksSlice";
 
-import { Box, Stack, Button } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { green } from "@mui/material/colors";
 import ModalContent from "./ModalAddMark";
 import ModalWrapper from "../../components/ModalWrapper";
@@ -12,6 +12,7 @@ import ButtonEdit from "../../components/ButtonEdit";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import ModalHeader from "../../components/ModalHeader";
+import ButtonSecondary from "../../components/ButtonSecondary";
 
 export default function MarksList() {
   const { boardId } = useParams();
@@ -56,16 +57,14 @@ export default function MarksList() {
   return (
     <>
       <Stack mb={2}>{renderedMarks}</Stack>
-      <Button
+      <ButtonSecondary
         onClick={() => {
           setIsCreatingNewMark(true);
           setOpenModal(true);
         }}
+        text="Создать новую метку"
         fullWidth
-        variant="contained"
-      >
-        Создать новую метку
-      </Button>
+      />
       <ModalWrapper open={openModal} onClose={handleCloseModal}>
         <ModalHeader title="Метки" />
         <ModalContent
