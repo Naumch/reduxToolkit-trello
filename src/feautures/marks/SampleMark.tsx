@@ -7,7 +7,7 @@ type Props = {
   hoverChanges?: boolean;
 };
 
-export default function MarkItem({ mark, onClick, hoverChanges }: Props) {
+export default function SampleMark({ mark, onClick, hoverChanges }: Props) {
   return (
     <Tooltip
       title={createTooltipTextForMark(mark)}

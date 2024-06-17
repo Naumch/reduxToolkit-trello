@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import { markAdded, markDeleted, markUpdated } from "./marksSlice";
 
-import MarkItem from "./MarkItem";
+import SampleMark from "./SampleMark";
 import {
   Box,
   Button,
@@ -61,7 +61,7 @@ export default function ModalAddMark({
           alignItems: "center",
         }}
       >
-        <MarkItem mark={mark} />
+        <SampleMark mark={mark} />
       </Box>
       <Typography variant="body2" my={1}>
         Название

@@ -8,7 +8,7 @@ import { Box, Button, Typography, TextField, Stack } from "@mui/material";
 import SampleBoard from "./SampleBoard";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalHeader from "../../components/ModalHeader";
-import { getRequestUnsplashAPI } from "../../app/apiUnsplash";
+import { getRequestUnsplashAPI } from "../../common/apiUnsplash";
 import ButtonSecondary from "../../components/ButtonSecondary";
 import BoxSampleBackground from "./BoxSampleBackground";
 

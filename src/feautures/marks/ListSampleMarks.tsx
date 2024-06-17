@@ -6,7 +6,7 @@ import { Box, Stack } from "@mui/material";
 import { green } from "@mui/material/colors";
 import ModalContent from "./ModalAddMark";
 import ModalWrapper from "../../components/ModalWrapper";
-import MarkItem from "./MarkItem";
+import SampleMark from "./SampleMark";
 
 import ButtonEdit from "../../components/ButtonEdit";
 import { useParams } from "react-router-dom";
@@ -14,7 +14,7 @@ import { useAppSelector } from "../../app/hooks";
 import ModalHeader from "../../components/ModalHeader";
 import ButtonSecondary from "../../components/ButtonSecondary";
 
-export default function MarksList() {
+export default function ListSampleMarks() {
   const { boardId } = useParams();
 
   const newMark: Mark = {
@@ -43,9 +43,9 @@ export default function MarksList() {
     setIsCreatingNewMark(false);
   };
 
-  const renderedMarks = marks.map((mark) => (
+  const renderedSampleMarks = marks.map((mark) => (
     <Box sx={{ display: "flex", alignItems: "flex-start", gap: 0.5 }}>
-      <MarkItem
+      <SampleMark
         mark={mark}
         onClick={() => handleOpenModal(mark)}
         hoverChanges
@@ -56,7 +56,7 @@ export default function MarksList() {
 
   return (
     <>
-      <Stack mb={2}>{renderedMarks}</Stack>
+      <Stack mb={2}>{renderedSampleMarks}</Stack>
       <ButtonSecondary
         onClick={() => {
           setIsCreatingNewMark(true);

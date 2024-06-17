@@ -13,7 +13,7 @@ export default function SmallMark({ id }: Props) {
     <Tooltip title={createTooltipTextForMark(mark)} disableInteractive>
       <Box
         sx={{
-          width: 40,
+          width: 44,
           height: 8,
           backgroundColor: mark.bgColor,
           borderRadius: 1,

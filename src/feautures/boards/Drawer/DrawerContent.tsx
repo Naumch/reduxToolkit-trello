@@ -21,7 +21,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import ModalWrapper from "../../../components/ModalWrapper";
 import ModalHeader from "../../../components/ModalHeader";
 import ModalContentDelete from "../../../components/ModalContentDelete";
-import MarksList from "../../marks/MarksList";
+import ListSampleMarks from "../../marks/ListSampleMarks";
 import ChangeBackground from "./ChangeBackground";
 import OpenArchive from "./OpenArchive";
 import EditDescription from "./EditDescription";
@@ -122,7 +122,7 @@ export default function DrawerMenuContent({ board }: Props) {
         <Typography variant="body2" my={1}>
           Метки
         </Typography>
-        <MarksList />
+        <ListSampleMarks />
       </>
     );
   } else {

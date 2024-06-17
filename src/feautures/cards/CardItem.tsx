@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 
-import { Box, Modal, Stack } from "@mui/material";
+import { Box, Modal, Stack, Typography } from "@mui/material";
 import ButtonEdit from "../../components/ButtonEdit";
 import ButtonCardAction from "./ButtonCardAction";
 
@@ -16,7 +16,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { cardUpdated } from "./cardsSlice";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalContent from "./Modal/ModalContent";
-import SmallMark from "../marks/SmallMark";
+import StackMarksOnTheCard from "../marks/StackMarksOnTheCard";
 
 type Props = {
   card: Card;
@@ -35,6 +35,11 @@ export default function CardItem({ card }: Props) {
 
   const dispatch = useAppDispatch();
 
+  const handleOpenChildModal = (type: CardAction) => {
+    setTypeAction(type);
+    setOpenChildModal(true);
+  };
+
   const buttons: Buttons[] = [
     {
       id: nanoid(),
@@ -44,10 +49,7 @@ export default function CardItem({ card }: Props) {
           Открыть карточку
         </>
       ),
-      func: () => {
-        setTypeAction("openCard");
-        setOpenChildModal(true);
-      },
+      func: () => handleOpenChildModal("openCard"),
     },
     {
       id: nanoid(),
@@ -57,10 +59,7 @@ export default function CardItem({ card }: Props) {
           Изменить метки
         </>
       ),
-      func: () => {
-        setTypeAction("changeMarks");
-        setOpenChildModal(true);
-      },
+      func: () => handleOpenChildModal("changeMarks"),
     },
     {
       id: nanoid(),
@@ -70,10 +69,7 @@ export default function CardItem({ card }: Props) {
           Сменить обложку
         </>
       ),
-      func: () => {
-        setTypeAction("changeCover");
-        setOpenChildModal(true);
-      },
+      func: () => handleOpenChildModal("changeCover"),
     },
     {
       id: nanoid(),
@@ -83,10 +79,7 @@ export default function CardItem({ card }: Props) {
           Изменить даты
         </>
       ),
-      func: () => {
-        setTypeAction("changeDate");
-        setOpenChildModal(true);
-      },
+      func: () => handleOpenChildModal("changeDate"),
     },
     {
       id: nanoid(),
@@ -96,10 +89,7 @@ export default function CardItem({ card }: Props) {
           Переместить
         </>
       ),
-      func: () => {
-        setTypeAction("moveCard");
-        setOpenChildModal(true);
-      },
+      func: () => handleOpenChildModal("moveCard"),
     },
     {
       id: nanoid(),
@@ -109,10 +99,7 @@ export default function CardItem({ card }: Props) {
           Копировать
         </>
       ),
-      func: () => {
-        setTypeAction("copyCard");
-        setOpenChildModal(true);
-      },
+      func: () => handleOpenChildModal("copyCard"),
     },
     {
       id: nanoid(),
@@ -137,10 +124,6 @@ export default function CardItem({ card }: Props) {
     />
   ));
 
-  const renderedMarks = card.marks.map((markId) => (
-    <SmallMark key={markId} id={markId} />
-  ));
-
   const handleCloseModal = () => {
     setOpenModal(false);
     setOpenChildModal(false);
@@ -151,24 +134,21 @@ export default function CardItem({ card }: Props) {
       sx={{
         p: 1,
         mt: 1,
-        borderRadius: 1,
+        borderRadius: 2,
         boxShadow: 1,
         backgroundColor: "#fff",
         cursor: "pointer",
       }}
     >
-      <Stack direction="row" gap={1}>
-        {renderedMarks}
-      </Stack>
+      <StackMarksOnTheCard markIds={card.marks} />
       <Box
-        key={card.id}
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
-        {card.title}
+        <Typography>{card.title}</Typography>
         <ButtonEdit onClick={() => setOpenModal(true)} />
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <Box>

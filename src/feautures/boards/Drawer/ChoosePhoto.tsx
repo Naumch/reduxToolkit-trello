@@ -11,7 +11,7 @@ import {
 import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../../app/hooks";
 import { boardUpdated } from "../boardsSlice";
 import { useParams } from "react-router-dom";
-import { getRequestUnsplashAPI } from "../../../app/apiUnsplash";
+import { getRequestUnsplashAPI } from "../../../common/apiUnsplash";
 
 type Props = {
   handleClickPrev: () => void;

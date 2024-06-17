@@ -9,7 +9,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { ChangeEvent } from "react";
-import MarkItem from "../../marks/MarkItem";
+import SampleMark from "../../marks/SampleMark";
 import { cardChangedMark } from "../cardsSlice";
 
 type Props = {
@@ -36,7 +36,7 @@ export default function ChangeMarks({ card }: Props) {
           name={mark.id}
         />
       }
-      label={<MarkItem mark={mark} />}
+      label={<SampleMark mark={mark} />}
     />
   ));
 
