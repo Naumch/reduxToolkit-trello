@@ -8,7 +8,10 @@ import {
   LinearProgress,
   Link,
 } from "@mui/material";
-import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../../app/hooks";
+import {
+  generateUrlsPhotoUnsplash,
+  useAppDispatch,
+} from "../../../common/hooks";
 import { boardUpdated } from "../boardsSlice";
 import { useParams } from "react-router-dom";
 import { getRequestUnsplashAPI } from "../../../common/apiUnsplash";

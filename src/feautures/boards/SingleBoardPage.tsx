@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../common/hooks";
 import { selectBoardById } from "./boardsSlice";
 
 import ListsStack from "../lists/ListsStack";

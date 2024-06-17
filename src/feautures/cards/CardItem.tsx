@@ -12,7 +12,7 @@ import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import PhotoOutlinedIcon from "@mui/icons-material/PhotoOutlined";
 import CallToActionOutlinedIcon from "@mui/icons-material/CallToActionOutlined";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "../../common/hooks";
 import { cardUpdated } from "./cardsSlice";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalContent from "./Modal/ModalContent";

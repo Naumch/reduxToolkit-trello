@@ -7,7 +7,7 @@ import {
   FormHelperText,
 } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../common/hooks";
 import { selectAllBoards } from "../../boards/boardsSlice";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";

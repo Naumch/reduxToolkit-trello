@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import ModalHeader from "../../../components/ModalHeader";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../common/hooks";
 import { selectMarksdByBoardId } from "../../marks/marksSlice";
 import {
   FormControl,

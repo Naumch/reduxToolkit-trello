@@ -10,7 +10,7 @@ import SampleMark from "./SampleMark";
 
 import ButtonEdit from "../../components/ButtonEdit";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../common/hooks";
 import ModalHeader from "../../components/ModalHeader";
 import ButtonSecondary from "../../components/ButtonSecondary";
 

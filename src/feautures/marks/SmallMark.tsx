@@ -1,5 +1,5 @@
 import { Tooltip, Box } from "@mui/material";
-import { createTooltipTextForMark, useAppSelector } from "../../app/hooks";
+import { createTooltipTextForMark, useAppSelector } from "../../common/hooks";
 import { selectMarkById } from "./marksSlice";
 
 type Props = {

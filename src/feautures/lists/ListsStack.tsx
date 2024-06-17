@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../common/hooks";
 import { selectListsdByBoardId } from "./listsSlice";
 
 import { Stack, Button } from "@mui/material";

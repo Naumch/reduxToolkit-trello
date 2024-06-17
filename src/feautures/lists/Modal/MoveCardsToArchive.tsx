@@ -1,4 +1,4 @@
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../common/hooks";
 
 import ModalContentDelete from "../../../components/ModalContentDelete";
 import { cardsMovedToArchive } from "../../cards/cardsSlice";

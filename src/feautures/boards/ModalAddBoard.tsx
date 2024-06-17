@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../app/hooks";
+import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../common/hooks";
 import { boardAdded } from "./boardsSlice";
 
 import { Box, Button, Typography, TextField, Stack } from "@mui/material";

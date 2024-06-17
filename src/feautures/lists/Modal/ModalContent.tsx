@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { listUpdated } from "../listsSlice";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../common/hooks";
 
 import { List, ListItemButton, ListItemText, Divider } from "@mui/material";
 import CopyList from "./CopyList";

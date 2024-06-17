@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAppDispatch, pressedEnter } from "../../app/hooks";
+import { useAppDispatch, pressedEnter } from "../../common/hooks";
 import { boardUpdated } from "./boardsSlice";
 
 import {

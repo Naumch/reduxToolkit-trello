@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../common/hooks";
 import { listUpdated } from "../listsSlice";
 
 import { List, ListItemButton, ListItemText } from "@mui/material";

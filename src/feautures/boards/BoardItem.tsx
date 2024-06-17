@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "../../common/hooks";
 import { boardUpdated } from "./boardsSlice";
 
 import { Box, Typography, IconButton } from "@mui/material";

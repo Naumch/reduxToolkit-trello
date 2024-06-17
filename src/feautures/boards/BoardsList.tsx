@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../common/hooks";
 import { selectAllBoards } from "./boardsSlice";
 
 import { Box, Container, Grid } from "@mui/material";

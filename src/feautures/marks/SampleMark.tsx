@@ -1,5 +1,5 @@
 import { Box, Tooltip, Typography } from "@mui/material";
-import { createTooltipTextForMark } from "../../app/hooks";
+import { createTooltipTextForMark } from "../../common/hooks";
 
 type Props = {
   mark: Mark;

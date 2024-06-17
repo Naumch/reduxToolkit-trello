@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../common/hooks";
 import { boardDeleted } from "../boardsSlice";
 
 import {

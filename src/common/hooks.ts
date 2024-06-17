@@ -1,6 +1,6 @@
 import { KeyboardEvent } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "./store";
+import type { RootState, AppDispatch } from "../app/store";
 import Color from "color";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;

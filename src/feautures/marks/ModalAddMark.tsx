@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "../../common/hooks";
 import { markAdded, markDeleted, markUpdated } from "./marksSlice";
 
 import SampleMark from "./SampleMark";

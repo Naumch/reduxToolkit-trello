@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../common/hooks";
 import { selectListsdByBoardId } from "../listsSlice";
 import { cardsMovedToAnotherList } from "../../cards/cardsSlice";
 
