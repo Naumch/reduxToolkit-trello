@@ -8,7 +8,7 @@ type Props = {
 export default function ButtonEdit({ onClick }: Props) {
   return (
     <IconButton onClick={onClick}>
-      <EditOutlinedIcon fontSize="small" />
+      <EditOutlinedIcon sx={{ fontSize: 18 }} />
     </IconButton>
   );
 }

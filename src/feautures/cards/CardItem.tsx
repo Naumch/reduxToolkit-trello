@@ -16,7 +16,7 @@ import { useAppDispatch } from "../../common/hooks";
 import { cardUpdated } from "./cardsSlice";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalContent from "./Modal/ModalContent";
-import StackMarksOnTheCard from "../marks/StackMarksOnTheCard";
+import StackMarks from "../marks/StackMarks";
 
 type Props = {
   card: Card;
@@ -140,7 +140,7 @@ export default function CardItem({ card }: Props) {
         cursor: "pointer",
       }}
     >
-      <StackMarksOnTheCard markIds={card.marks} />
+      {!!card.marks.length && <StackMarks markIds={card.marks} />}
       <Box
         sx={{
           display: "flex",
@@ -148,7 +148,14 @@ export default function CardItem({ card }: Props) {
           alignItems: "center",
         }}
       >
-        <Typography>{card.title}</Typography>
+        <Typography
+          ml={1}
+          maxWidth={190}
+          sx={{ overflow: "auto", textOverflow: "ellipsis" }}
+          variant="body2"
+        >
+          {card.title}
+        </Typography>
         <ButtonEdit onClick={() => setOpenModal(true)} />
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <Box>

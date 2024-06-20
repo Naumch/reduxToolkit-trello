@@ -12,7 +12,8 @@ import cloneDeep from "lodash/cloneDeep";
 const cardsInitial: Card[] = [
   {
     id: nanoid(),
-    title: "1",
+    title:
+      "С посадок https://sovcombank.ru/apply/credit/upload-documents/ https://sovcombank.ru/apply/credit/resturn-documents/поступают задачки в пайрус без вложения.",
     list: "1",
     archive: false,
     time: new Date().toISOString(),
@@ -20,7 +21,8 @@ const cardsInitial: Card[] = [
   },
   {
     id: nanoid(),
-    title: "2",
+    title:
+      "Обновить страницу https://halvacard.ru/order/card-procent-na-ostatok/",
     list: "1",
     archive: false,
     time: new Date().toISOString(),
@@ -28,7 +30,7 @@ const cardsInitial: Card[] = [
   },
   {
     id: nanoid(),
-    title: "3",
+    title: "Тесты на выход за пределы экрана",
     list: "1",
     archive: false,
     time: new Date().toISOString(),

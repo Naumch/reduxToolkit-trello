@@ -6,7 +6,7 @@ type Props = {
   id: string;
 };
 
-export default function SmallMark({ id }: Props) {
+export default function Mark({ id }: Props) {
   const mark = useAppSelector((state) => selectMarkById(state, id));
 
   return (
@@ -21,7 +21,7 @@ export default function SmallMark({ id }: Props) {
             opacity: 0.7,
           },
         }}
-      ></Box>
+      />
     </Tooltip>
   );
 }
