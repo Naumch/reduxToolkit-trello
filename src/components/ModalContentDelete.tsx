@@ -2,7 +2,7 @@ import { Typography, Button, Box } from "@mui/material";
 
 type Props = {
   text: string;
-  onClick: () => void;
+  onClick: FunctionVoid;
   textButton?: string;
 };
 

@@ -3,7 +3,7 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import { ReactNode } from "react";
 
 type Props = {
-  handleClickPrev: () => void;
+  handleClickPrev: FunctionVoid;
   title: ReactNode;
 };
 

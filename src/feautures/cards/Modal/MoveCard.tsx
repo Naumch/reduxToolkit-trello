@@ -16,7 +16,7 @@ import { cardUpdated } from "../cardsSlice";
 
 type Props = {
   card: Card;
-  handleCloseModal: () => void;
+  handleCloseModal: FunctionVoid;
 };
 
 export default function MoveCard({ card, handleCloseModal }: Props) {

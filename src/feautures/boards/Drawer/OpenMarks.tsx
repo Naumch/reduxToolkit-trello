@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
-import { selectMarksdByBoardId } from "./marksSlice";
+import { selectMarksdByBoardId } from "../../marks/marksSlice";
 
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { green } from "@mui/material/colors";
-import ModalContent from "./ModalAddMark";
-import ModalWrapper from "../../components/ModalWrapper";
-import SampleMark from "./SampleMark";
+import ModalWorkWithMarks from "../../marks/ModalWorkWithMarks";
+import ModalWrapper from "../../../components/ModalWrapper";
+import SampleMark from "../../marks/SampleMark";
 
-import ButtonEdit from "../../components/ButtonEdit";
+import ButtonEdit from "../../../components/ButtonEdit";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../common/hooks";
-import ModalHeader from "../../components/ModalHeader";
-import ButtonSecondary from "../../components/ButtonSecondary";
+import { useAppSelector } from "../../../common/hooks";
+import ModalHeader from "../../../components/ModalHeader";
+import ButtonSecondary from "../../../components/ButtonSecondary";
+import DrawerHeader from "./DrawerHeader";
 
-export default function ListSampleMarks() {
+type Props = {
+  handleClickPrev: FunctionVoid;
+};
+
+export default function OpenMarks({ handleClickPrev }: Props) {
   const { boardId } = useParams();
 
   const newMark: Mark = {
@@ -56,6 +61,10 @@ export default function ListSampleMarks() {
 
   return (
     <>
+      <DrawerHeader title="Метки" handleClickPrev={handleClickPrev} />
+      <Typography variant="body2" my={1}>
+        Метки
+      </Typography>
       <Stack mb={2}>{renderedSampleMarks}</Stack>
       <ButtonSecondary
         onClick={() => {
@@ -67,7 +76,7 @@ export default function ListSampleMarks() {
       />
       <ModalWrapper open={openModal} onClose={handleCloseModal}>
         <ModalHeader title="Метки" />
-        <ModalContent
+        <ModalWorkWithMarks
           mark={editableMark}
           setMark={setEditableMark}
           handleCloseModal={handleCloseModal}

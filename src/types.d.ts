@@ -78,4 +78,4 @@ type CardAction = "openCard"
 | "moveCard" 
 | "copyCard"
 
-
+type FunctionVoid = () => void

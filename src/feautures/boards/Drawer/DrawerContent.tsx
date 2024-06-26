@@ -21,7 +21,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import ModalWrapper from "../../../components/ModalWrapper";
 import ModalHeader from "../../../components/ModalHeader";
 import ModalContentDelete from "../../../components/ModalContentDelete";
-import ListSampleMarks from "../../marks/ListSampleMarks";
+import OpenMarks from "./OpenMarks";
 import ChangeBackground from "./ChangeBackground";
 import OpenArchive from "./OpenArchive";
 import EditDescription from "./EditDescription";
@@ -35,7 +35,7 @@ type Actions = {
   id: string;
   icon: ReactNode;
   text: string;
-  func: () => void;
+  func: FunctionVoid;
   divider: boolean;
 };
 
@@ -116,15 +116,7 @@ export default function DrawerMenuContent({ board }: Props) {
   } else if (boardAction === "changeBackground") {
     return <ChangeBackground handleClickPrev={handleClickPrev} />;
   } else if (boardAction === "openMarks") {
-    return (
-      <>
-        <DrawerHeader title="Метки" handleClickPrev={handleClickPrev} />
-        <Typography variant="body2" my={1}>
-          Метки
-        </Typography>
-        <ListSampleMarks />
-      </>
-    );
+    return <OpenMarks handleClickPrev={handleClickPrev} />;
   } else {
     return (
       <>

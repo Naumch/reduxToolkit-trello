@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
   open: boolean;
-  onClose: () => void;
+  onClose: FunctionVoid;
   children: ReactNode;
 };
 

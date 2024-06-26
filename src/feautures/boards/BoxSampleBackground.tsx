@@ -4,7 +4,7 @@ import DoneIcon from "@mui/icons-material/Done";
 
 type Props = {
   background: string;
-  onClick: () => void;
+  onClick: FunctionVoid;
   style?: SxProps;
   withIcon: boolean;
 };

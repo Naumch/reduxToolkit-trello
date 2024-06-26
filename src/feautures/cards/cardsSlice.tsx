@@ -8,6 +8,7 @@ import {
 import { RootState } from "../../app/store";
 import { listCopied, selectListsdByBoardId } from "../lists/listsSlice";
 import cloneDeep from "lodash/cloneDeep";
+import { markDeleted } from "../marks/marksSlice";
 
 const cardsInitial: Card[] = [
   {
@@ -123,6 +124,13 @@ const cardsSlice = createSlice({
 
         cardsAdapter.addMany(state, copiedCards);
       }
+    });
+    builder.addCase(markDeleted, (state, action) => {
+      const markId = action.payload;
+
+      Object.values(state.entities).forEach((card) => {
+        card.marks = card.marks.filter((mark) => mark !== markId);
+      });
     });
   },
 });

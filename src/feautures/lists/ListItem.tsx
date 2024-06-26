@@ -29,8 +29,8 @@ const sort = (array: Card[], sorting: Sorting) => {
 
 interface IContextModalList {
   listId: string;
-  handleCloseModal: () => void;
-  handleClickPrev: () => void;
+  handleCloseModal: FunctionVoid;
+  handleClickPrev: FunctionVoid;
   listAction: ListAction;
   setIsAddingCard?: Dispatch<SetStateAction<boolean>>;
 }

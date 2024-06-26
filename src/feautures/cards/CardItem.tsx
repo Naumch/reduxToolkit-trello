@@ -25,7 +25,7 @@ type Props = {
 type Buttons = {
   id: string;
   text: ReactNode;
-  func: () => void;
+  func: FunctionVoid;
 };
 
 export default function CardItem({ card }: Props) {

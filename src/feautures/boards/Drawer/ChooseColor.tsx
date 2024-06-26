@@ -1,7 +1,7 @@
 import DrawerHeader from "./DrawerHeader";
 
 type Props = {
-  handleClickPrev: () => void;
+  handleClickPrev: FunctionVoid;
 };
 
 export default function ChooseColor({ handleClickPrev }: Props) {

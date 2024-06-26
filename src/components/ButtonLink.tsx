@@ -1,7 +1,7 @@
 import { Link } from "@mui/material";
 
 type Props = {
-  onClick: () => void;
+  onClick: FunctionVoid;
   text: string;
 };
 

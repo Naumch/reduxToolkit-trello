@@ -8,7 +8,7 @@ import OpenCard from "./OpenCard";
 type Props = {
   typeAction: CardAction;
   card: Card;
-  handleCloseModal: () => void;
+  handleCloseModal: FunctionVoid;
 };
 
 export default function ModalContent({

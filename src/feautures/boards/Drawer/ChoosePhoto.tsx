@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import { getRequestUnsplashAPI } from "../../../common/apiUnsplash";
 
 type Props = {
-  handleClickPrev: () => void;
+  handleClickPrev: FunctionVoid;
 };
 
 export default function ChoosePhoto({ handleClickPrev }: Props) {

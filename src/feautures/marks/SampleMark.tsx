@@ -3,7 +3,7 @@ import { createTooltipTextForMark } from "../../common/hooks";
 
 type Props = {
   mark: Mark;
-  onClick?: () => void;
+  onClick?: FunctionVoid;
   hoverChanges?: boolean;
 };
 

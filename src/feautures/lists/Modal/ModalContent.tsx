@@ -19,7 +19,7 @@ type Props = {
 type Action = {
   id: string;
   text: string;
-  func: () => void;
+  func: FunctionVoid;
   divider: boolean;
 };
 

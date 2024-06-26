@@ -6,7 +6,7 @@ import Color from "color";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export const pressedEnter = (event: KeyboardEvent, callback: () => void) => {
+export const pressedEnter = (event: KeyboardEvent, callback: FunctionVoid) => {
   if (event.key === "Enter") {
     callback();
   }

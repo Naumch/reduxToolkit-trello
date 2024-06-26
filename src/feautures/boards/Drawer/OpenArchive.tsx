@@ -7,7 +7,7 @@ import ArchiveLists from "../../lists/ArchiveLists";
 import ArchiveCards from "../../cards/ArchiveCards";
 
 type Props = {
-  handleClickPrev: () => void;
+  handleClickPrev: FunctionVoid;
 };
 
 export default function OpenArchive({ handleClickPrev }: Props) {

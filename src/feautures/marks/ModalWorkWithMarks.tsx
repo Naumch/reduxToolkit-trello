@@ -18,11 +18,11 @@ import ModalHeader from "../../components/ModalHeader";
 type Props = {
   mark: Mark;
   setMark: Dispatch<SetStateAction<Mark>>;
-  handleCloseModal: () => void;
+  handleCloseModal: FunctionVoid;
   isCreatingNewMark: boolean;
 };
 
-export default function ModalAddMark({
+export default function ModalWorkWithMark({
   mark,
   setMark,
   handleCloseModal,

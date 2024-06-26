@@ -6,7 +6,7 @@ import ButtonSecondary from "../../../components/ButtonSecondary";
 import DrawerHeader from "./DrawerHeader";
 
 type Props = {
-  handleClickPrev: () => void;
+  handleClickPrev: FunctionVoid;
 };
 
 export default function EditDescription({ handleClickPrev }: Props) {

@@ -8,7 +8,7 @@ import photosImg from "../../../images/photos.jpg";
 import colorsImg from "../../../images/colors.png";
 
 type Props = {
-  handleClickPrev: () => void;
+  handleClickPrev: FunctionVoid;
 };
 
 export default function ChangeBackground({ handleClickPrev }: Props) {

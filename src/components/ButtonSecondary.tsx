@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Button, SxProps, Typography } from "@mui/material";
 
 type Props = {
-  onClick: () => void;
+  onClick: FunctionVoid;
   text: ReactNode;
   fullWidth?: boolean;
   sx?: SxProps;

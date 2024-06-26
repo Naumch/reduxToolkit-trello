@@ -2,7 +2,7 @@ import { Typography, IconButton } from "@mui/material";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 
 type Props = {
-  handleClickPrev?: () => void;
+  handleClickPrev?: FunctionVoid;
   title: string;
 };
 
