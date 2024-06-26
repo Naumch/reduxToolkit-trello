@@ -18,10 +18,14 @@ export const generateUrlsPhotoUnsplash = (photo: PhotoUnsplash): BoardBackground
       photo.urls.raw +
       `&w=${window.innerWidth}&dpr=${window.devicePixelRatio}`,
     urlThumb: photo.urls.thumb,
-    contrastColorText: Color(photo.color).isLight() ? "black" : "white",
+    contrastColorText: getContrastColorText(photo.color),
   };
 
  return urls
+}
+
+export const getContrastColorText = (color: string): "black" | "white" => {
+  return Color(color).isLight() ? "black" : "white"
 }
 
 export const createTooltipTextForMark = (mark: Mark) => {

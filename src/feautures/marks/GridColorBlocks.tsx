@@ -21,156 +21,36 @@ const lightText = "приглушенный ";
 const darkText = "насыщенный ";
 
 const colors: ColorMark[] = [
-  {
-    bgColor: green[lightTone],
-    fontColor: "black",
-    colorName: lightText + "зеленый",
-  },
-  {
-    bgColor: green[mediumTone],
-    fontColor: "black",
-    colorName: "зеленый",
-  },
-  {
-    bgColor: green[darkTone],
-    fontColor: "white",
-    colorName: darkText + "зеленый",
-  },
-  {
-    bgColor: blue[lightTone],
-    fontColor: "black",
-    colorName: lightText + "синий",
-  },
-  {
-    bgColor: blue[mediumTone],
-    fontColor: "black",
-    colorName: "синий",
-  },
-  {
-    bgColor: blue[darkTone],
-    fontColor: "white",
-    colorName: darkText + "синий",
-  },
-  {
-    bgColor: yellow[lightTone],
-    fontColor: "black",
-    colorName: lightText + "желтый",
-  },
-  {
-    bgColor: yellow[mediumTone],
-    fontColor: "black",
-    colorName: "желтый",
-  },
-  {
-    bgColor: yellow[darkTone],
-    fontColor: "white",
-    colorName: darkText + "желтый",
-  },
-  {
-    bgColor: cyan[lightTone],
-    fontColor: "black",
-    colorName: lightText + "голубой",
-  },
-  {
-    bgColor: cyan[mediumTone],
-    fontColor: "black",
-    colorName: "голубой",
-  },
-  {
-    bgColor: cyan[darkTone],
-    fontColor: "white",
-    colorName: darkText + "голубой",
-  },
-  {
-    bgColor: orange[lightTone],
-    fontColor: "black",
-    colorName: lightText + "оранжевый",
-  },
-  {
-    bgColor: orange[mediumTone],
-    fontColor: "black",
-    colorName: "оранжевый",
-  },
-  {
-    bgColor: orange[darkTone],
-    fontColor: "white",
-    colorName: darkText + "оранжевый",
-  },
-  {
-    bgColor: lime[lightTone],
-    fontColor: "black",
-    colorName: lightText + "лаймовый",
-  },
-  {
-    bgColor: lime[mediumTone],
-    fontColor: "black",
-    colorName: "лаймовый",
-  },
-  {
-    bgColor: lime[darkTone],
-    fontColor: "white",
-    colorName: darkText + "лаймовый",
-  },
-  {
-    bgColor: red[lightTone],
-    fontColor: "black",
-    colorName: lightText + "красный",
-  },
-  {
-    bgColor: red[mediumTone],
-    fontColor: "black",
-    colorName: "красный",
-  },
-  {
-    bgColor: red[darkTone],
-    fontColor: "white",
-    colorName: darkText + "красный",
-  },
-  {
-    bgColor: pink[lightTone],
-    fontColor: "black",
-    colorName: lightText + "розовый",
-  },
-  {
-    bgColor: pink[mediumTone],
-    fontColor: "black",
-    colorName: "розовый",
-  },
-  {
-    bgColor: pink[darkTone],
-    fontColor: "white",
-    colorName: darkText + "розовый",
-  },
-  {
-    bgColor: purple[lightTone],
-    fontColor: "black",
-    colorName: lightText + "фиолетовый",
-  },
-  {
-    bgColor: purple[mediumTone],
-    fontColor: "black",
-    colorName: "фиолетовый",
-  },
-  {
-    bgColor: purple[darkTone],
-    fontColor: "white",
-    colorName: darkText + "фиолетовый",
-  },
-  {
-    bgColor: grey[lightTone],
-    fontColor: "black",
-    colorName: lightText + "серый",
-  },
-  {
-    bgColor: grey[mediumTone],
-    fontColor: "black",
-    colorName: "серый",
-  },
-  {
-    bgColor: grey[darkTone],
-    fontColor: "white",
-    colorName: darkText + "серый",
-  },
+  { color: green[lightTone], colorName: lightText + "зеленый" },
+  { color: green[mediumTone], colorName: "зеленый" },
+  { color: green[darkTone], colorName: darkText + "зеленый" },
+  { color: blue[lightTone], colorName: lightText + "синий" },
+  { color: blue[mediumTone], colorName: "синий" },
+  { color: blue[darkTone], colorName: darkText + "синий" },
+  { color: yellow[lightTone], colorName: lightText + "желтый" },
+  { color: yellow[mediumTone], colorName: "желтый" },
+  { color: yellow[darkTone], colorName: darkText + "желтый" },
+  { color: cyan[lightTone], colorName: lightText + "голубой" },
+  { color: cyan[mediumTone], colorName: "голубой" },
+  { color: cyan[darkTone], colorName: darkText + "голубой" },
+  { color: orange[lightTone], colorName: lightText + "оранжевый" },
+  { color: orange[mediumTone], colorName: "оранжевый" },
+  { color: orange[darkTone], colorName: darkText + "оранжевый" },
+  { color: lime[lightTone], colorName: lightText + "лаймовый" },
+  { color: lime[mediumTone], colorName: "лаймовый" },
+  { color: lime[darkTone], colorName: darkText + "лаймовый" },
+  { color: red[lightTone], colorName: lightText + "красный" },
+  { color: red[mediumTone], colorName: "красный" },
+  { color: red[darkTone], colorName: darkText + "красный" },
+  { color: pink[lightTone], colorName: lightText + "розовый" },
+  { color: pink[mediumTone], colorName: "розовый" },
+  { color: pink[darkTone], colorName: darkText + "розовый" },
+  { color: purple[lightTone], colorName: lightText + "фиолетовый" },
+  { color: purple[mediumTone], colorName: "фиолетовый" },
+  { color: purple[darkTone], colorName: darkText + "фиолетовый" },
+  { color: grey[lightTone], colorName: lightText + "серый" },
+  { color: grey[mediumTone], colorName: "серый" },
+  { color: grey[darkTone], colorName: darkText + "серый" },
 ];
 
 type Props = {
@@ -199,14 +79,14 @@ export default function GridColorBlocks({ mark, setMark }: Props) {
       <Box
         sx={{
           position: "relative",
-          backgroundColor: color.bgColor,
+          backgroundColor: color.color,
           height: 40,
           minWidth: 50,
           borderRadius: 1,
-          border: color.bgColor === mark.bgColor ? 2 : null,
+          border: color.color === mark.color ? 2 : null,
           borderColor: "primary.main",
           "&:before":
-            color.bgColor === mark.bgColor
+            color.color === mark.color
               ? {
                   content: '""',
                   position: "absolute",

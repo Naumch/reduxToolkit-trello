@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../common/hooks";
 import { boardUpdated } from "./boardsSlice";
 
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, Typography, Checkbox } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 
@@ -48,7 +48,21 @@ export default function BoardItem({ board }: Props) {
       >
         {board.title}
       </Typography>
-      <IconButton
+      <Checkbox
+        checked={board.favourites}
+        icon={
+          <StarBorderIcon
+            sx={{
+              color:
+                typeof board.background === "object"
+                  ? board.background.contrastColorText
+                  : "black",
+            }}
+          />
+        }
+        checkedIcon={<StarIcon sx={{ fill: "orange" }} />}
+        size="small"
+        sx={{ position: "absolute", bottom: 4, right: 4 }}
         onClick={(e) => {
           e.stopPropagation();
           dispatch(
@@ -58,22 +72,7 @@ export default function BoardItem({ board }: Props) {
             })
           );
         }}
-        sx={{ position: "absolute", bottom: 4, right: 4 }}
-      >
-        {board.favourites ? (
-          <StarIcon sx={{ fill: "orange", fontSize: 20 }} />
-        ) : (
-          <StarBorderIcon
-            sx={{
-              fontSize: 20,
-              color:
-                typeof board.background === "object"
-                  ? board.background.contrastColorText
-                  : "black",
-            }}
-          />
-        )}
-      </IconButton>
+      />
     </Box>
   );
 }

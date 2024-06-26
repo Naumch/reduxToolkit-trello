@@ -29,8 +29,7 @@ type Card = {
 };
 
 interface ColorMark {
-  bgColor: string;
-  fontColor: "white" | "black";
+  color: string;
   colorName: string;
 }
 

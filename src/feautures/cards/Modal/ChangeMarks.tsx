@@ -30,8 +30,7 @@ export default function ChangeMarks({ card }: Props) {
     id: nanoid(),
     title: "",
     board: boardId!,
-    bgColor: green[400],
-    fontColor: "black",
+    color: green[400],
     colorName: "зеленый",
   };
 

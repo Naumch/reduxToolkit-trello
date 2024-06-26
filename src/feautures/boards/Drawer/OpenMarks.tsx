@@ -26,8 +26,7 @@ export default function OpenMarks({ handleClickPrev }: Props) {
     id: nanoid(),
     title: "",
     board: boardId!,
-    bgColor: green[400],
-    fontColor: "black",
+    color: green[400],
     colorName: "зеленый",
   };
 

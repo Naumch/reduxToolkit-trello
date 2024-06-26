@@ -1,5 +1,8 @@
 import { Box, Tooltip, Typography } from "@mui/material";
-import { createTooltipTextForMark } from "../../common/hooks";
+import {
+  createTooltipTextForMark,
+  getContrastColorText,
+} from "../../common/hooks";
 
 type Props = {
   mark: Mark;
@@ -32,7 +35,7 @@ export default function SampleMark({ mark, onClick, hoverChanges }: Props) {
           height: 36,
           mb: 0.5,
           borderRadius: 1,
-          backgroundColor: mark.bgColor,
+          backgroundColor: mark.color,
           cursor: hoverChanges ? "pointer" : "",
           display: "flex",
           alignItems: "center",
@@ -44,7 +47,7 @@ export default function SampleMark({ mark, onClick, hoverChanges }: Props) {
         onClick={onClick}
       >
         <Typography
-          color={mark.fontColor}
+          color={getContrastColorText(mark.color)}
           variant="body1"
           fontWeight={500}
           fontSize={14}

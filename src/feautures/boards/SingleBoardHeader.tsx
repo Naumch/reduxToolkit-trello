@@ -10,6 +10,7 @@ import {
   Container,
   Stack,
   Drawer,
+  Checkbox,
 } from "@mui/material";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -89,7 +90,11 @@ export default function Header({ board }: Props) {
                 </Typography>
               </Box>
             )}
-            <IconButton
+            <Checkbox
+              checked={board.favourites}
+              icon={<StarBorderIcon />}
+              checkedIcon={<StarIcon sx={{ fill: "orange" }} />}
+              size="small"
               sx={{ ml: 1 }}
               onClick={() =>
                 dispatch(
@@ -99,13 +104,7 @@ export default function Header({ board }: Props) {
                   })
                 )
               }
-            >
-              {board.favourites ? (
-                <StarIcon sx={{ fill: "orange", fontSize: 20 }} />
-              ) : (
-                <StarBorderIcon sx={{ fontSize: 20 }} />
-              )}
-            </IconButton>
+            />
           </Box>
           <IconButton>
             <MoreHorizOutlinedIcon onClick={() => setOpenDrawer(true)} />

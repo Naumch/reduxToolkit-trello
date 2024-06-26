@@ -15,7 +15,7 @@ export default function Mark({ id }: Props) {
         sx={{
           width: 44,
           height: 8,
-          backgroundColor: mark.bgColor,
+          backgroundColor: mark.color,
           borderRadius: 1,
           "&:hover": {
             opacity: 0.7,
