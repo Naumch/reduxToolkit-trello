@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, createContext } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 
 import { Box, Modal, Stack, Typography } from "@mui/material";
@@ -27,6 +27,22 @@ type Buttons = {
   text: ReactNode;
   func: FunctionVoid;
 };
+
+interface IContextModalCard {
+  card: Card;
+}
+
+export const ContextModalCard = createContext<IContextModalCard>({
+  card: {
+    id: "",
+    title: "",
+    list: "",
+    archive: false,
+    time: "",
+    marks: [],
+    cover: false,
+  },
+});
 
 export default function CardItem({ card }: Props) {
   const [openModal, setOpenModal] = useState(false);
@@ -129,6 +145,8 @@ export default function CardItem({ card }: Props) {
     setOpenChildModal(false);
   };
 
+  const valueContext: IContextModalCard = { card };
+
   return (
     <Box
       sx={{
@@ -163,12 +181,14 @@ export default function CardItem({ card }: Props) {
             <ModalWrapper
               open={openChildModal}
               onClose={() => setOpenChildModal(false)}
+              sx={typeAction === "openCard" ? { width: 768 } : null}
             >
-              <ModalContent
-                typeAction={typeAction}
-                card={card}
-                handleCloseModal={handleCloseModal}
-              />
+              <ContextModalCard.Provider value={valueContext}>
+                <ModalContent
+                  typeAction={typeAction}
+                  handleCloseModal={handleCloseModal}
+                />
+              </ContextModalCard.Provider>
             </ModalWrapper>
           </Box>
         </Modal>

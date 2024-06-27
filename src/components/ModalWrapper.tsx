@@ -1,15 +1,16 @@
 import { ReactNode } from "react";
 
-import { Modal, Box, IconButton } from "@mui/material";
+import { Modal, Box, IconButton, SxProps } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
   open: boolean;
   onClose: FunctionVoid;
   children: ReactNode;
+  sx?: SxProps;
 };
 
-export default function ModalWrapper({ open, onClose, children }: Props) {
+export default function ModalWrapper({ open, onClose, children, sx }: Props) {
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -22,6 +23,7 @@ export default function ModalWrapper({ open, onClose, children }: Props) {
           bgcolor: "background.paper",
           p: 2,
           borderRadius: 2,
+          ...sx,
         }}
       >
         <Box sx={{ position: "relative" }}>

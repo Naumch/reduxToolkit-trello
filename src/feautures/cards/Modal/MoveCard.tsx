@@ -10,16 +10,17 @@ import ModalHeader from "../../../components/ModalHeader";
 import { useAppDispatch, useAppSelector } from "../../../common/hooks";
 import { selectAllBoards } from "../../boards/boardsSlice";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { selectListById, selectListsdByBoardId } from "../../lists/listsSlice";
 import { cardUpdated } from "../cardsSlice";
+import { ContextModalCard } from "../CardItem";
 
 type Props = {
-  card: Card;
   handleCloseModal: FunctionVoid;
 };
 
-export default function MoveCard({ card, handleCloseModal }: Props) {
+export default function MoveCard({ handleCloseModal }: Props) {
+  const { card } = useContext(ContextModalCard);
   const { boardId } = useParams();
   const [selectedBoardId, setSelectedBoardId] = useState(boardId!);
   const [selectedListId, setSelectedListId] = useState(card.list);

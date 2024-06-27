@@ -9,7 +9,7 @@ import {
   Checkbox,
   Stack,
 } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import SampleMark from "../../marks/SampleMark";
 import { cardChangedMark } from "../cardsSlice";
 import ButtonEdit from "../../../components/ButtonEdit";
@@ -17,12 +17,10 @@ import ModalWorkWithMarks from "../../marks/ModalWorkWithMarks";
 import { nanoid } from "@reduxjs/toolkit";
 import { green } from "@mui/material/colors";
 import ButtonSecondary from "../../../components/ButtonSecondary";
+import { ContextModalCard } from "../CardItem";
 
-type Props = {
-  card: Card;
-};
-
-export default function ChangeMarks({ card }: Props) {
+export default function ChangeMarks() {
+  const { card } = useContext(ContextModalCard);
   const { boardId } = useParams();
   const marks = useAppSelector(selectMarksdByBoardId(boardId!));
 

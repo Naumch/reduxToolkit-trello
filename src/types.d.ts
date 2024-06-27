@@ -26,18 +26,18 @@ type Card = {
   archive: boolean
   time: string
   marks: string[]
+  cover: boolean
 };
 
-interface ColorMark {
+type Mark = {
+  id: string;
+  title: string;
+  board: string
   color: string;
   colorName: string;
 }
 
-interface Mark extends ColorMark {
-  id: string;
-  title: string;
-  board: string
-}
+type ColorMark = Pick<Mark,  "color" | "colorName">
 
 type PhotoUnsplash = {
   id: string;
