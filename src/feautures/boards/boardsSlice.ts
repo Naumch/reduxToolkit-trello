@@ -7,6 +7,7 @@ const boardsInitial: Board[] = [
     title: "Test",
     background: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
     favourites: false,
+    description: "Helloworld"
   },
   {
     id: "2",

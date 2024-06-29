@@ -2,10 +2,11 @@ import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../common/hooks";
 import { listCopied, selectListById } from "../listsSlice";
 
-import { Button, TextField, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
 import { nanoid } from "@reduxjs/toolkit";
 import { ContextModalList } from "../ListItem";
+import ButtonMain from "../../../components/ButtonMain";
 
 export default function CopyList() {
   const { listId, handleClickPrev, handleCloseModal } =
@@ -33,17 +34,14 @@ export default function CopyList() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <Button
-        variant="contained"
-        size="small"
+      <ButtonMain
+        text="Создать список"
         sx={{ mt: 2 }}
         onClick={() => {
           dispatch(listCopied({ currentListId: listId, newListId, title }));
           handleCloseModal();
         }}
-      >
-        Создать список
-      </Button>
+      />
     </>
   );
 }

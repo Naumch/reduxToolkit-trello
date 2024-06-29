@@ -2,9 +2,10 @@ import { useState, Dispatch, SetStateAction } from "react";
 import { useAppDispatch, pressedEnter } from "../../common/hooks";
 import { listAdded } from "./listsSlice";
 
-import { Box, Button, IconButton, TextField } from "@mui/material";
+import { Box, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import ButtonMain from "../../components/ButtonMain";
 
 type Props = {
   boardId: string;
@@ -47,14 +48,11 @@ export default function FormAddNewList({ boardId, setIsEditing }: Props) {
           onKeyDown={(event) => pressedEnter(event, saveNewList)}
           sx={{ mb: 1, backgroundColor: "white", borderRadius: 1 }}
         />
-        <Button
+        <ButtonMain
           sx={{ mr: 1 }}
           onClick={saveNewList}
-          size="small"
-          variant="contained"
-        >
-          Добавить список
-        </Button>
+          text="Добавить список"
+        />
         <IconButton onClick={() => setIsEditing(false)}>
           <CloseIcon fontSize="small" htmlColor="black" />
         </IconButton>

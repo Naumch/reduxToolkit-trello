@@ -3,7 +3,6 @@ import {
   Select,
   MenuItem,
   Box,
-  Button,
   FormHelperText,
 } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
@@ -14,6 +13,7 @@ import { useContext, useEffect, useState } from "react";
 import { selectListById, selectListsdByBoardId } from "../../lists/listsSlice";
 import { cardUpdated } from "../cardsSlice";
 import { ContextModalCard } from "../CardItem";
+import ButtonMain from "../../../components/ButtonMain";
 
 type Props = {
   handleCloseModal: FunctionVoid;
@@ -118,14 +118,11 @@ export default function MoveCard({ handleCloseModal }: Props) {
           <FormHelperText error>Нет списков</FormHelperText>
         )}
       </Box>
-      <Button
-        variant="contained"
-        size="small"
+      <ButtonMain
+        text="Переместить"
         onClick={handleClick}
         disabled={!listsBySelectedBoardId.length}
-      >
-        Переместить
-      </Button>
+      />
     </>
   );
 }

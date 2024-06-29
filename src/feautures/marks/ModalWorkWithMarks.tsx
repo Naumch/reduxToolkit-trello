@@ -3,17 +3,11 @@ import { useAppDispatch } from "../../common/hooks";
 import { markAdded, markDeleted, markUpdated } from "./marksSlice";
 
 import SampleMark from "./SampleMark";
-import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  Divider,
-  Stack,
-} from "@mui/material";
+import { Box, TextField, Typography, Divider, Stack } from "@mui/material";
 import GridColorBlocks from "./GridColorBlocks";
 import ModalContentDelete from "../../components/ModalContentDelete";
 import ModalHeader from "../../components/ModalHeader";
+import ButtonMain from "../../components/ButtonMain";
 
 type Props = {
   mark: Mark;
@@ -79,37 +73,28 @@ export default function ModalWorkWithMark({
       <GridColorBlocks mark={mark} setMark={setMark} />
       <Divider />
       {isCreatingNewMark ? (
-        <Button
+        <ButtonMain
+          text="Создание"
           onClick={() => {
             dispatch(markAdded(mark));
             handleCloseModal();
           }}
           sx={{ mt: 2 }}
-          variant="contained"
-          size="small"
-        >
-          Создание
-        </Button>
+        />
       ) : (
         <Stack mt={2} justifyContent="space-between" direction="row">
-          <Button
+          <ButtonMain
             onClick={() => {
               dispatch(markUpdated(mark));
               handleCloseModal();
             }}
-            size="small"
-            variant="contained"
-          >
-            Сохранить
-          </Button>
-          <Button
+            text="Сохранить"
+          />
+          <ButtonMain
             onClick={() => setIsDeleting(true)}
-            color="error"
-            size="small"
-            variant="contained"
-          >
-            Удалить
-          </Button>
+            text="Удалить"
+            error
+          />
         </Stack>
       )}
     </>

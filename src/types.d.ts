@@ -3,6 +3,7 @@ type Board = {
   title: string;
   background: string | BoardBackgroundPhoto
   favourites: boolean;
+  description?: string
 };
 
 type BoardBackgroundPhoto = {

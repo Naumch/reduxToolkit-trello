@@ -1,12 +1,13 @@
-import { useState, Dispatch, SetStateAction, useContext } from "react";
+import { useState, useContext } from "react";
 import { useAppDispatch, pressedEnter } from "../../common/hooks";
 import { cardAdded } from "./cardsSlice";
 import { useParams } from "react-router-dom";
 
-import { Button, IconButton, TextField, Box } from "@mui/material";
+import { IconButton, TextField, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import { ContextModalList } from "../lists/ListItem";
+import ButtonMain from "../../components/ButtonMain";
 
 export default function FormAddNewCard() {
   const { listId, setIsAddingCard } = useContext(ContextModalList);
@@ -41,14 +42,11 @@ export default function FormAddNewCard() {
           onKeyDown={(e) => pressedEnter(e, saveNewCard)}
           sx={{ mb: 1, backgroundColor: "white", borderRadius: 1 }}
         />
-        <Button
+        <ButtonMain
           onClick={saveNewCard}
+          text="Добавить карточку"
           sx={{ mr: 1 }}
-          size="small"
-          variant="contained"
-        >
-          Добавить карточку
-        </Button>
+        />
         <IconButton onClick={() => setIsAddingCard!(false)}>
           <CloseIcon fontSize="small" htmlColor="black" />
         </IconButton>
