@@ -63,7 +63,6 @@ export default function EditDescription({ handleClickPrev }: Props) {
             margin="normal"
           />
           <ButtonMain
-            text="Сохранить"
             onClick={() => {
               dispatch(
                 boardUpdated({ id: board.id, changes: { description } })

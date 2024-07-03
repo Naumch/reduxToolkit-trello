@@ -2,11 +2,12 @@ import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../common/hooks";
 import { listCopied, selectListById } from "../listsSlice";
 
-import { TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
 import { nanoid } from "@reduxjs/toolkit";
 import { ContextModalList } from "../ListItem";
 import ButtonMain from "../../../components/ButtonMain";
+import Label from "../../../components/Label";
 
 export default function CopyList() {
   const { listId, handleClickPrev, handleCloseModal } =
@@ -24,9 +25,7 @@ export default function CopyList() {
         title="Копирование списка"
         handleClickPrev={handleClickPrev}
       />
-      <Typography variant="body2" mt={2} mb={0.5}>
-        Название
-      </Typography>
+      <Label text="Название" sx={{ mt: 2 }} />
       <TextField
         size="small"
         fullWidth

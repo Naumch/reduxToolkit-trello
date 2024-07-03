@@ -1,4 +1,4 @@
-import { Typography, Box, Stack, Grid } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
 import {
   red,
@@ -13,6 +13,7 @@ import {
   blueGrey,
 } from "@mui/material/colors";
 import { useState } from "react";
+import Label from "../../../components/Label";
 const tone = 400;
 
 const colors = [
@@ -68,34 +69,36 @@ export default function ChangeCover() {
   return (
     <>
       <ModalHeader title="Обложка" />
-      <Typography variant="body2">Размер</Typography>
-      <Stack gap={1} direction="row">
-        <Box sx={{ width: "50%", height: 74, borderRadius: 1, boxShadow: 1 }}>
+      <Box>
+        <Label text="Размер" />
+        <Stack gap={1} direction="row">
+          <Box sx={{ width: "50%", height: 74, borderRadius: 1, boxShadow: 1 }}>
+            <Box
+              sx={{
+                height: "50%",
+                backgroundColor: cover,
+                borderRadius: "4px 4px 0 0",
+              }}
+            />
+            <Box sx={{ backgroundColor: "black" }} />
+          </Box>
           <Box
             sx={{
-              height: "50%",
               backgroundColor: cover,
-              borderRadius: "4px 4px 0 0",
+              width: "50%",
+              height: 74,
+              borderRadius: 1,
+              boxShadow: 1,
             }}
-          />
-          <Box sx={{backgroundColor: "black"}}/>
-        </Box>
-        <Box
-          sx={{
-            backgroundColor: cover,
-            width: "50%",
-            height: 74,
-            borderRadius: 1,
-            boxShadow: 1,
-          }}
-        ></Box>
-      </Stack>
-      <Typography variant="body2">Цвета</Typography>
-      <Stack direction="row" flexWrap="wrap" gap={0.8}>
-        {renderedColorBlocks}
-      </Stack>
-      <Typography variant="body2">Вложения</Typography>
-      <Typography variant="body2">Изображения из базы Unsplash</Typography>
+          ></Box>
+        </Stack>
+      </Box>
+      <Box>
+        <Label text="Цвета" />
+        <Stack direction="row" flexWrap="wrap" gap={0.8}>
+          {renderedColorBlocks}
+        </Stack>
+      </Box>
     </>
   );
 }

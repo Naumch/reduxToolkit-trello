@@ -31,7 +31,7 @@ export default function Header({ board }: Props) {
   const dispatch = useAppDispatch();
 
   const updateTitle = () => {
-    if (title) {
+    if (title.trim()) {
       dispatch(boardUpdated({ id: board.id, changes: { title } }));
     } else {
       setTitle(board.title);

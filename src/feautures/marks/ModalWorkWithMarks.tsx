@@ -3,11 +3,12 @@ import { useAppDispatch } from "../../common/hooks";
 import { markAdded, markDeleted, markUpdated } from "./marksSlice";
 
 import SampleMark from "./SampleMark";
-import { Box, TextField, Typography, Divider, Stack } from "@mui/material";
+import { Box, TextField, Divider, Stack } from "@mui/material";
 import GridColorBlocks from "./GridColorBlocks";
 import ModalContentDelete from "../../components/ModalContentDelete";
 import ModalHeader from "../../components/ModalHeader";
 import ButtonMain from "../../components/ButtonMain";
+import Label from "../../components/Label";
 
 type Props = {
   mark: Mark;
@@ -57,9 +58,7 @@ export default function ModalWorkWithMark({
       >
         <SampleMark mark={mark} />
       </Box>
-      <Typography variant="body2" my={1}>
-        Название
-      </Typography>
+      <Label text="Название " />
       <TextField
         size="small"
         value={mark.title}
@@ -67,9 +66,7 @@ export default function ModalWorkWithMark({
         fullWidth
         autoFocus
       />
-      <Typography variant="body2" mt={2} mb={1}>
-        Цвет
-      </Typography>
+      <Label text="Цвет" sx={{ mt: 2 }} />
       <GridColorBlocks mark={mark} setMark={setMark} />
       <Divider />
       {isCreatingNewMark ? (
@@ -88,7 +85,6 @@ export default function ModalWorkWithMark({
               dispatch(markUpdated(mark));
               handleCloseModal();
             }}
-            text="Сохранить"
           />
           <ButtonMain
             onClick={() => setIsDeleting(true)}

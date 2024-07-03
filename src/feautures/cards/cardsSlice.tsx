@@ -57,16 +57,15 @@ const cardsSlice = createSlice({
       reducer(state, action: PayloadAction<Card>) {
         cardsAdapter.addOne(state, action.payload);
       },
-      prepare({ title, listId, boardId }) {
+      prepare({ title, listId, marks = [] }) {
         return {
           payload: {
             id: nanoid(),
             title,
             list: listId,
-            board: boardId,
             archive: false,
             time: new Date().toISOString(),
-            marks: [],
+            marks,
             cover: false,
           },
         };

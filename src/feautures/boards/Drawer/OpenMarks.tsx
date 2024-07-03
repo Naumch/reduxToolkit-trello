@@ -2,7 +2,7 @@ import { useState } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { selectMarksdByBoardId } from "../../marks/marksSlice";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { green } from "@mui/material/colors";
 import ModalWorkWithMarks from "../../marks/ModalWorkWithMarks";
 import ModalWrapper from "../../../components/ModalWrapper";
@@ -14,6 +14,7 @@ import { useAppSelector } from "../../../common/hooks";
 import ModalHeader from "../../../components/ModalHeader";
 import ButtonSecondary from "../../../components/ButtonSecondary";
 import DrawerHeader from "./DrawerHeader";
+import Label from "../../../components/Label";
 
 type Props = {
   handleClickPrev: FunctionVoid;
@@ -61,9 +62,7 @@ export default function OpenMarks({ handleClickPrev }: Props) {
   return (
     <>
       <DrawerHeader title="Метки" handleClickPrev={handleClickPrev} />
-      <Typography variant="body2" my={1}>
-        Метки
-      </Typography>
+      <Label text="Метки" sx={{ mt: 1 }} />
       <Stack mb={2}>{renderedSampleMarks}</Stack>
       <ButtonSecondary
         onClick={() => {

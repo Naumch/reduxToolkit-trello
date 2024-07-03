@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { useAppDispatch, pressedEnter } from "../../common/hooks";
 import { cardAdded } from "./cardsSlice";
-import { useParams } from "react-router-dom";
 
 import { IconButton, TextField, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,14 +10,13 @@ import ButtonMain from "../../components/ButtonMain";
 
 export default function FormAddNewCard() {
   const { listId, setIsAddingCard } = useContext(ContextModalList);
-  const { boardId } = useParams();
   const [title, setTitle] = useState("");
 
   const dispatch = useAppDispatch();
 
   const saveNewCard = () => {
-    if (title) {
-      dispatch(cardAdded({ title, listId, boardId }));
+    if (title.trim()) {
+      dispatch(cardAdded({ title, listId }));
       setTitle("");
     } else {
       setIsAddingCard!(false);

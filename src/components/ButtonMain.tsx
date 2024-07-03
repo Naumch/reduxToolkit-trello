@@ -1,7 +1,7 @@
 import { Button as ButtonBase, SxProps } from "@mui/material";
 
 type Props = {
-  text: string;
+  text?: string;
   onClick: FunctionVoid;
   sx?: SxProps;
   error?: boolean;
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function ButtonMain({
-  text,
+  text = "Сохранить",
   onClick,
   sx,
   error,

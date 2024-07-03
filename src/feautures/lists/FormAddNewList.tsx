@@ -18,7 +18,7 @@ export default function FormAddNewList({ boardId, setIsEditing }: Props) {
   const dispatch = useAppDispatch();
 
   const saveNewList = () => {
-    if (title) {
+    if (title.trim()) {
       dispatch(listAdded({ title, boardId }));
       setTitle("");
     }

@@ -56,7 +56,7 @@ export default function ListItem({ list }: Props) {
   const dispatch = useAppDispatch();
 
   const updateTitle = () => {
-    if (title) {
+    if (title.trim()) {
       dispatch(listUpdated({ id: list.id, changes: { title } }));
     } else {
       setTitle(list.title);

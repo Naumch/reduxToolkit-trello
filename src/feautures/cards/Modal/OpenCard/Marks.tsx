@@ -1,7 +1,8 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useContext } from "react";
 import { ContextModalCard } from "../../CardItem";
 import Mark from "../../../marks/Mark";
+import Label from "../../../../components/Label";
 
 export default function Marks() {
   const { card } = useContext(ContextModalCard);
@@ -14,7 +15,7 @@ export default function Marks() {
 
   return (
     <>
-      <Typography variant="body2">Метки</Typography>
+      <Label text="Метки" />
       <Stack>{renderedMarks}</Stack>
     </>
   );

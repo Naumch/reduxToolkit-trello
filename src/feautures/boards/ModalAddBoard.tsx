@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../common/hooks";
 import { boardAdded } from "./boardsSlice";
 
-import { Box, Button, Typography, TextField, Stack } from "@mui/material";
+import { Box, Button, TextField, Stack } from "@mui/material";
 import SampleBoard from "./SampleBoard";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalHeader from "../../components/ModalHeader";
 import { getRequestUnsplashAPI } from "../../common/apiUnsplash";
 import ButtonSecondary from "../../components/ButtonSecondary";
 import BoxSampleBackground from "./BoxSampleBackground";
+import Label from "../../components/Label";
 
 const gradients = [
   "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
@@ -69,9 +70,7 @@ export default function ModalAddBoard() {
         <ModalHeader title="Создать доску" />
         <SampleBoard background={background} />
         <Box mb={3}>
-          <Typography variant="body2" mb={0.5}>
-            Фон
-          </Typography>
+          <Label text="Фон" />
           <Stack direction="row" spacing={0.8} mb={0.6}>
             {gradients.map((gradient) => (
               <BoxSampleBackground
@@ -111,10 +110,9 @@ export default function ModalAddBoard() {
           </Stack>
         </Box>
         <Box>
-          <Typography variant="body2">Заголовок доски</Typography>
+          <Label text="Заголовок доски" />
           <TextField
             size="small"
-            margin="dense"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth

@@ -1,7 +1,8 @@
-import { ReactNode, useState, createContext } from "react";
+import { ReactNode, useState, createContext, useRef } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 
-import { Box, Modal, Stack, Typography } from "@mui/material";
+import { Box, Modal, Stack, TextField, Typography } from "@mui/material";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import ButtonEdit from "../../components/ButtonEdit";
 import ButtonCardAction from "./ButtonCardAction";
 
@@ -12,11 +13,12 @@ import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import PhotoOutlinedIcon from "@mui/icons-material/PhotoOutlined";
 import CallToActionOutlinedIcon from "@mui/icons-material/CallToActionOutlined";
-import { useAppDispatch } from "../../common/hooks";
+import { pressedEnter, useAppDispatch } from "../../common/hooks";
 import { cardUpdated } from "./cardsSlice";
 import ModalWrapper from "../../components/ModalWrapper";
 import ModalContent from "./Modal/ModalContent";
 import StackMarks from "../marks/StackMarks";
+import ButtonMain from "../../components/ButtonMain";
 
 type Props = {
   card: Card;
@@ -30,6 +32,7 @@ type Buttons = {
 
 interface IContextModalCard {
   card: Card;
+  handleCloseModal: FunctionVoid;
 }
 
 export const ContextModalCard = createContext<IContextModalCard>({
@@ -42,18 +45,29 @@ export const ContextModalCard = createContext<IContextModalCard>({
     marks: [],
     cover: false,
   },
+  handleCloseModal: () => {},
 });
 
 export default function CardItem({ card }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [openChildModal, setOpenChildModal] = useState(false);
   const [typeAction, setTypeAction] = useState<CardAction>("openCard");
+  const [title, setTitle] = useState(card.title);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
 
   const handleOpenChildModal = (type: CardAction) => {
     setTypeAction(type);
     setOpenChildModal(true);
+  };
+
+  const updateTitle = () => {
+    if (title.trim()) {
+      dispatch(cardUpdated({ id: card.id, changes: { title } }));
+      setOpenModal(false);
+    }
   };
 
   const buttons: Buttons[] = [
@@ -145,10 +159,11 @@ export default function CardItem({ card }: Props) {
     setOpenChildModal(false);
   };
 
-  const valueContext: IContextModalCard = { card };
+  const valueContext: IContextModalCard = { card, handleCloseModal };
 
   return (
     <Box
+      ref={ref}
       sx={{
         p: 1,
         mt: 1,
@@ -177,17 +192,47 @@ export default function CardItem({ card }: Props) {
         <ButtonEdit onClick={() => setOpenModal(true)} />
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <Box>
-            <Stack alignItems="start">{renderedButtons}</Stack>
+            <Box
+              sx={{
+                position: "absolute" as "absolute",
+                top: ref.current?.getBoundingClientRect().y,
+                left: ref.current?.getBoundingClientRect().x,
+              }}
+            >
+              <Stack direction="row">
+                <Box>
+                  <Box
+                    sx={{
+                      width: 256,
+                      height: ref.current?.offsetHeight,
+                      mr: 1,
+                      mb: 1,
+                      borderRadius: 2,
+                      backgroundColor: "white",
+                    }}
+                  >
+                    <TextField
+                      fullWidth
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      onKeyDown={(event) => pressedEnter(event, updateTitle)}
+                      multiline
+                      size="small"
+                      autoFocus
+                    />
+                  </Box>
+                  <ButtonMain onClick={updateTitle} />
+                </Box>
+                <Stack alignItems="start">{renderedButtons}</Stack>
+              </Stack>
+            </Box>
             <ModalWrapper
               open={openChildModal}
               onClose={() => setOpenChildModal(false)}
               sx={typeAction === "openCard" ? { width: 768 } : null}
             >
               <ContextModalCard.Provider value={valueContext}>
-                <ModalContent
-                  typeAction={typeAction}
-                  handleCloseModal={handleCloseModal}
-                />
+                <ModalContent typeAction={typeAction} />
               </ContextModalCard.Provider>
             </ModalWrapper>
           </Box>
