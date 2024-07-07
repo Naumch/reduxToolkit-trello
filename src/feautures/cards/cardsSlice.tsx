@@ -19,7 +19,7 @@ const cardsInitial: Card[] = [
     archive: false,
     time: new Date().toISOString(),
     marks: ["1", "2"],
-    cover: false,
+    cover: null,
   },
   {
     id: nanoid(),
@@ -29,7 +29,7 @@ const cardsInitial: Card[] = [
     archive: false,
     time: new Date().toISOString(),
     marks: [],
-    cover: false,
+    cover: null,
   },
   {
     id: nanoid(),
@@ -38,7 +38,7 @@ const cardsInitial: Card[] = [
     archive: false,
     time: new Date().toISOString(),
     marks: [],
-    cover: false,
+    cover: null,
   },
 ];
 
@@ -66,7 +66,7 @@ const cardsSlice = createSlice({
             archive: false,
             time: new Date().toISOString(),
             marks,
-            cover: false,
+            cover: null,
           },
         };
       },

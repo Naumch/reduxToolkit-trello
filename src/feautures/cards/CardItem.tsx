@@ -43,7 +43,7 @@ export const ContextModalCard = createContext<IContextModalCard>({
     archive: false,
     time: "",
     marks: [],
-    cover: false,
+    cover: null,
   },
   handleCloseModal: () => {},
 });
@@ -165,78 +165,91 @@ export default function CardItem({ card }: Props) {
     <Box
       ref={ref}
       sx={{
-        p: 1,
         mt: 1,
         borderRadius: 2,
         boxShadow: 1,
-        backgroundColor: "#fff",
+        backgroundColor:
+          card.cover?.size === "full" ? card.cover.color : "#fff",
         cursor: "pointer",
       }}
     >
-      {!!card.marks.length && <StackMarks markIds={card.marks} />}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Typography
-          ml={1}
-          maxWidth={190}
-          sx={{ overflow: "auto", textOverflow: "ellipsis" }}
-          variant="body2"
+      {card.cover?.size === "half" && (
+        <Box
+          sx={{
+            height: 40,
+            backgroundColor: card.cover.color,
+            borderRadius: "8px 8px 0 0",
+          }}
+        />
+      )}
+      <Box sx={{ p: 1 }}>
+        {!!card.marks.length && card.cover?.size !== "full" && (
+          <StackMarks markIds={card.marks} />
+        )}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          {card.title}
-        </Typography>
-        <ButtonEdit onClick={() => setOpenModal(true)} />
-        <Modal open={openModal} onClose={() => setOpenModal(false)}>
-          <Box>
-            <Box
-              sx={{
-                position: "absolute" as "absolute",
-                top: ref.current?.getBoundingClientRect().y,
-                left: ref.current?.getBoundingClientRect().x,
-              }}
-            >
-              <Stack direction="row">
-                <Box>
-                  <Box
-                    sx={{
-                      width: 256,
-                      height: ref.current?.offsetHeight,
-                      mr: 1,
-                      mb: 1,
-                      borderRadius: 2,
-                      backgroundColor: "white",
-                    }}
-                  >
-                    <TextField
-                      fullWidth
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      onKeyDown={(event) => pressedEnter(event, updateTitle)}
-                      multiline
-                      size="small"
-                      autoFocus
-                    />
+          <Typography
+            ml={1}
+            maxWidth={190}
+            sx={{ overflow: "auto", textOverflow: "ellipsis" }}
+            variant="body2"
+          >
+            {card.title}
+          </Typography>
+          <ButtonEdit onClick={() => setOpenModal(true)} />
+          <Modal open={openModal} onClose={() => setOpenModal(false)}>
+            <Box>
+              <Box
+                sx={{
+                  position: "absolute" as "absolute",
+                  top: ref.current?.getBoundingClientRect().y,
+                  left: ref.current?.getBoundingClientRect().x,
+                }}
+              >
+                <Stack direction="row">
+                  <Box>
+                    <Box
+                      sx={{
+                        width: 256,
+                        height: ref.current?.offsetHeight,
+                        mr: 1,
+                        mb: 1,
+                        borderRadius: 2,
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <TextField
+                        fullWidth
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        onKeyDown={(event) => pressedEnter(event, updateTitle)}
+                        multiline
+                        size="small"
+                        autoFocus
+                      />
+                    </Box>
+                    <ButtonMain onClick={updateTitle} />
                   </Box>
-                  <ButtonMain onClick={updateTitle} />
-                </Box>
-                <Stack alignItems="start">{renderedButtons}</Stack>
-              </Stack>
+                  <Stack alignItems="start">{renderedButtons}</Stack>
+                </Stack>
+              </Box>
+              <ModalWrapper
+                open={openChildModal}
+                onClose={() => setOpenChildModal(false)}
+                sx={typeAction === "openCard" ? { width: 768 } : null}
+              >
+                <ContextModalCard.Provider value={valueContext}>
+                  <ModalContent typeAction={typeAction} />
+                </ContextModalCard.Provider>
+              </ModalWrapper>
             </Box>
-            <ModalWrapper
-              open={openChildModal}
-              onClose={() => setOpenChildModal(false)}
-              sx={typeAction === "openCard" ? { width: 768 } : null}
-            >
-              <ContextModalCard.Provider value={valueContext}>
-                <ModalContent typeAction={typeAction} />
-              </ContextModalCard.Provider>
-            </ModalWrapper>
-          </Box>
-        </Modal>
+          </Modal>
+        </Box>
       </Box>
     </Box>
   );

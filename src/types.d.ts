@@ -27,8 +27,13 @@ type Card = {
   archive: boolean
   time: string
   marks: string[]
-  cover: boolean
+  cover: null | CoverCard
 };
+
+type CoverCard = {
+  color: string, 
+  size: "half" | "full"
+}
 
 type Mark = {
   id: string;

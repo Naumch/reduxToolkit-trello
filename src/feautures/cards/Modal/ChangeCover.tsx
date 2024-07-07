@@ -1,4 +1,13 @@
-import { Box, Stack } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import {
+  Alert,
+  Box,
+  Grid,
+  LinearProgress,
+  ImageListItem,
+  ImageListItemBar,
+  Link,
+} from "@mui/material";
 import ModalHeader from "../../../components/ModalHeader";
 import {
   red,
@@ -12,8 +21,14 @@ import {
   orange,
   blueGrey,
 } from "@mui/material/colors";
-import { useState } from "react";
 import Label from "../../../components/Label";
+import { ContextModalCard } from "../CardItem";
+import ButtonSecondary from "../../../components/ButtonSecondary";
+import SampleCoverCard from "./SampleCoverCard";
+import { useAppDispatch } from "../../../common/hooks";
+import { cardUpdated } from "../cardsSlice";
+import { getRequestUnsplashAPI } from "../../../common/apiUnsplash";
+
 const tone = 400;
 
 const colors = [
@@ -26,25 +41,57 @@ const colors = [
   cyan[tone],
   pink[tone],
   orange[tone],
-  blueGrey[tone],
+  blueGrey[200],
 ];
 
 export default function ChangeCover() {
-  const [cover, setCover] = useState("");
+  const { card } = useContext(ContextModalCard);
+  const [sampleCover, setSampleCover] = useState(card.cover);
+  const [photos, setPhotos] = useState<PhotoUnsplash[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<null | string>(null);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(cardUpdated({ id: card.id, changes: { cover: sampleCover } }));
+  }, [sampleCover]);
+
+  useEffect(() => {
+    const fetchDataForPhotos = async () => {
+      try {
+        const photosData = await getRequestUnsplashAPI(6);
+        setPhotos(photosData);
+        setError(null);
+      } catch (error) {
+        setError("Ошибка при получении фото");
+        setPhotos([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDataForPhotos();
+  }, []);
 
   const renderedColorBlocks = colors.map((color) => (
     <Box
       key={color}
+      onClick={() => {
+        setSampleCover((prevState) =>
+          prevState ? { ...prevState, color } : { color, size: "half" }
+        );
+      }}
       sx={{
         position: "relative",
         backgroundColor: color,
         height: 34,
-        width: "18%",
+        minWidth: 56,
         borderRadius: 1,
-        border: color === cover ? 2 : null,
+        border: sampleCover && color === sampleCover.color ? 2 : null,
         borderColor: "primary.main",
         "&:before":
-          color === cover
+          sampleCover && color === sampleCover.color
             ? {
                 content: '""',
                 position: "absolute",
@@ -62,42 +109,67 @@ export default function ChangeCover() {
           opacity: 0.8,
         },
       }}
-      onClick={() => setCover(color)}
     />
+  ));
+
+  const renderedPhotos = photos.map((photo) => (
+    <ImageListItem
+      key={photo.id}
+      sx={{ cursor: "pointer", border: "none", padding: 0 }}
+      component="button"
+    >
+      <img
+        src={photo.urls.thumb}
+        alt={photo.alt}
+        loading="lazy"
+        style={{ borderRadius: "4px", height: "60px" }}
+      />
+      <ImageListItemBar
+        sx={{ height: 20 }}
+        subtitle={
+          <Link
+            color="inherit"
+            component="a"
+            href={photo.user.links.html}
+            target="_blank"
+          >
+            {photo.user.name}
+          </Link>
+        }
+      />
+    </ImageListItem>
   ));
 
   return (
     <>
       <ModalHeader title="Обложка" />
-      <Box>
+      <Box mt={1} mb={2}>
         <Label text="Размер" />
-        <Stack gap={1} direction="row">
-          <Box sx={{ width: "50%", height: 74, borderRadius: 1, boxShadow: 1 }}>
-            <Box
-              sx={{
-                height: "50%",
-                backgroundColor: cover,
-                borderRadius: "4px 4px 0 0",
-              }}
-            />
-            <Box sx={{ backgroundColor: "black" }} />
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: cover,
-              width: "50%",
-              height: 74,
-              borderRadius: 1,
-              boxShadow: 1,
-            }}
-          ></Box>
-        </Stack>
+        <SampleCoverCard
+          sampleCover={sampleCover}
+          setSampleCover={setSampleCover}
+        />
+        {sampleCover && (
+          <ButtonSecondary
+            text="Убрать обложку"
+            onClick={() => setSampleCover(null)}
+            fullWidth
+          />
+        )}
+      </Box>
+      <Box mb={2}>
+        <Label text="Цвета" />
+        <Grid container direction="column" gap={0.6} maxHeight={76}>
+          {renderedColorBlocks}
+        </Grid>
       </Box>
       <Box>
-        <Label text="Цвета" />
-        <Stack direction="row" flexWrap="wrap" gap={0.8}>
-          {renderedColorBlocks}
-        </Stack>
+        <Label text="Изображения из базы Unsplash" />
+        {isLoading && <LinearProgress />}
+        {error && <Alert severity="error">{error}</Alert>}
+        <Grid container direction="column" gap={0.8} maxHeight={130}>
+          {renderedPhotos}
+        </Grid>
       </Box>
     </>
   );
