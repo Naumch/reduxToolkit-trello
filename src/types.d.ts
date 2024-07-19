@@ -1,12 +1,12 @@
 type Board = {
   id: string;
   title: string;
-  background: string | BoardBackgroundPhoto
+  background: string | BackgroundBoardPhoto
   favourites: boolean;
   description?: string
 };
 
-type BoardBackgroundPhoto = {
+type BackgroundBoardPhoto = {
   urlMain: string
   urlThumb: string
   contrastColorText: string
@@ -27,12 +27,18 @@ type Card = {
   archive: boolean
   time: string
   marks: string[]
-  cover: null | CoverCard
+  cover: null | CoverCardColor | CoverCardPhoto
 };
 
-type CoverCard = {
+type CoverCardColor = {
   color: string, 
   size: "half" | "full"
+}
+
+type CoverCardPhoto = {
+  url: string, 
+  size: "half" | "full"
+  colorText?: "white" | "black"
 }
 
 type Mark = {

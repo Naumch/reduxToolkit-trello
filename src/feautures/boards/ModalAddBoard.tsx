@@ -26,7 +26,7 @@ export default function ModalAddBoard() {
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState("");
   const [photos, setPhotos] = useState<PhotoUnsplash[]>([]);
-  const [background, setBackground] = useState<string | BoardBackgroundPhoto>(
+  const [background, setBackground] = useState<string | BackgroundBoardPhoto>(
     gradients[0]
   );
 

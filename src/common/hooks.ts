@@ -2,6 +2,7 @@ import { KeyboardEvent } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../app/store";
 import Color from "color";
+import { SxProps } from "@mui/material";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -12,11 +13,11 @@ export const pressedEnter = (event: KeyboardEvent, callback: FunctionVoid) => {
   }
 };
 
-export const generateUrlsPhotoUnsplash = (photo: PhotoUnsplash): BoardBackgroundPhoto => {
-  const urls: BoardBackgroundPhoto = {
+export const generateUrlsPhotoUnsplash = (photo: PhotoUnsplash): BackgroundBoardPhoto => {
+  const urls: BackgroundBoardPhoto = {
     urlMain:
       photo.urls.raw +
-      `&w=${window.innerWidth}&dpr=${window.devicePixelRatio}`,
+      `&w=${document.documentElement.scrollWidth}&dpr=${window.devicePixelRatio}`,
     urlThumb: photo.urls.thumb,
     contrastColorText: getContrastColorText(photo.color),
   };
@@ -34,3 +35,19 @@ export const createTooltipTextForMark = (mark: Mark) => {
   }"`;
 }
 
+export const styleBlueBorder = { 
+  border: 2,
+  borderColor: "primary.main",
+  position: "relative",
+  "&:before": {
+    content: '""',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    border: 2,
+    borderRadius: 0.5,
+    borderColor: "white",
+  }
+}

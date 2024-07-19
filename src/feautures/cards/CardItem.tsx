@@ -2,7 +2,6 @@ import { ReactNode, useState, createContext, useRef } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 
 import { Box, Modal, Stack, TextField, Typography } from "@mui/material";
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import ButtonEdit from "../../components/ButtonEdit";
 import ButtonCardAction from "./ButtonCardAction";
 
@@ -164,22 +163,42 @@ export default function CardItem({ card }: Props) {
   return (
     <Box
       ref={ref}
-      sx={{
-        mt: 1,
-        borderRadius: 2,
-        boxShadow: 1,
-        backgroundColor:
-          card.cover?.size === "full" ? card.cover.color : "#fff",
-        cursor: "pointer",
-      }}
+      sx={[
+        {
+          mt: 1,
+          borderRadius: 2,
+          boxShadow: 1,
+          cursor: "pointer",
+          backgroundColor: "fff",
+        },
+        card.cover?.size === "full" &&
+          "color" in card.cover && {
+            backgroundColor: card.cover.color,
+          },
+        card.cover?.size === "full" &&
+          "url" in card.cover && {
+            backgroundImage: `url(${card.cover.url})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            color: card.cover.colorText,
+          },
+      ]}
     >
       {card.cover?.size === "half" && (
         <Box
-          sx={{
-            height: 40,
-            backgroundColor: card.cover.color,
-            borderRadius: "8px 8px 0 0",
-          }}
+          sx={[
+            { borderRadius: "8px 8px 0 0" },
+            "color" in card.cover && {
+              height: 40,
+              backgroundColor: card.cover.color,
+            },
+            "url" in card.cover && {
+              backgroundImage: `url(${card.cover.url})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              height: 160,
+            },
+          ]}
         />
       )}
       <Box sx={{ p: 1 }}>
@@ -198,10 +217,14 @@ export default function CardItem({ card }: Props) {
             maxWidth={190}
             sx={{ overflow: "auto", textOverflow: "ellipsis" }}
             variant="body2"
+            color="inherit"
           >
             {card.title}
           </Typography>
-          <ButtonEdit onClick={() => setOpenModal(true)} />
+          <ButtonEdit
+            onClick={() => setOpenModal(true)}
+            sx={{ color: "inherit" }}
+          />
           <Modal open={openModal} onClose={() => setOpenModal(false)}>
             <Box>
               <Box

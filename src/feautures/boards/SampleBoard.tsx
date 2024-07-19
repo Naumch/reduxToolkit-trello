@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import SampleBoardSvg from "../../images/SampleBoardSvg";
 
 type Props = {
-  background: string | BoardBackgroundPhoto;
+  background: string | BackgroundBoardPhoto;
 };
 
 export default function SampleBoard({ background }: Props) {
