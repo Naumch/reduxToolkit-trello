@@ -1,16 +1,10 @@
 type Board = {
   id: string;
   title: string;
-  background: string | BackgroundBoardPhoto
+  background: string | PhotoUnsplash
   favourites: boolean;
   description?: string
 };
-
-type BackgroundBoardPhoto = {
-  urlMain: string
-  urlThumb: string
-  contrastColorText: string
-}
 
 type List = {
   id: string;

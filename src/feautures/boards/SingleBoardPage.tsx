@@ -20,7 +20,7 @@ export default function SingleBoardPage() {
         height: "100vh",
         backgroundImage:
           typeof board.background === "object"
-            ? `url(${board.background.urlMain})`
+            ? `url(${board.background.urls.raw})`
             : board.background,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",

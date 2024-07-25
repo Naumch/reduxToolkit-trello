@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../common/hooks";
+import { getContrastColorText, useAppDispatch } from "../../common/hooks";
 import { boardUpdated } from "./boardsSlice";
 
 import { Box, Typography, Checkbox } from "@mui/material";
@@ -23,7 +23,7 @@ export default function BoardItem({ board }: Props) {
         height: 100,
         backgroundImage:
           typeof board.background === "object"
-            ? `url(${board.background.urlThumb})`
+            ? `url(${board.background.urls.thumb})`
             : board.background,
         backgroundSize: "cover",
         position: "relative",
@@ -42,7 +42,7 @@ export default function BoardItem({ board }: Props) {
         variant="h5"
         color={
           typeof board.background === "object"
-            ? board.background.contrastColorText
+            ? getContrastColorText(board.background.color)
             : "black"
         }
       >
@@ -55,7 +55,7 @@ export default function BoardItem({ board }: Props) {
             sx={{
               color:
                 typeof board.background === "object"
-                  ? board.background.contrastColorText
+                  ? getContrastColorText(board.background.color)
                   : "black",
             }}
           />

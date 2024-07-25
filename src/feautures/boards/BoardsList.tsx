@@ -5,7 +5,6 @@ import { Box, Container, Grid } from "@mui/material";
 import ModalAddBoard from "./ModalAddBoard";
 import BoardsListTitle from "./BoardsListTitle";
 import BoardItem from "./BoardItem";
-import { useEffect } from "react";
 
 export default function BoardsList() {
   const boards = useAppSelector(selectAllBoards);
@@ -18,14 +17,14 @@ export default function BoardsList() {
 
   return (
     <Container>
-      {favouritesBoards.length ? (
+      {favouritesBoards.length !== 0 && (
         <Box mt={6}>
           <BoardsListTitle title="Отмеченные доски" />
           <Grid container mt={2} gap={1}>
             {renderedFavouritesBoards}
           </Grid>
         </Box>
-      ) : null}
+      )}
       <Box mt={6}>
         <BoardsListTitle title="Мои доски" />
         <Grid container mt={2} gap={1}>

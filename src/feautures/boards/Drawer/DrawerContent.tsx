@@ -72,7 +72,7 @@ export default function DrawerMenuContent({ board }: Props) {
             height: 24,
             backgroundImage:
               typeof board.background === "object"
-                ? `url(${board.background.urlThumb})`
+                ? `url(${board.background.urls.thumb})`
                 : board.background,
             backgroundSize: "cover",
             borderRadius: 1,

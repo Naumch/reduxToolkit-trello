@@ -2,13 +2,15 @@ import { Box } from "@mui/material";
 import Header from "./Header";
 import Marks from "./Marks";
 import Description from "./Description";
+import Cover from "./Cover";
 
 export default function OpenCard() {
   return (
-    <Box>
+    <>
+      <Cover />
       <Header />
       <Marks />
       <Description />
-    </Box>
+    </>
   );
 }

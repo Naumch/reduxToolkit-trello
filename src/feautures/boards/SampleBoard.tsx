@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import SampleBoardSvg from "../../images/SampleBoardSvg";
 
 type Props = {
-  background: string | BackgroundBoardPhoto;
+  background: string | PhotoUnsplash;
 };
 
 export default function SampleBoard({ background }: Props) {
@@ -11,7 +11,7 @@ export default function SampleBoard({ background }: Props) {
       sx={{
         backgroundImage:
           typeof background === "object"
-            ? `url(${background.urlThumb})`
+            ? `url(${background.urls.thumb})`
             : background,
         backgroundSize: "cover",
         borderRadius: 1,

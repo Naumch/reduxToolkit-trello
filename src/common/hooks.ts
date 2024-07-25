@@ -2,7 +2,6 @@ import { KeyboardEvent } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../app/store";
 import Color from "color";
-import { SxProps } from "@mui/material";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -13,17 +12,17 @@ export const pressedEnter = (event: KeyboardEvent, callback: FunctionVoid) => {
   }
 };
 
-export const generateUrlsPhotoUnsplash = (photo: PhotoUnsplash): BackgroundBoardPhoto => {
-  const urls: BackgroundBoardPhoto = {
-    urlMain:
-      photo.urls.raw +
-      `&w=${document.documentElement.scrollWidth}&dpr=${window.devicePixelRatio}`,
-    urlThumb: photo.urls.thumb,
-    contrastColorText: getContrastColorText(photo.color),
-  };
+// export const generateUrlsPhotoUnsplash = (photo: PhotoUnsplash): BackgroundBoardPhoto => {
+//   const urls: BackgroundBoardPhoto = {
+//     urlMain:
+//       photo.urls.raw +
+//       `&w=${document.documentElement.scrollWidth}&dpr=${window.devicePixelRatio}`,
+//     urlThumb: photo.urls.thumb,
+//     contrastColorText: getContrastColorText(photo.color),
+//   };
 
- return urls
-}
+//  return urls
+// }
 
 export const getContrastColorText = (color: string): "black" | "white" => {
   return Color(color).isLight() ? "black" : "white"

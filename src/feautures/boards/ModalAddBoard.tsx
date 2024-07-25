@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { generateUrlsPhotoUnsplash, useAppDispatch } from "../../common/hooks";
+import { useAppDispatch } from "../../common/hooks";
 import { boardAdded } from "./boardsSlice";
 
 import { Box, Button, TextField, Stack } from "@mui/material";
@@ -26,7 +26,7 @@ export default function ModalAddBoard() {
   const [openModal, setOpenModal] = useState(false);
   const [title, setTitle] = useState("");
   const [photos, setPhotos] = useState<PhotoUnsplash[]>([]);
-  const [background, setBackground] = useState<string | BackgroundBoardPhoto>(
+  const [background, setBackground] = useState<string | PhotoUnsplash>(
     gradients[0]
   );
 
@@ -93,10 +93,10 @@ export default function ModalAddBoard() {
               <BoxSampleBackground
                 key={photo.id}
                 background={`url(${photo.urls.thumb})`}
-                onClick={() => setBackground(generateUrlsPhotoUnsplash(photo))}
+                onClick={() => setBackground(photo)}
                 withIcon={
                   typeof background === "object" &&
-                  photo.urls.thumb === background.urlThumb
+                  photo.urls.thumb === background.urls.thumb
                 }
                 style={{
                   width: 80,
