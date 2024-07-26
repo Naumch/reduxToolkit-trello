@@ -8,7 +8,7 @@ import {
   LinearProgress,
   Link,
 } from "@mui/material";
-import { useAppDispatch } from "../../../common/hooks";
+import { numberMillisecondsInDay, useAppDispatch } from "../../../common/hooks";
 import { boardUpdated } from "../boardsSlice";
 import { useParams } from "react-router-dom";
 import { getRequestUnsplashAPI } from "../../../common/apiUnsplash";
@@ -31,7 +31,7 @@ export default function ChoosePhoto({ handleClickPrev }: Props) {
       const lastFetch = localStorage.getItem("lastFetch");
       const now = Date.now();
 
-      if (!lastFetch || now - Number(lastFetch) > 86400000) {
+      if (!lastFetch || now - Number(lastFetch) > numberMillisecondsInDay) {
         try {
           const photosData = await getRequestUnsplashAPI(20);
           setPhotos(photosData);

@@ -6,6 +6,7 @@ type Props = {
   sx?: SxProps;
   error?: boolean;
   disabled?: boolean;
+  fullWidth?: boolean;
 };
 
 export default function ButtonMain({
@@ -14,6 +15,7 @@ export default function ButtonMain({
   sx,
   error,
   disabled,
+  fullWidth,
 }: Props) {
   return (
     <ButtonBase
@@ -23,6 +25,7 @@ export default function ButtonMain({
       sx={sx}
       color={error ? "error" : "primary"}
       disabled={disabled}
+      fullWidth={fullWidth}
     >
       {text}
     </ButtonBase>

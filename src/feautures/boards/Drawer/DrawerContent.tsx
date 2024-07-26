@@ -25,7 +25,6 @@ import OpenMarks from "./OpenMarks";
 import ChangeBackground from "./ChangeBackground";
 import OpenArchive from "./OpenArchive";
 import EditDescription from "./EditDescription";
-import DrawerHeader from "./DrawerHeader";
 
 type Props = {
   board: Board;

@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { Box, SxProps } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 

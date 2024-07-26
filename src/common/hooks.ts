@@ -50,3 +50,6 @@ export const styleBlueBorder = {
     borderColor: "white",
   }
 }
+
+export const numberMillisecondsInDay = 86400000
+

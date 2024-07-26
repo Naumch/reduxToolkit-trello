@@ -7,7 +7,7 @@ import {
   selectCardsdByBoardIdAndArchive,
 } from "../cards/cardsSlice";
 
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 
 import ModalWrapper from "../../components/ModalWrapper";

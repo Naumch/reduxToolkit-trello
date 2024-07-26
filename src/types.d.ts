@@ -20,6 +20,7 @@ type Card = {
   list: string;
   archive: boolean
   time: string
+  deadline?: number
   marks: string[]
   cover: null | CoverCardColor | CoverCardPhoto
 };
